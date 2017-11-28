@@ -2,6 +2,7 @@ import * as Koa from 'koa'
 import * as process from 'process'
 import * as koaRouter from 'koa-router'
 import * as koaBody from 'koa-bodyparser'
+import * as cors from '@koa/cors'
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 
 // config
@@ -34,6 +35,7 @@ router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
 // middlewares
 app.use(router.routes())
 app.use(router.allowedMethods())
+app.use(cors({origin: '*'}))
 
 // listen
 app.listen(config.port)

@@ -9,6 +9,9 @@
     "start": "npm run build && concurrently \"npm run watch\" \"npm run server:dev\"",
     "watch": "tsc --watch -p ../../tsconfig.json --outDir ./dist"
   },
+  "bin": {
+    "mango-api": "./bin/mango-api"
+  },
   "author": "Axel Springer SE",
   "contributors": [
     {
@@ -29,6 +32,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.1",
     "apollo-server-koa": "^1.2.0",
     "axios": "^0.17.1",
     "graphql": "^0.11.7",
