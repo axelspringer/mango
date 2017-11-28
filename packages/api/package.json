@@ -1,0 +1,39 @@
+{
+  "name": "@mango/api",
+  "version": "0.0.1",
+  "description": "An API Gateway for WordPress",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p ../../tsconfig.json --outDir ./dist",
+    "server:dev": "./node_modules/.bin/nodemon ./dist/server.js",
+    "start": "npm run build && concurrently \"npm run watch\" \"npm run server:dev\"",
+    "watch": "tsc --watch -p ../../tsconfig.json --outDir ./dist"
+  },
+  "author": "Axel Springer SE",
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@types/koa": "^2.0.41",
+    "@types/node": "^8.0.53",
+    "concurrently": "^3.5.1",
+    "cross-env": "^5.1.1",
+    "nodemon": "^1.12.1",
+    "prettier": "^1.8.2",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "apollo-server-koa": "^1.2.0",
+    "axios": "^0.17.1",
+    "graphql": "^0.11.7",
+    "koa-bodyparser": "^3.2.0",
+    "koa-router": "^7.1.1",
+    "tslib": "^1.8.0"
+  }
+}
