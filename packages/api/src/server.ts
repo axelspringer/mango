@@ -3,6 +3,7 @@ import * as process from 'process'
 import * as koaRouter from 'koa-router'
 import * as koaBody from 'koa-bodyparser'
 import * as cors from '@koa/cors'
+import { fetchPosts, fetchWp } from './loader'
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 
 // config
@@ -21,13 +22,19 @@ config.port = process.env.PORT || config.port
 // construct app
 const app = new Koa()
 const router = new koaRouter()
+const context = {
+  loaders: {
+    fetchWp,
+    fetchPosts
+  }
+}
 
 // Ping
 router.get('/ping', ping)
 
 // GraphQL
-router.post('/graphql', koaBody(), graphqlKoa({ schema: wpGraphQLSchema }));
-router.get('/graphql', graphqlKoa({ schema: wpGraphQLSchema }));
+router.post('/graphql', koaBody(), graphqlKoa({ schema: wpGraphQLSchema, context }));
+router.get('/graphql', graphqlKoa({ schema: wpGraphQLSchema, context }));
 
 // GraphQLi
 router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
@@ -35,7 +42,7 @@ router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
 // middlewares
 app.use(router.routes())
 app.use(router.allowedMethods())
-app.use(cors({origin: '*'}))
+app.use(cors({ origin: '*' }))
 
 // listen
 app.listen(config.port)
