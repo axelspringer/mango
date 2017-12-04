@@ -1,2 +1,2 @@
-export * from './postsLoaders'
-export * from './wpLoader'
+export * from './loader'
+export * from './wp'
