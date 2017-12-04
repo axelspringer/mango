@@ -66,10 +66,10 @@ export const PostType = new GraphQLObjectType({
       type: GraphQLBoolean,
       resolve: post => post.sticky
     },
-    // meta: {
-    //   type: new GraphQLList(MetaType),
-    //   resolve: (_, args, ctx) => new Meta(ctx).fetch(args)
-    // },
+    meta: {
+      type: new GraphQLList(GraphQLString),
+      resolve: post => post.meta
+    },
     categories: {
       type: new GraphQLList(CategoryType),
       resolve: (root, args, ctx) => ctx.loader.getCategories(ctx, root.categories, args)
