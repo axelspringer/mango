@@ -22,4 +22,5 @@ export class WP extends Loader {
   public async getCategory(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [WP.Categories, id].join('/'), args)
   }
+
 }

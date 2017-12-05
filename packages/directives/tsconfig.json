@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "noEmit": false,
+    "noEmitHelpers": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "pretty": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strictNullChecks": false,
+    "target": "es5",
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "es5",
+      "es6"
+    ],
+    "types": [
+      "graphql",
+      "express",
+      "hammerjs",
+      "jasmine",
+      "jest",
+      "node",
+      "source-map",
+      "uglify-js",
+      "vue"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "public",
+    "server",
+    "src/**/*.spec.ts",
+    "src/**/*.spec.tsx",
+    "src/**/*.e2e.ts"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
