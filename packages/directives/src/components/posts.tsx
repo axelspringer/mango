@@ -1,15 +1,16 @@
-import Vue from 'vue'
-import Component from 'vue-class-component'
+import { Component, Inject, Vue } from 'vue-property-decorator'
 
-@Component({
-  inject: ['client']
-})
+@Component
 export default class Posts extends Vue {
-  constructor(...props) {
-    super(props)
+
+  @Inject()
+  public test: string
+
+  constructor() {
+    super()
   }
 
   public render(h) {
-    return <div>{this.client.version}</div>
+    return <div>{this.test()}</div>
   }
 }
