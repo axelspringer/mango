@@ -84,10 +84,7 @@ export const devConfig = () => {
   ]
 
   config.resolve = {
-    modules: [root(`src`), `node_modules`],
-    alias: {
-      vue: 'vue/dist/vue.esm.js'
-    }
+    modules: [root(`src`), `node_modules`]
   }
 
   config.entry = {

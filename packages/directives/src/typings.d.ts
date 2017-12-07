@@ -5,18 +5,25 @@
  */
 
 // support NodeJS modules without type definitions
-declare module '*';
+declare module '*'
 
 // Extra variables that live on Global that will be replaced by webpack DefinePlugin
-declare var System: SystemJS;
-declare var __PROD__: boolean;
-declare var __DEV__: boolean;
+declare var System: SystemJS
+declare var __PROD__: boolean
+declare var __DEV__: boolean
+
+declare module 'vue/types/options' {
+  interface ComponentOptions<V extends Vue> {
+    apolloProvider?: any;
+  }
+}
 
 // Window
 interface Window {
-  Promise: any;
+  Promise: any
+  Vue: any
 }
 
 interface SystemJS {
-  import: (path?: string) => Promise<any>;
+  import: (path?: string) => Promise<any>
 }
