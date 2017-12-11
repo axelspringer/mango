@@ -4,10 +4,10 @@
   "description": "An API Gateway for WordPress",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p ../../tsconfig.json --outDir ./dist",
+    "build": "tsc --outDir ./dist",
     "server:dev": "./node_modules/.bin/nodemon ./dist/server.js",
     "start": "npm run build && concurrently \"npm run watch\" \"npm run server:dev\"",
-    "watch": "tsc --watch -p ../../tsconfig.json --outDir ./dist"
+    "watch": "tsc --watch --outDir ./dist"
   },
   "bin": {
     "mango-api": "./bin/mango-api"

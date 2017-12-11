@@ -3,6 +3,8 @@ import * as koaRouter from 'koa-router'
 import * as koaBody from 'koa-bodyparser'
 import * as cors from '@koa/cors'
 import * as logger from 'koa-logger'
+import axios from 'axios'
+import { MockAdapter } from './mock'
 import { EventEmitter } from 'events'
 
 // apollo
@@ -16,12 +18,19 @@ import wpGraphQLSchema from './schema'
 
 export class Middleware extends EventEmitter {
 
-  private app: any
-  private router: any
+  private app: Koa
+  private router: koaRouter
 
   constructor(public ctx, public config) {
     super()
 
+    // init mock
+    if (config.mock) {
+      const adapter = new MockAdapter(axios, {})
+      adapter.get('/posts', require('../data/posts.json'))
+    }
+
+    // Koa
     this.app = new Koa()
     this.router = new koaRouter()
 
@@ -35,11 +44,11 @@ export class Middleware extends EventEmitter {
     // GraphQLi
     this.router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
 
-    // middlewares
+    // Middlewares
     this.app.use(logger())
+    this.app.use(cors({ origin: '*' }))
     this.app.use(this.router.routes())
     this.app.use(this.router.allowedMethods())
-    this.app.use(cors({ origin: '*' }))
   }
 
   public run() {
