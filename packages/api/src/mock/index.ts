@@ -27,7 +27,7 @@ export class MockAdapter {
 
   public adapter = (config): AxiosPromise => {
     for (let handler of this.handlers[config.method]) {
-      if (handler.is(config.url)) {
+      if (handler.is(config.url.substr(config.baseURL.length))) {
         return handler.handle(config)
       }
     }

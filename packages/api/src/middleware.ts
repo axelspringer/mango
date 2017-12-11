@@ -3,8 +3,6 @@ import * as koaRouter from 'koa-router'
 import * as koaBody from 'koa-bodyparser'
 import * as cors from '@koa/cors'
 import * as logger from 'koa-logger'
-import axios from 'axios'
-import { MockAdapter } from './mock'
 import { EventEmitter } from 'events'
 
 // apollo
@@ -23,12 +21,6 @@ export class Middleware extends EventEmitter {
 
   constructor(public ctx, public config) {
     super()
-
-    // init mock
-    if (config.mock) {
-      const adapter = new MockAdapter(axios, {})
-      adapter.get('/posts', require('../data/posts.json'))
-    }
 
     // Koa
     this.app = new Koa()
