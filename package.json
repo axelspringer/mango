@@ -1,22 +1,21 @@
 {
-	"devDependencies": {
-		"lerna": "^2.5.1"
-	},
-	"private": true,
-	"license": "Apache-2.0",
-	"description": "Mango - a boilerplate for modern-day WordPress projects",
-	"homepage": "https://github.com/axelspringer/mango",
-	"bugs": "https://github.com/axelspringer/mango/issues",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/axelspringer/mango.git"
-	},
-	"engines": {
-		"node": ">=6.9.5",
-		"npm": ">=3.10.7",
-		"yarn": ">=1.0.2"
-	},
-	"dependencies": {
-		"koa": "^2.4.1"
-	}
+  "devDependencies": {
+    "lerna": "^2.5.1"
+  },
+  "license": "Apache-2.0",
+  "description": "Mango - a boilerplate for modern-day WordPress projects",
+  "homepage": "https://github.com/axelspringer/mango",
+  "bugs": "https://github.com/axelspringer/mango/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/axelspringer/mango.git"
+  },
+  "engines": {
+    "node": ">=6.9.5",
+    "npm": ">=3.10.7",
+    "yarn": ">=1.0.2"
+  },
+  "dependencies": {
+    "koa": "^2.4.1"
+  }
 }
