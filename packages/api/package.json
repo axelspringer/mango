@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc --outDir ./dist",
-    "server:dev": "./node_modules/.bin/nodemon ./dist/server.js",
-    "start": "npm run build && concurrently \"npm run watch\" \"npm run server:dev\"",
+    "server:dev": "cross-env NODE_ENV=development ./node_modules/.bin/nodemon ./dist/server.js",
+    "start": "cross-env NODE_ENV=development npm run build && concurrently \"npm run watch\" \"npm run server:dev\"",
     "watch": "tsc --watch --outDir ./dist"
   },
   "bin": {
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@types/koa": "^2.0.41",
     "@types/node": "^8.0.53",
+    "@types/winston": "^2.3.7",
     "concurrently": "^3.5.1",
     "cross-env": "^5.1.1",
     "nodemon": "^1.12.1",
@@ -40,9 +41,11 @@
     "dataloader": "^1.3.0",
     "graphql": "^0.11.7",
     "graphql-iso-date": "^3.3.0",
+    "http-status-codes": "^1.3.0",
     "koa-bodyparser": "^3.2.0",
     "koa-logger": "^2.0.1",
     "koa-router": "^7.1.1",
+    "winston": "^3.0.0-rc1",
     "yargs": "^10.0.3"
   }
 }
