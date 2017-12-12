@@ -52,6 +52,7 @@ export class Middleware extends EventEmitter {
     this.app.use(this.router.allowedMethods())
   }
 
+  // run the middleware
   public run() {
     // listen
     this.app.listen(this.config.port)

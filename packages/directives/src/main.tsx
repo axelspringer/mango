@@ -1,78 +1,40 @@
 /* tslint:disable:max-classes-per-file */
-
-import Mango from './index'
-import Posts from './components/posts'
-import gql from 'graphql-tag'
-
 import { ApolloClient } from 'apollo-client'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { Component, Inject, Prop, Provide, Watch, Vue } from 'vue-property-decorator'
+import { Vue } from 'vue-property-decorator'
 import VueApollo from 'vue-apollo'
-import { willPrefetch } from 'vue-apollo'
+import Mango from './index'
+import Root from './root.vue'
+import MyPosts from './posts.vue'
 
+// Use new Apollo Client, connect to devs
 const httpLink = new HttpLink({
   // You should use an absolute URL here
-  uri: 'http://localhost:8080/graphql'
+  uri: 'http://localhost:3000/graphql' // use Mango Api  dev
 })
-
-// client and caching
 const cache = new InMemoryCache()
 const apolloClient = new ApolloClient({
   link: httpLink,
   cache,
-  connectToDevTools: true,
+  connectToDevTools: true, // this is for easying development
 })
 
-// Install the vue plugin
+// Install Plugin + Mixins
 Vue.use(VueApollo)
+Vue.use(Mango)
+Vue.component('my-posts', MyPosts)
 
 // create apollo provider
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
 
-@Component({
-  apollo: {
-    posts: {
-      query: gql`
-        query Query {
-          posts {
-            title
-          }
-        }
-      `,
-      prefetch: true
-    }
-  },
-  data() {
-    return {
-      posts: []
-    }
-  }
-} as any)
-class TPosts extends Vue {
-
-  public render(h) {
-    // mounting test provider
-    return <div>{this.posts.map(post => <h2>{post.title}</h2>)}</div>
-  }
-}
-
-const Posts = willPrefetch(TPosts)
-
-@Component
-class Root extends Vue {
-
-  public render(h) {
-    // mounting test provider
-    return <Posts />
-  }
-}
-
+// bootstrap testing app
 const boostrap = new Vue({
   apolloProvider,
   render: (h) => h(Root)
 } as any)
 
+// mount app in dom (index.html)
 boostrap.$mount('#app')
