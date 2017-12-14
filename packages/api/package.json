@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-api",
-  "version": "0.0.1-alpha",
+  "version": "0.0.4-alpha",
   "description": "An API Gateway for WordPress",
   "main": "dist/server.js",
   "scripts": {
@@ -29,7 +29,6 @@
     "nodemon": "^1.12.1",
     "prettier": "^1.9.0",
     "rimraf": "^2.6.2",
-    "tslib": "^1.8.0",
     "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.6.0",
     "typescript": "^2.6.2"
@@ -46,6 +45,7 @@
     "koa-bodyparser": "^3.2.0",
     "koa-logger": "^2.0.1",
     "koa-router": "^7.1.1",
+    "tslib": "^1.8.0",
     "winston": "^3.0.0-rc1",
     "yargs": "^10.0.3"
   }
