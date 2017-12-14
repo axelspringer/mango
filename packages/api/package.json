@@ -1,8 +1,8 @@
 {
   "name": "@mango/api",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "description": "An API Gateway for WordPress",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc --outDir ./dist",
     "server:dev": "cross-env NODE_ENV=development ./node_modules/.bin/nodemon ./dist/server.js",
