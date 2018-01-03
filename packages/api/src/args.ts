@@ -4,9 +4,9 @@ import * as process from 'process'
 export function parseArgs() {
   return argv
     .usage('Usage: $0 [options]')
-    .options('endpoint', {
+    .options('wp', {
       string: true,
-      alias: 'e',
+      alias: 'w',
       default: process.env.MANGO_WP || '',
       desc: 'WordPress API Endpoint'
     })

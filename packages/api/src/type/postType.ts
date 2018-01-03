@@ -1,6 +1,7 @@
 import { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLInt } from 'graphql'
 import { GraphQLDateTime } from 'graphql-iso-date'
 import { CategoryType } from './catType'
+import { UserType } from './userType'
 
 export const PostType = new GraphQLObjectType({
   name: 'Post',
@@ -10,7 +11,7 @@ export const PostType = new GraphQLObjectType({
       type: GraphQLDateTime,
       resolve: post => post.date
     },
-    date_gmt: {
+    dateGmt: {
       type: GraphQLDateTime,
       resolve: post => post.date_gmt.rendered
     },
@@ -26,7 +27,7 @@ export const PostType = new GraphQLObjectType({
       type: GraphQLDateTime,
       resolve: post => post.modified
     },
-    modified_gmt: {
+    modifiedGmt: {
       type: GraphQLDateTime,
       resolve: post => post.modified_gmt
     },
@@ -46,15 +47,15 @@ export const PostType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: post => post.excerpt.rendered
     },
-    featured_media: {
+    featuredMedia: {
       type: GraphQLInt,
       resolve: post => post.featured_media
     },
-    comment_status: {
+    commentStatus: {
       type: GraphQLString,
       resolve: post => post.comment_status
     },
-    ping_status: {
+    pingStatus: {
       type: GraphQLString,
       resolve: post => post.ping_status
     },
@@ -87,8 +88,8 @@ export const PostType = new GraphQLObjectType({
       resolve: post => post.slug
     },
     author: {
-      type: GraphQLInt,
-      resolve: post => post.author
+      type: UserType,
+      resolve: (root, args, ctx) => ctx.loader.getUser(ctx, root.author, args)
     },
     format: {
       type: GraphQLString,

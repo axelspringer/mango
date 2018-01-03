@@ -32,7 +32,7 @@ if (isDev) {
 // construct context
 const ctx = {
   config,
-  axios: axios.create({ baseURL: config.endpoint }),
+  axios: axios.create({ baseURL: config.wp }),
   loader: new WP()
 }
 
