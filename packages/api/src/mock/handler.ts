@@ -6,12 +6,12 @@ export class Handler {
   public status = HttpStatus.OK
   public statusText = HttpStatus.getStatusText(HttpStatus.OK)
 
-  constructor(public url, public data) {
+  constructor(public url, public data, public exact = false) {
   }
 
   // test to handle
   public is(url): boolean { // this is a simple match
-    return url === this.url
+    return this.exact ? url === this.url : url.startsWith(this.url)
   }
 
   // called to handle a config

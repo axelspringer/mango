@@ -7,7 +7,8 @@ import * as cors from '@koa/cors'
 import * as logger from 'koa-logger'
 import { MockAdapter } from './mock'
 import { EventEmitter } from 'events'
-import { Winston } from 'winston';
+import { Winston } from 'winston'
+import { WP } from './loader/wp'
 
 // apollo
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
@@ -61,7 +62,10 @@ export class Middleware extends EventEmitter {
   // inject mock
   private injectMock() {
     const adapter = new MockAdapter(this.ctx.axios, this.config)
-    adapter.get('/posts', require('../data/posts.json')).reply(200)
+    adapter.get(WP.Posts, require('../data/posts.json')).reply(200)
+    adapter.get(WP.NavLocations, require('../data/navLocations.json'), true).reply(200)
+    adapter.get(WP.NavMenu, require('../data/navMenus.json')).reply(200)
+    adapter.get(WP.NavItems, require('../data/navItems.json')).reply(200)
     // log
     this.log.log(LogMessage.mockInject.level, LogMessage.mockInject.message)
   }

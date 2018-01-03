@@ -45,16 +45,16 @@ export class MockAdapter {
   }
 
   // get
-  public get(url, data) {
-    return this.addHandler(HttpMethods.GET, url, data)
+  public get(url, data, exact = false) {
+    return this.addHandler(HttpMethods.GET, url, data, exact)
   }
 
   // add a handler
-  private addHandler(method, url, data) {
+  private addHandler(method, url, data, exact) {
     if (!this.handlers[method]) {
       this.handlers[method] = []
     }
-    const handler = new Handler(url, data)
+    const handler = new Handler(url, data, exact)
     this.handlers[method].push(handler)
 
     // return the handler

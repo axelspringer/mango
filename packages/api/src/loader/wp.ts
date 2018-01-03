@@ -19,7 +19,7 @@ export class WP extends Loader {
     return this._fetcher(ctx, WP.Posts, args)
   }
 
-  // get categories
+  // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: number[] = [], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [WP.Categories, id].join('/')), args))
   }
@@ -52,11 +52,10 @@ export class WP extends Loader {
 
   // fetch nav locations
   public async getNavLocations(ctx: GraphQLContext, args = {}) {
-    const res = await this._fetcher(ctx, WP.NavLocations, args)
-    // parse results locations
+    const res = await this._fetcher(ctx, WP.NavLocations, args) // get locations
     const locations = []
-    for (const location in res) {
-      locations.push({ // map keys
+    for (const location in res) { // parse locations to a subitable
+      locations.push({ // map to new object
         name: location,
         id: res[location]
       })
