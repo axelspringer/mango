@@ -15,6 +15,7 @@ import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 
 // custom
 import ping from './ping'
+import { isProd } from './utils'
 
 // schema
 import wpGraphQLSchema from './schema'
@@ -43,14 +44,17 @@ export class Middleware extends EventEmitter {
     this.router.post('/graphql', koaBody(), graphqlKoa({ schema: wpGraphQLSchema, context: this.ctx }));
     this.router.get('/graphql', graphqlKoa({ schema: wpGraphQLSchema, context: this.ctx }));
 
-    // GraphQLi
-    this.router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
+    // GraphiQL (if not in production)
+    if (!isProd) {
+      this.router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
+    }
 
     // Middlewares
     this.app.use(logger())
     this.app.use(cors({ origin: '*' }))
     this.app.use(this.router.routes())
     this.app.use(this.router.allowedMethods())
+
   }
 
   // run the middleware
@@ -63,6 +67,7 @@ export class Middleware extends EventEmitter {
   private injectMock() {
     const adapter = new MockAdapter(this.ctx.axios, this.config)
     adapter.get(WP.Posts, require('../data/posts.json')).reply(200)
+    adapter.get(WP.Users, require('../data/users.json')).reply(200)
     adapter.get(WP.NavLocations, require('../data/navLocations.json'), true).reply(200)
     adapter.get(WP.NavMenu, require('../data/navMenus.json')).reply(200)
     adapter.get(WP.NavItems, require('../data/navItems.json')).reply(200)

@@ -56,6 +56,9 @@ cd mango/packages/api
 
 # Start the local dev server
 npm start
+
+# To use your local version for development of other mango parts, run
+npm link
 ```
 
 ## Docker

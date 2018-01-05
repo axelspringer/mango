@@ -1,0 +1,26 @@
+{
+  "id": 1,
+  "name": "admin",
+  "url": "",
+  "description": "",
+  "link": "http:\/\/localhost:8080\/author\/admin\/",
+  "slug": "admin",
+  "avatar_urls": {
+    "24": "http:\/\/1.gravatar.com\/avatar\/4bc95ca2c9281087a83dde0b6350a7b0?s=24&d=mm&r=g",
+    "48": "http:\/\/1.gravatar.com\/avatar\/4bc95ca2c9281087a83dde0b6350a7b0?s=48&d=mm&r=g",
+    "96": "http:\/\/1.gravatar.com\/avatar\/4bc95ca2c9281087a83dde0b6350a7b0?s=96&d=mm&r=g"
+  },
+  "meta": [],
+  "_links": {
+    "self": [
+      {
+        "href": "http:\/\/localhost:8080\/wp-json\/wp\/v2\/users\/1"
+      }
+    ],
+    "collection": [
+      {
+        "href": "http:\/\/localhost:8080\/wp-json\/wp\/v2\/users"
+      }
+    ]
+  }
+}
