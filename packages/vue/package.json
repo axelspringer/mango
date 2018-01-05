@@ -1,0 +1,33 @@
+{
+  "name": "@axelspringer/mango-vue",
+  "version": "0.0.1",
+  "description": "Vue.js components for Mango",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --outDir ./dist",
+    "clean:dist": "npm run rimraf -- dist",
+    "prebuild": "npm run clean:dist",
+    "rimraf": "rimraf",
+    "watch": "tsc --watch -p tsconfig.json --outDir ./dist"
+  },
+  "author": "Axel Springer SE",
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^8.5.2",
+    "prettier": "^1.9.2",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "vue": "^2.5.13",
+    "vue-apollo": "^3.0.0-alpha.3"
+  }
+}
