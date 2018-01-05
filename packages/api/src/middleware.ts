@@ -69,6 +69,7 @@ export class Middleware extends EventEmitter {
     adapter.get(WP.Posts, require('../data/posts.json')).reply(200)
     adapter.get(WP.Users, require('../data/users.json')).reply(200)
     adapter.get(WP.NavLocations, require('../data/navLocations.json'), true).reply(200)
+    adapter.get(WP.NavLocations + '/', require('../data/navLocations.json')).reply(200)
     adapter.get(WP.NavMenu, require('../data/navMenus.json')).reply(200)
     adapter.get(WP.NavItems, require('../data/navItems.json')).reply(200)
     // log
