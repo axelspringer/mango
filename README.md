@@ -11,7 +11,7 @@ Mango is setup as a mono repo with [Lerna](https://github.com/lerna/lerna), enco
 Packages:
 
 * [API](https://github.com/axelspringer/mango/tree/master/packages/api#README)
-* [Directives](https://github.com/axelspringer/mango/tree/master/packages/directives#README)
+* [Vue](https://github.com/axelspringer/mango/tree/master/packages/vue#README)
 
 ## License
 [Apache-2.0](/LICENSE)
