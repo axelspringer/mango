@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-api",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "An API Gateway for WordPress",
   "main": "dist/server.js",
   "scripts": {
@@ -12,8 +12,15 @@
     "start": "cross-env NODE_ENV=development npm run build && concurrently \"npm run watch\" \"npm run server:dev\"",
     "watch": "tsc --watch -p tsconfig.json --outDir ./dist"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "bin": {
     "mango-api": "./bin/mango-api"
+  },
+  "engines": {
+    "node": ">=6.9.13",
+    "npm": ">=3.10.7"
   },
   "author": "Axel Springer SE",
   "contributors": [
