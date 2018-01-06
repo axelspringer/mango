@@ -14,4 +14,4 @@ Packages:
 * [Vue](https://github.com/axelspringer/mango/tree/master/packages/vue#README)
 
 ## License
-[Apache-2.0](/LICENSE)
+[MIT](/LICENSE)

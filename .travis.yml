@@ -1,26 +1,33 @@
+git:
+  depth: 1
+sudo: false
 language: node_js
 node_js:
-  - "6"
-  - "7"
-  - "node"
-services:
-  - docker
-addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
-before_install:
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - npm i npm@^4 -g
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3
-script:
-  - npm run build
-  - npm run ci
+ - 'node'
+ - '8'
+ - '7'
+ - '6'
+
+notifications:
+  email: false
+
 cache:
   directories:
     - node_modules
-sudo: required
+    - $HOME/.npm
+
+before_install:
+  - if [[ `node -v` == v6* ]]; then npm i -g npm@latest-4; fi
+  - if [[ `node -v` == v8* ]]; then npm i -g npm@latest-5; fi
+  - npm i
+
+script:
+  - npm run build
+  - npm run test
+
+env:
+  global:
+    - HUBOT_PORT=8080
+
+matrix:
+  fast_finish: true
