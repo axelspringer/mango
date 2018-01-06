@@ -6,8 +6,8 @@
     "nodemon": "^1.14.7",
     "prettier": "^1.9.2",
     "rimraf": "^2.6.2",
-    "tslint-config-prettier": "^1.6.0",
     "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
     "typescript": "^2.6.2"
   },
   "author": "Axel Springer SE",

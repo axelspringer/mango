@@ -1,8 +1,8 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 
 // construct Plugin
 const MangoPlugin = {
-  install(Vue: Vue) {
+  install() {
     if (this.installed) {
       return
     }
