@@ -1,5 +1,3 @@
-// import Vue from 'vue'
-
 // construct Plugin
 const MangoPlugin = {
   install() {

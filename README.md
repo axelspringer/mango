@@ -15,5 +15,16 @@ Packages:
 * [API](https://github.com/axelspringer/mango/tree/master/packages/api#README)
 * [Vue](https://github.com/axelspringer/mango/tree/master/packages/vue#README)
 
+## Development
+
+The API and the components are highly integrated. You will thus need the gateway to develop the components. Therefore you can harvest the power of [lerna](https://lernajs.io/).
+
+> you should `export MANGO_MOCK=true` to set the gateway in mock mode
+
+```bash
+# this starts the dev mode for gateway so as for the components
+lerna run start --stream
+```
+
 ## License
 [MIT](/LICENSE)

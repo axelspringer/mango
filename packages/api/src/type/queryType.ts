@@ -2,8 +2,8 @@ import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'graph
 import { PostType } from './postType'
 import { NavMenuType, NavMenuLocation } from './navType'
 
-export const QueryType = new GraphQLObjectType({
-  name: 'Query',
+export const WPQueryType = new GraphQLObjectType({
+  name: 'WP',
   description: 'The root of all WordPress queries',
   fields: () => ({
     posts: {

@@ -2,13 +2,16 @@
   "name": "@axelspringer/mango-vue",
   "version": "0.0.7",
   "description": "Vue.js components for Mango",
-  "main": "dist/main.js",
+  "main": "dist/mango-vue.common.js",
+  "web": "dist/mango-vue.js",
+  "module": "dist/mango-vue.esm.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json --outDir ./dist",
+    "build": "rollup -c scripts/config.js",
     "clean:dist": "npm run rimraf -- dist",
     "prebuild": "npm run clean:dist",
     "rimraf": "rimraf",
-    "watch": "tsc --watch -p tsconfig.json --outDir ./dist"
+    "start": "npm run watch",
+    "watch": "rollup -w -c scripts/config.js"
   },
   "publishConfig": {
     "access": "public"
@@ -29,7 +32,10 @@
     "@types/node": "^8.5.2"
   },
   "dependencies": {
+    "graphql-tag": "^2.6.1",
     "vue": "^2.5.13",
-    "vue-apollo": "^3.0.0-alpha.3"
+    "vue-apollo": "^3.0.0-alpha.3",
+    "vue-functional-data-merge": "^2.0.3",
+    "vue-property-decorator": "^6.0.0"
   }
 }
