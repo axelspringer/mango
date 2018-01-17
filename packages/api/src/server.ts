@@ -2,6 +2,8 @@
 import { parseArgs } from './args'
 import { Middleware } from './middleware'
 import { WP } from './loader'
+import * as http from 'http'
+import * as https from 'https'
 import axios from 'axios'
 import { isDev } from './utils'
 
@@ -35,9 +37,17 @@ const headers = {
   'X-MANGO-SECRET': config.secret
 }
 
+// configure agent
+const agent = {
+  keepAlive: true
+}
+
 // construct context
 const ctx = {
   config,
+  timeout: 1 * 1000, // only wait 1 second before timeout
+  httpAgent: new http.Agent(agent),
+  httpsAgent: new https.Agent(agent),
   axios: axios.create({
     baseURL: config.wp,
     headers
