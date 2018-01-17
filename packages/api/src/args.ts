@@ -28,6 +28,18 @@ export function parseArgs() {
       default: process.env.MANGO_HOST || 'localhost',
       desc: 'Host'
     })
+    .options('token', {
+      string: true,
+      alias: 't',
+      default: process.env.MANGO_TOKEN || '',
+      desc: 'Token'
+    })
+    .options('secret', {
+      string: true,
+      alias: 's',
+      default: process.env.MANGO_SECRET || '',
+      desc: 'Secret'
+    })
     .version(require('../package.json').version)
     .alias('version', 'v')
     .help('help')

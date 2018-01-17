@@ -25,23 +25,35 @@ mango-api -d
 
 ## Arguments
 
-> most command line arguments have a reflection in environment variables
+> most command line arguments have a reflection in environment variables, which allows it to be easily tested and developed in many environments
 
-### `MANGO_WP` (string)
+### `help`
+
+Displays all the available arguments
+
+### `-wp` `MANGO_WP` (string)
 
 Sets the url to the [WordPress REST](https://developer.wordpress.org/rest-api/) endpoint (e.g. http://localhost/wp-json/)
 
-### `MANGO_MOCK` (boolean)
+### `-m` `MANGO_MOCK` (boolean)
 
 Enables the Mocks of the Mango API. 
 
-### `MANGO_PORT` (string)
+### `-p` `MANGO_PORT` (string)
 
 Sets the port of the Mango API.
 
-### `MANGO_HOST` (string)
+### `-h` `MANGO_HOST` (string)
 
 Sets the host of the Mango API.
+
+### `-t` `MANGO_TOKEN` (string)
+
+Sets the `X-MANGO-TOKEN` to the value provided by [WP Mango](https://github.com/axelspringer/wp-mango).
+
+### `-s` `MANGO_SECRET` (string)
+
+Sets the `X-MANGO-SECRET` to the value provided by [WP Mango](https://github.com/axelspringer/wp-mango).
 
 ## Development
 

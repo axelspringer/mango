@@ -29,10 +29,19 @@ if (isDev) {
   }))
 }
 
+// headers to send with, X-MANGO-TOKEN, X-MANGO-SECRET
+const headers = {
+  'X-MANGO-TOKEN': config.token,
+  'X-MANGO-SECRET': config.secret
+}
+
 // construct context
 const ctx = {
   config,
-  axios: axios.create({ baseURL: config.wp }),
+  axios: axios.create({
+    baseURL: config.wp,
+    headers
+  }),
   loader: new WP()
 }
 

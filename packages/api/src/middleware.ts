@@ -82,6 +82,7 @@ export class Middleware extends EventEmitter {
     adapter.get(WP.NavLocations + '/', require('../data/navLocations.json')).reply(200)
     adapter.get(WP.NavMenu, require('../data/navMenus.json')).reply(200)
     adapter.get(WP.NavItems, require('../data/navItems.json')).reply(200)
+    adapter.get(WP.Settings, require('../data/settings.json')).reply(200)
     // log
     this.log.log(LogMessage.mockInject.level, LogMessage.mockInject.message)
   }

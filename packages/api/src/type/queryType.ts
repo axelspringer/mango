@@ -1,5 +1,6 @@
 import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'graphql'
 import { PostType } from './postType'
+import { SettingsType } from './settingsType'
 import { NavMenuType, NavMenuLocation } from './navType'
 
 export const WPQueryType = new GraphQLObjectType({
@@ -31,6 +32,10 @@ export const WPQueryType = new GraphQLObjectType({
     menuLocations: {
       type: new GraphQLList(NavMenuLocation),
       resolve: (_root, _args, ctx) => ctx.loader.getNavLocations(ctx)
+    },
+    settings: {
+      type: SettingsType,
+      resolve: (_root, _args, ctx) => ctx.loader.getSettings(ctx)
     }
   }),
 })

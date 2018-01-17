@@ -1,0 +1,17 @@
+{
+  "title": "Example",
+  "description": "Example Blog",
+  "url": "http:\/\/localhost:8181",
+  "email": "admin@example.lan",
+  "timezone": "Europe\/Berlin",
+  "date_format": "j. F Y",
+  "time_format": "G:i",
+  "start_of_week": 1,
+  "language": "en_EN",
+  "use_smilies": true,
+  "default_category": 1,
+  "default_post_format": "0",
+  "posts_per_page": 10,
+  "default_ping_status": "open",
+  "default_comment_status": "open"
+}

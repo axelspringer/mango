@@ -1,0 +1,46 @@
+version: "3.2"
+
+services:
+  maria:
+    image: mariadb:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_DATABASE=wordpress
+    networks:
+      - dev
+    volumes:
+      - db:/var/lib/mysql
+
+  adminer:
+    image: adminer:latest
+    depends_on:
+      - maria
+    ports:
+      - 8282:8080
+    networks:
+      - dev
+
+  wordpress:
+    image: wordpress:latest
+    volumes:
+      - ./:/var/www/html/wp-content/plugins/mango-plugin
+    depends_on:
+      - maria
+      - adminer
+    ports:
+      - 8181:80
+    environment:
+      - WORDPRESS_DB_HOST=maria
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+    networks:
+      - dev
+
+volumes:
+  db:
+
+networks:
+  dev:

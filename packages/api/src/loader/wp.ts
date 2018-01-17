@@ -8,6 +8,7 @@ export class WP extends Loader {
   public static Posts = '/wp/v2/posts'
   public static Categories = '/wp/v2/categories'
   public static Users = '/wp/v2/users'
+  public static Settings = '/wp/v2/settings'
 
   // mango specific apis
   public static NavMenu = '/mango/v1/nav/menus'
@@ -42,6 +43,11 @@ export class WP extends Loader {
   // fetch nav menu items
   public async getNavItems(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [WP.NavItems, id].join('/'), args)
+  }
+
+  // fetch settings
+  public async getSettings(ctx: GraphQLContext, args = {}) {
+    return this._fetcher(ctx, WP.Settings, args)
   }
 
   // fetch nav location
