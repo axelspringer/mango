@@ -21,6 +21,8 @@
     "rollup-plugin-buble": "^0.18.0",
     "rollup-plugin-commonjs": "^8.2.6",
     "rollup-plugin-flow-no-whitespace": "^1.0.0",
+    "rollup-plugin-multi-entry": "^2.0.2",
+    "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-typescript": "^0.8.1",
@@ -55,6 +57,8 @@
     }
   ],
   "dependencies": {
-    "pino-http": "^3.0.1"
+    "pino-http": "^3.0.1",
+    "vue-server-renderer": "^2.5.13",
+    "webpack-dev-middleware": "^2.0.4"
   }
 }

@@ -13,6 +13,7 @@ Mango is setup as a mono repo with [Lerna](https://github.com/lerna/lerna), enco
 Packages:
 
 * [API](https://github.com/axelspringer/mango/tree/master/packages/api#README)
+* [SSR](https://github.com/axelspringer/mango/tree/master/packages/ssr#README)
 * [Vue](https://github.com/axelspringer/mango/tree/master/packages/vue#README)
 
 ## Development

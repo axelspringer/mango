@@ -1,4 +1,4 @@
-# :smiley_cat: Mango API
+# :smiley_cat: Mango SSR
 
 <br/>
 
@@ -11,16 +11,14 @@
 
 > requires a `node` version >= 6 and an `npm` version >= 3.x.x
 
-> we use [Koa](https://github.com/koajs/koa) as middleware
-
 > we do provide a `help` command to display all possible arguments
 
 ```bash
 # Installs the Mango API
-npm i @axelspringer/mango-api -g
+npm i @axelspringer/mango-ssr -g
 
 # Starts the Mango API in Mock modus
-mango-api -d
+mango-ssr --serve public --bundle public/vue-ssr-server-bundle.json -m public/vue-ssr-client-manifest.json -t public/index.html -w config/configs
 ```
 
 ## Arguments
@@ -31,29 +29,25 @@ mango-api -d
 
 Displays all the available arguments
 
-### `-wp` `MANGO_WP` (string)
+### `-s` `--serve` `MANGO_SERVE` (string)
 
-Sets the url to the [WordPress REST](https://developer.wordpress.org/rest-api/) endpoint (e.g. http://localhost/wp-json/)
+Sets the path to the folder of the static assets.
 
-### `-m` `MANGO_MOCK` (boolean)
+### `-b` `--bundle` `MANGO_BUNDLE` (boolean)
 
-Enables the Mocks of the Mango API. 
+Passes in the `vue-ssr-server-bundle.json`.
 
-### `-p` `MANGO_PORT` (string)
+### `-m` `--manifest` `MANGO_PORT` (string)
 
-Sets the port of the Mango API.
+Passes in the `vue-ssr-client-manifest.json`.
 
-### `-h` `MANGO_HOST` (string)
+### `-t` `--template` `MANGO_TEMPLATE` (string)
 
-Sets the host of the Mango API.
+Passes in the `index.html` as the template.
 
-### `-t` `MANGO_TOKEN` (string)
+### `-w` `--webpack` `MANGO_WEBPACK` (string)
 
-Sets the `X-MANGO-TOKEN` to the value provided by [WP Mango](https://github.com/axelspringer/wp-mango).
-
-### `-s` `MANGO_SECRET` (string)
-
-Sets the `X-MANGO-SECRET` to the value provided by [WP Mango](https://github.com/axelspringer/wp-mango).
+Passes in the Webpack config to use.
 
 ## Development
 
@@ -63,8 +57,8 @@ Sets the `X-MANGO-SECRET` to the value provided by [WP Mango](https://github.com
 # Clone the repository
 git clone https://github.com/axelspringer/mango
 
-# enter directory
-cd mango/packages/api
+# Enter directory
+cd mango/packages/ssr
 
 # Start the local dev server
 npm start
