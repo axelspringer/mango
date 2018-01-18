@@ -1,6 +1,5 @@
 import * as express from 'express'
 import * as pino from 'express-pino-logger'
-import * as path from 'path'
 import * as fs from 'fs'
 import { serve, resolve, relative, createRenderer } from './helpers'
 import { SSRConfig } from './config'
@@ -39,6 +38,7 @@ export class SSR {
     // static files
     this.app.use('/static', serve(this.config))
 
+    // create renderer
     this.createRenderer()
 
     // config requests

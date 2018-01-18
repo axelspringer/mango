@@ -2,8 +2,6 @@ import { parseArgs } from './args'
 import { resolve } from './helpers'
 import { SSRConfig } from './config'
 import { SSR } from './main'
-import * as path from 'path'
-import * as process from 'process'
 
 const args = parseArgs()
 
