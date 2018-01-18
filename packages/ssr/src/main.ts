@@ -33,13 +33,13 @@ export class SSR {
   }
 
   public start() {
-    this.createRenderer()
-
     // logging
     this.app.use(pino())
 
     // static files
     this.app.use('/static', serve(this.config))
+
+    this.createRenderer()
 
     // config requests
     // render to
