@@ -55,6 +55,27 @@ Sets the `X-MANGO-TOKEN` to the value provided by [WP Mango](https://github.com/
 
 Sets the `X-MANGO-SECRET` to the value provided by [WP Mango](https://github.com/axelspringer/wp-mango).
 
+### `-a` `MANGO_MOCK_ADAPTER` (string)
+
+Uses a differen adapter for the mock data. This should implement and overload.
+
+```javascript
+const api = require('@axelspringer/mango-api');
+
+function mocks(axios, config) {
+  let adapter = new api.MockAdapter(axios, config);
+  adapter.get(api.WP.Posts, require('./data/posts.json')).reply(200);
+  adapter.get(api.WP.Users, require('./data/users.json')).reply(200);
+  adapter.get(api.WP.NavLocations, require('./data/navLocations.json'), true).reply(200);
+  adapter.get(api.WP.NavLocations + '/', require('./data/navLocations.json')).reply(200);
+  adapter.get(api.WP.NavMenu, require('./data/navMenus.json')).reply(200);
+  adapter.get(api.WP.NavItems, require('./data/navItems.json')).reply(200);
+  adapter.get(api.WP.Settings, require('./data/settings.json')).reply(200);
+}
+
+exports.default = mocks
+```
+
 ## Development
 
 > all commands can be seen via `npm run help`

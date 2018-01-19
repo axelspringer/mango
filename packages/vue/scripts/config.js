@@ -7,6 +7,7 @@ import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import typescript from 'rollup-plugin-typescript'
 import vue from 'rollup-plugin-vue'
+import replace from 'rollup-plugin-replace'
 
 let { name, dependencies } = require('../package.json')
 const version = process.env.VERSION || require('../package.json').version
@@ -18,6 +19,7 @@ const dist = path.resolve(base, 'dist')
 
 const externalExcludes = [
   'vue-apollo',
+  'vue-router',
   'vue'
 ]
 
@@ -48,6 +50,9 @@ module.exports = {
       // css(style) {
       //   fs.writeFileSync(path.resolve(dist, `${name}.css`), new CleanCSS().minify(style).styles)
       // }
+    }),
+    replace({
+      '__VERSION__': version
     }),
     resolve({ external: ['vue'] }),
     commonjs(),

@@ -4,12 +4,12 @@ import * as Koa from 'koa'
 import * as koaRouter from 'koa-router'
 import * as koaBody from 'koa-bodyparser'
 import * as cors from '@koa/cors'
+import * as path from 'path'
 // import * as logger from 'koa-logger'
 import logger from './logger'
-import { MockAdapter } from './mock'
 import { EventEmitter } from 'events'
 import { Winston } from 'winston'
-import { WP } from './loader/wp'
+import { MockDefaults } from './mock'
 
 // apollo
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
@@ -31,7 +31,7 @@ export class Middleware extends EventEmitter {
 
     // call to inject mock
     if (this.config.mock) {
-      this.injectMock()
+      this.injectMock(this.config.adapter, this.ctx.axios, this.config)
     }
 
     // Koa
@@ -74,15 +74,15 @@ export class Middleware extends EventEmitter {
   }
 
   // inject mock
-  private injectMock() {
-    const adapter = new MockAdapter(this.ctx.axios, this.config)
-    adapter.get(WP.Posts, require('../data/posts.json')).reply(200)
-    adapter.get(WP.Users, require('../data/users.json')).reply(200)
-    adapter.get(WP.NavLocations, require('../data/navLocations.json'), true).reply(200)
-    adapter.get(WP.NavLocations + '/', require('../data/navLocations.json')).reply(200)
-    adapter.get(WP.NavMenu, require('../data/navMenus.json')).reply(200)
-    adapter.get(WP.NavItems, require('../data/navItems.json')).reply(200)
-    adapter.get(WP.Settings, require('../data/settings.json')).reply(200)
+  private injectMock(adapter: string, axios, config) {
+    if (adapter !== null && adapter !== '') { //
+      require('ts-node').register({ /* options */ })
+      const mock = require(path.relative(__dirname, adapter)).default
+      mock(axios, config)
+    } else {
+      new MockDefaults(axios, config);
+    }
+
     // log
     this.log.log(LogMessage.mockInject.level, LogMessage.mockInject.message)
   }

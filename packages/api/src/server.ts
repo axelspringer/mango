@@ -6,6 +6,7 @@ import * as http from 'http'
 import * as https from 'https'
 import axios from 'axios'
 import { isDev } from './utils'
+import { MockAdapter } from './mock/adapter'
 
 // use default for import
 const { createLogger, format, transports } = require('winston')
@@ -58,3 +59,8 @@ const ctx = {
 // run middlware
 const middleware = new Middleware(ctx, config, logger)
 middleware.run()
+
+export {
+  MockAdapter,
+  WP
+}

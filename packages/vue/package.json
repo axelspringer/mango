@@ -29,13 +29,12 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^8.5.2"
-  },
-  "dependencies": {
-    "graphql-tag": "^2.6.1",
     "vue": "^2.5.13",
-    "vue-apollo": "^3.0.0-alpha.3",
+    "vue-router": "^3.0.1",
+    "vue-property-decorator": "^6.0.0",
     "vue-functional-data-merge": "^2.0.3",
-    "vue-property-decorator": "^6.0.0"
+    "vue-apollo": "^3.0.0-alpha.3",
+    "graphql-tag": "^2.6.1",
+    "@types/node": "^8.5.2"
   }
 }

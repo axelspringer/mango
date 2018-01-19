@@ -20,8 +20,6 @@ Packages:
 
 The API and the components are highly integrated. You will thus need the gateway to develop the components. Therefore you can harvest the power of [lerna](https://lernajs.io/).
 
-> you should `export MANGO_MOCK=true` to set the gateway in mock mode
-
 > also you should use the [WP Mango](https://github.com/axelspringer/wp-mango) plugin to authenticate protected endpoints in your [WP REST API](http://v2.wp-api.org/)
 
 ```bash

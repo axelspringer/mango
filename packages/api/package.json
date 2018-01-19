@@ -55,6 +55,7 @@
     "koa-bodyparser": "^4.2.0",
     "koa-pino-logger": "^2.1.1",
     "koa-router": "^7.3.0",
+    "ts-node": "^4.1.0",
     "tslib": "^1.8.0",
     "winston": "^3.0.0-rc1",
     "yargs": "^10.0.3"

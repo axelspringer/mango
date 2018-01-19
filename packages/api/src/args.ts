@@ -40,6 +40,12 @@ export function parseArgs() {
       default: process.env.MANGO_SECRET || '',
       desc: 'Secret'
     })
+    .options('adapter', {
+      string: true,
+      alias: 'a',
+      default: process.env.MANGO_MOCK_ADAPTER || null,
+      desc: 'Mock adapter'
+    })
     .version(require('../package.json').version)
     .alias('version', 'v')
     .help('help')
