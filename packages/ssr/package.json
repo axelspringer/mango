@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json --outDir ./dist",
+    "build:docker": "docker build --squash -t axelspringer/mango-ssr .",
     "clean:dist": "npm run rimraf -- dist",
     "prebuild": "npm run clean:dist",
     "rimraf": "rimraf",
