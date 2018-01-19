@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-vue",
-  "version": "0.0.8",
+  "version": "0.0.13",
   "description": "Vue.js components for Mango",
   "main": "dist/mango-vue.common.js",
   "web": "dist/mango-vue.js",
@@ -28,7 +28,6 @@
     "npm": ">=3.10.7"
   },
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^8.5.2",
     "graphql-tag": "^2.6.1",
