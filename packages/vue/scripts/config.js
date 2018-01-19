@@ -79,6 +79,6 @@ module.exports = {
       file: path.resolve(dist, name + '.js'),
       sourcemap: true,
       banner
-    },
+    }
   ]
 }

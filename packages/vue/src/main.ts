@@ -2,7 +2,7 @@ import { install } from './install'
 
 interface MangoPluginOptions { }
 
-export class MangoPlugin {
+export default class MangoPlugin {
   static install: (Vue) => void
   static version: string
 

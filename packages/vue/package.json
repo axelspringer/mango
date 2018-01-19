@@ -28,13 +28,16 @@
     "npm": ">=3.10.7"
   },
   "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
-    "vue": "^2.5.13",
-    "vue-router": "^3.0.1",
-    "vue-property-decorator": "^6.0.0",
-    "vue-functional-data-merge": "^2.0.3",
-    "vue-apollo": "^3.0.0-alpha.3",
+    "@types/node": "^8.5.2",
     "graphql-tag": "^2.6.1",
-    "@types/node": "^8.5.2"
+    "rimraf": "^2.6.2",
+    "typescript": "^2.6.2",
+    "vue": "^2.5.13",
+    "vue-apollo": "^3.0.0-alpha.3",
+    "vue-functional-data-merge": "^2.0.3",
+    "vue-property-decorator": "^6.0.0",
+    "vue-router": "^3.0.1"
   }
 }
