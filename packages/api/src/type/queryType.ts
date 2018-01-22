@@ -9,6 +9,11 @@ export const WPQueryType = new GraphQLObjectType({
   fields: () => ({
     posts: {
       type: new GraphQLList(PostType),
+      args: {
+        lang: {
+          type: GraphQLString
+        }
+      },
       resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args)
     },
     menu: {

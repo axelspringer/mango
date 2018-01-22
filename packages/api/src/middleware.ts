@@ -25,6 +25,7 @@ export class Middleware extends EventEmitter {
 
   private app: Koa
   private router: koaRouter
+  private
 
   constructor(public ctx, public config, public log: Winston) {
     super()

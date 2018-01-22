@@ -46,6 +46,10 @@ export function parseArgs() {
       default: process.env.MANGO_MOCK_ADAPTER || null,
       desc: 'Mock adapter'
     })
+    .options('plugin', {
+      array: true,
+      desc: 'Plugin'
+    })
     .version(require('../package.json').version)
     .alias('version', 'v')
     .help('help')
