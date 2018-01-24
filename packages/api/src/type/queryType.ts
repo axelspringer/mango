@@ -2,6 +2,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'graph
 import { PostType } from './postType'
 import { SettingsType } from './settingsType'
 import { NavMenuType, NavMenuLocation } from './navType'
+import { PageManagerBlock } from './pageManagerType'
 
 export const WPQueryType = new GraphQLObjectType({
   name: 'WP',
@@ -41,6 +42,15 @@ export const WPQueryType = new GraphQLObjectType({
     settings: {
       type: SettingsType,
       resolve: (_root, _args, ctx) => ctx.loader.getSettings(ctx)
+    },
+    pageManagerCategory: {
+      type: new GraphQLList(PageManagerBlock),
+      args: {
+        id: {
+          type: GraphQLInt
+        }
+      },
+      resolve: (_root, args, ctx) => ctx.loader.getPageManagerCategories(ctx, args.id, args)
     }
   }),
 })

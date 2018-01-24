@@ -15,6 +15,13 @@ export class WP extends Loader {
   public static NavItems = '/mango/v1/nav/items'
   public static NavLocations = '/mango/v1/nav/locations'
 
+  // page manager specific apis
+  public static PageManagerCategories = '/page-manager/categories'
+  public static PageManagerPosts = '/page-manager/posts'
+  public static PageManagerPages = '/page-manager/pages'
+  public static PageManagerTags = '/page-manager/tags'
+  public static PageManagerSettings = '/page-manager/settings'
+
   // fetch posts
   public async getPosts(ctx: GraphQLContext, args = {}) {
     return this._fetcher(ctx, WP.Posts, args)
@@ -48,6 +55,13 @@ export class WP extends Loader {
   // fetch settings
   public async getSettings(ctx: GraphQLContext, args = {}) {
     return this._fetcher(ctx, WP.Settings, args)
+  }
+
+  // fetch page manager categories
+  public async getPageManagerCategories(ctx: GraphQLContext, id: number, args = {}) {
+    const result = await this._fetcher(ctx, [WP.PageManagerCategories, id].join('/'), args)
+    // this is a hack for later
+    return result.data
   }
 
   // fetch nav location
