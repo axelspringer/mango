@@ -48,6 +48,9 @@ export const WPQueryType = new GraphQLObjectType({
       args: {
         id: {
           type: GraphQLInt
+        },
+        language: {
+          type: GraphQLString
         }
       },
       resolve: (_root, args, ctx) => ctx.loader.getPageManagerCategories(ctx, args.id, args)
