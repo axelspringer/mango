@@ -21,7 +21,7 @@ export class SSRConfig implements Config {
     public manifest,
     public template,
     public webpack,
-    public dev = true,
+    public dev = !isProd,
     public cache = true,
     public maxAge = isProd ? 60 * 60 * 24 * 30 : 0,
     public port = process.env.PORT || isProd ? 8080 : 3000,
