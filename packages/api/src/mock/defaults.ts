@@ -16,6 +16,9 @@ export class MockDefaults {
     this.adapter.get(WP.NavItems, require('../../data/navItems.json')).reply(200)
     this.adapter.get(WP.Settings, require('../../data/settings.json')).reply(200)
     this.adapter.get(WP.PageManagerCategories, require('../../data/pageManagerCategories.json')).reply(200)
+    this.adapter.get(WP.PageManagerTags, require('../../data/pageManagerTags.json')).reply(200)
+    this.adapter.get(WP.PageManagerPosts, require('../../data/pageManagerPosts.json')).reply(200)
+    this.adapter.get(WP.PageManagerPages, require('../../data/pageManagerPages.json')).reply(200)
   }
 
 }

@@ -16,7 +16,7 @@ export class WP extends Loader {
   public static NavLocations = '/mango/v1/nav/locations'
 
   // page manager specific apis
-  public static PageManagerCategories = '/page-manager/categories'
+  public static PageManagerCategories = '/page-manager/categories' // todo(katallaxie): move to enum?
   public static PageManagerPosts = '/page-manager/posts'
   public static PageManagerPages = '/page-manager/pages'
   public static PageManagerTags = '/page-manager/tags'
@@ -60,6 +60,27 @@ export class WP extends Loader {
   // fetch page manager categories
   public async getPageManagerCategories(ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [WP.PageManagerCategories, id].join('/'), args)
+    // this is a hack for later
+    return result.data
+  }
+
+  // fetch page manager tags
+  public async getPageManagerTags(ctx: GraphQLContext, id: number, args = {}) {
+    const result = await this._fetcher(ctx, [WP.PageManagerTags, id].join('/'), args)
+    // this is a hack for later
+    return result.data
+  }
+
+  // fetch page manager posts
+  public async getPageManagerPosts(ctx: GraphQLContext, id: number, args = {}) {
+    const result = await this._fetcher(ctx, [WP.PageManagerPosts, id].join('/'), args)
+    // this is a hack for later
+    return result.data
+  }
+
+  // fetch page manager pages
+  public async getPageManagerPages(ctx: GraphQLContext, id: number, args = {}) {
+    const result = await this._fetcher(ctx, [WP.PageManagerPages, id].join('/'), args)
     // this is a hack for later
     return result.data
   }

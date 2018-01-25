@@ -1,55 +1,16 @@
-import { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList } from 'graphql'
-import { PostType } from './postType'
+import { GraphQLUnionType } from 'graphql'
+import { SelectedArticles } from './pageManagerBlockType'
 
-export const PageManagerBlock = new GraphQLObjectType({
+enum BlockTypes {
+  SelectedArticles = 'selected_articles'
+}
+
+export const PageManagerBlock = new GraphQLUnionType({
   name: 'PageManagerBlock',
-  description: 'Contains a Page Manager block',
-  fields: () => ({
-    pageBlock: {
-      type: GraphQLString,
-      resolve: block => block.page_block
-    },
-    language: {
-      type: GraphQLString,
-      resolve: block => block.language
-    },
-    widgetSettings: {
-      type: new GraphQLList(PageManagerWidgetSettings),
-      resolve: block => block.widget_settings
-    },
-    result: {
-      type: new GraphQLList(PostType),
-      resolve: block => block.result
+  types: [SelectedArticles],
+  resolveType(value) {
+    if (value.page_block === BlockTypes.SelectedArticles) {
+      return SelectedArticles
     }
-  })
-})
-
-export const PageManagerWidgetSettings = new GraphQLObjectType({
-  name: 'PageManagerWidgetSetting',
-  description: 'Contains a Widget Settings',
-  fields: () => ({
-    type: {
-      type: GraphQLString,
-      resolve: setting => setting.type
-    },
-    name: {
-      type: GraphQLString,
-      resolve: setting => setting.name
-    },
-    value: {
-      type: new GraphQLList(GraphQLInt),
-      resolve: setting => setting.value
-    }
-  })
-})
-
-export const PageManagerCategoryType = new GraphQLObjectType({
-  name: 'PageManagerCategory',
-  description: 'Displays a managed category',
-  fields: () => ({
-    pageBlocks: {
-      type: new GraphQLList(PageManagerBlock),
-      resolve: blocks => blocks
-    }
-  })
+  }
 })
