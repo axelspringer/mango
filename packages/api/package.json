@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-api",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "An API Gateway for WordPress",
   "main": "dist/server.js",
   "typings": "mango-api",
