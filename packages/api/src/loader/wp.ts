@@ -95,7 +95,7 @@ export class WP extends Loader {
   public async getNavLocations(ctx: GraphQLContext, args = {}) {
     const res = await this._fetcher(ctx, WP.NavLocations, args) // get locations
     const locations = []
-    for (const location in res) { // parse locations to a subitable
+    for (const location in res) { // parse locations to a suitable
       locations.push({ // map to new object
         name: location,
         id: res[location]
