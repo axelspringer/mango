@@ -1,6 +1,8 @@
 import { GraphQLSchema } from 'graphql';
-import { WPQueryType } from './type'
+import { createQueryType } from './type'
 
-export default new GraphQLSchema({
-  query: WPQueryType,
-})
+export default function (plugins) {
+  return new GraphQLSchema({
+    query: createQueryType(plugins)
+  })
+}
