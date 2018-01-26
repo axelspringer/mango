@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'graphql'
+import { GraphQLString, GraphQLList, GraphQLInt } from 'graphql'
 import { PostType } from './postType'
 import { SettingsType } from './settingsType'
 import { NavMenuType, NavMenuLocation } from './navType'
@@ -41,11 +41,4 @@ export const defaultQuery = {
   }
 }
 
-export const createQueryType = (plugins) => {
-  const pluginQuery = plugins.reduce((query, plugin) => Object.assign(query, plugin.query), {})
-  return new GraphQLObjectType({
-    name: 'WP',
-    description: 'The root of all WordPress queries',
-    fields: () => (Object.assign(defaultQuery, pluginQuery))
-  })
-}
+

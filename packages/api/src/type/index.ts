@@ -1,5 +1,0 @@
-export * from './postType'
-export * from './queryType'
-export * from './navType'
-export * from './settingsType'
-export * from './userType'

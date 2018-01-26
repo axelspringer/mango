@@ -2,11 +2,11 @@
 import { parseArgs } from './args'
 import { Middleware } from './middleware'
 import { Plugin } from './plugin'
-import { WP } from './loader'
+import { createLoader, WP } from './loader'
 import * as http from 'http'
 import * as https from 'https'
 import axios from 'axios'
-import { isDev } from './utils'
+import { isDev, loadPlugin } from './utils'
 import { MockAdapter } from './mock/adapter'
 import { PostType, SettingsType, NavMenuLocation, NavMenuItemType } from './type'
 
@@ -16,13 +16,10 @@ const { createLogger, format, transports } = require('winston')
 // config
 const config = parseArgs()
 
-const loadPlugin = plugin => {
-  const { main } = require('../../' + 'mango-plugin-' + plugin + '/package.json')
-  return require('../../' + 'mango-plugin-' + plugin + '/' + main)
-}
-
 // map plugin
-config.plugin = config.plugin.map(plugin => new Plugin(loadPlugin(plugin)))
+config.plugin = config.plugin
+  ? config.plugin.map(plugin => new Plugin(loadPlugin(plugin)))
+  : []
 
 // logger
 const logger = createLogger({
@@ -63,7 +60,7 @@ const ctx = {
     baseURL: config.wp,
     headers
   }),
-  loader: new WP()
+  loader: createLoader(config.plugin)
 }
 
 // run middlware

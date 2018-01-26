@@ -1,8 +1,8 @@
 import { GraphQLSchema } from 'graphql';
-import { createQueryType } from './type'
+import { createQuery } from './type'
 
 export default function (plugins) {
   return new GraphQLSchema({
-    query: createQueryType(plugins)
+    query: createQuery(plugins)
   })
 }

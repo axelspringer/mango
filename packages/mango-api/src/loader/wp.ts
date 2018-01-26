@@ -16,7 +16,6 @@ export class WP extends Loader {
 
   // fetch posts
   public async getPosts(ctx: GraphQLContext, args = {}) {
-    console.log('test')
     return this._fetcher(ctx, API.Posts, args)
   }
 
