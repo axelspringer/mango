@@ -1,8 +1,9 @@
 {
   "name": "@axelspringer/mango-api",
-  "version": "0.0.13",
+  "version": "0.0.15",
   "description": "An API Gateway for WordPress",
   "main": "dist/server.js",
+  "typings": "mango-api",
   "scripts": {
     "build": "tsc -p tsconfig.json --outDir ./dist",
     "build:docker": "docker build --squash -t axelspringer/mango-api .",
