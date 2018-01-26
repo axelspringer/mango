@@ -1,15 +1,13 @@
 // imports
-import * as LogMessage from './log'
 import * as Koa from 'koa'
 import * as koaRouter from 'koa-router'
 import * as koaBody from 'koa-bodyparser'
 import * as cors from '@koa/cors'
-import * as path from 'path'
 // import * as logger from 'koa-logger'
 import logger from './logger'
 import { EventEmitter } from 'events'
 import { Winston } from 'winston'
-import { MockDefaults } from './mock'
+import { Mock, MockAdapter } from './mock'
 
 // apollo
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
@@ -19,20 +17,19 @@ import ping from './ping'
 import { isProd } from './utils'
 
 // schema
-import wpGraphQLSchema from './schema'
+import createSchema from './schema'
 
 export class Middleware extends EventEmitter {
 
   private app: Koa
   private router: koaRouter
-  private
 
   constructor(public ctx, public config, public log: Winston) {
     super()
 
     // call to inject mock
     if (this.config.mock) {
-      this.injectMock(this.config.adapter, this.ctx.axios, this.config)
+      Middleware.injectMock(this.ctx.axios, this.config)
     }
 
     // Koa
@@ -58,8 +55,8 @@ export class Middleware extends EventEmitter {
     this.router.get('/ping', ping)
 
     // GraphQL
-    this.router.post('/graphql', koaBody(), graphqlKoa({ schema: wpGraphQLSchema, context: this.ctx }))
-    this.router.get('/graphql', graphqlKoa({ schema: wpGraphQLSchema, context: this.ctx }))
+    this.router.post('/graphql', koaBody(), graphqlKoa({ schema: createSchema(this.config.plugin), context: this.ctx }))
+    this.router.get('/graphql', graphqlKoa({ schema: createSchema(this.config.plugin), context: this.ctx }))
 
 
     // GraphiQL (if not in production)
@@ -75,16 +72,11 @@ export class Middleware extends EventEmitter {
   }
 
   // inject mock
-  private injectMock(adapter: string, axios, config) {
-    if (adapter !== null && adapter !== '') { //
-      require('ts-node').register({ /* options */ })
-      const mock = require(path.relative(__dirname, adapter)).default
-      mock(axios, config)
-    } else {
-      new MockDefaults(axios, config);
-    }
-
-    // log
-    this.log.log(LogMessage.mockInject.level, LogMessage.mockInject.message)
+  public static injectMock(axios, config) {
+    const adapter = new MockAdapter(axios, config)
+    new Mock(adapter)
+    config.plugin.forEach(plugin => {
+      new plugin.mock(adapter)
+    })
   }
 }

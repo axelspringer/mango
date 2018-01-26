@@ -1,2 +1,2 @@
 export * from './adapter'
-export * from './defaults'
+export * from './mock'

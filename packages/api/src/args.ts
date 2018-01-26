@@ -22,6 +22,10 @@ export function parseArgs() {
       default: process.env.MANGO_PORT || '8080',
       desc: 'Port'
     })
+    .options('plugin', {
+      string: true,
+      desc: 'Plugin'
+    })
     .options('host', {
       string: true,
       alias: 'h',
@@ -39,12 +43,6 @@ export function parseArgs() {
       alias: 's',
       default: process.env.MANGO_SECRET || '',
       desc: 'Secret'
-    })
-    .options('adapter', {
-      string: true,
-      alias: 'a',
-      default: process.env.MANGO_MOCK_ADAPTER || null,
-      desc: 'Mock adapter'
     })
     .options('plugin', {
       array: true,
