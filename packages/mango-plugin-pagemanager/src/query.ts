@@ -1,4 +1,4 @@
-const { GraphQLString, GraphQLInt, GraphQLList } = require('../../mango-api/node_modules/graphql/type')
+const { GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
 import { PageManagerBlock } from './types'
 
 export const Query = {

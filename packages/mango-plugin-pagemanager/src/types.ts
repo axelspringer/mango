@@ -1,4 +1,4 @@
-const { GraphQLObjectType, GraphQLUnionType, GraphQLString, GraphQLInt, GraphQLList } = require('../../mango-api/node_modules/graphql/type')
+const { GraphQLObjectType, GraphQLUnionType, GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
 import { PostType } from '@axelspringer/mango-api'
 
 enum BlockTypes {
