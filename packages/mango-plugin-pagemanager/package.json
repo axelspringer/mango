@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-plugin-pagemanager",
-  "version": "0.0.18",
+  "version": "0.1.0",
   "description": "Mango API plugin for the Page Manager",
   "main": "dist/index.js",
   "scripts": {
