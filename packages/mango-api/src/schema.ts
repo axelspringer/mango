@@ -1,4 +1,4 @@
-import { GraphQLSchema } from 'graphql';
+const { GraphQLSchema } = require('graphql')
 import { createQuery } from './type'
 
 export default function (plugins) {

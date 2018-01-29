@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } from 'graphql'
+const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } = require('graphql')
 import { UserType } from './userType'
 import { GraphQLDateTime } from 'graphql-iso-date'
 

@@ -1,5 +1,5 @@
 import { defaultQuery } from './queryType'
-import { GraphQLObjectType } from 'graphql'
+const { GraphQLObjectType } = require('graphql')
 
 export * from './postType'
 export * from './queryType'

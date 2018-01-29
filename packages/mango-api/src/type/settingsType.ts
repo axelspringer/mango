@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLBoolean, GraphQLString, GraphQLInt } from 'graphql'
+const { GraphQLObjectType, GraphQLBoolean, GraphQLString, GraphQLInt } = require('graphql')
 import { CategoryType } from './catType'
 
 export const SettingsType = new GraphQLObjectType({

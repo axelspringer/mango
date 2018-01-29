@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } from 'graphql'
+const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } = require('graphql')
 
 export const UserType = new GraphQLObjectType({
   name: 'User',

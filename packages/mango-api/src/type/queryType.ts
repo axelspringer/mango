@@ -1,4 +1,4 @@
-import { GraphQLString, GraphQLList, GraphQLInt } from 'graphql'
+const { GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
 import { PostType } from './postType'
 import { SettingsType } from './settingsType'
 import { NavMenuType, NavMenuLocation } from './navType'
