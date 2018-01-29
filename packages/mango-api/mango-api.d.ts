@@ -20,4 +20,14 @@ export class MockAdapter {
   constructor(axios, config)
 }
 
+export enum API {
+  Posts = '/wp/v2/posts',
+  Categories = '/wp/v2/categories',
+  Users = '/wp/v2/users',
+  Settings = '/wp/v2/settings',
+  NavMenu = '/mango/v1/nav/menus',
+  NavItems = '/mango/v1/nav/items',
+  NavLocations = '/mango/v1/nav/locations'
+}
+
 export const PostType: GraphQLObjectType
