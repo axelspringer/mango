@@ -2,7 +2,7 @@
 import { parseArgs } from './args'
 import { Middleware } from './middleware'
 import { Plugin } from './plugin'
-import { createLoader, WP } from './loader'
+import { createLoader, API, WP } from './loader'
 import * as http from 'http'
 import * as https from 'https'
 import axios from 'axios'
@@ -68,10 +68,11 @@ const middleware = new Middleware(ctx, config, logger)
 middleware.run()
 
 export {
+  API,
   MockAdapter,
+  NavMenuItemType,
+  NavMenuLocation,
   PostType,
   SettingsType,
-  NavMenuLocation,
-  NavMenuItemType,
   WP
 }
