@@ -54,11 +54,17 @@ export class MockAdapter {
     if (!this.handlers[method]) {
       this.handlers[method] = []
     }
-    const handler = new Handler(url, data, exact)
-    this.handlers[method].push(handler)
+    const newHandler = new Handler(url, data, exact)
+    const search = this.handlers[method].findIndex(handler => handler.url === newHandler.url)
+    if (search !== -1) {
+      this.handlers[method][search] = newHandler
+      return newHandler
+    }
+
+    this.handlers[method].push(newHandler)
 
     // return the handler
-    return handler
+    return newHandler
   }
 
 }
