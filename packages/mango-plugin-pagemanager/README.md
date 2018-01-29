@@ -1,4 +1,4 @@
-# :smiley_cat: Mango Page Manager
+# :smiley_cat: Mango Page Manager Plugin
 
 <br/>
 
@@ -12,6 +12,11 @@
 > requires a `node` version >= 6 and an `npm` version >= 3.x.x
 
 > we do provide a `help` command to display all possible arguments
+
+```
+# Install the base package and the plugin (could also be global -g)
+npm i @axelspringer/mango-api @axelspringer/mango-plugin-pagemanager
+```
 
 ## License
 [MIT](/LICENSE)

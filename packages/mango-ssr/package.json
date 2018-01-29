@@ -34,7 +34,8 @@
   "devDependencies": {
     "@types/express": "^4.11.0",
     "@types/node": "^8.5.2",
-    "@types/winston": "^2.3.7"
+    "@types/winston": "^2.3.7",
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "@std/esm": "^0.19.6",
@@ -45,6 +46,7 @@
     "memory-fs": "^0.4.1",
     "ts-node": "^4.1.0",
     "tslib": "^1.8.0",
+    "typescript": "^2.6.2",
     "webpack": "^3.10.0",
     "webpack-hot-middleware": "^2.21.0",
     "yargs": "^10.1.1"
