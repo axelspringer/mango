@@ -5,6 +5,7 @@ import router from './router'
 import { sync } from 'vuex-router-sync'
 import Mango from '@axelspringer/mango-vue'
 
+// inject mango
 Vue.use(Mango)
 
 // create function

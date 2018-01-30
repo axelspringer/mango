@@ -1,25 +1,18 @@
 import { install } from './install'
-import { inBrowser } from './util/dom'
 
-export default class VueMango {
+export interface MangoPluginOptions { }
+
+export default class MangoPlugin {
   static install: (Vue) => void
   static version: string
 
-  constructor(options = {}) {
-    let mode = options.mode || VueMango.Browser
-
-    if (!inBrowser) {
-      mode = MangoPluginMode.Server
-    }
-
-    this.mode = mode
-  }
+  constructor(public options: MangoPluginOptions = {}) { }
 }
 
-VueMango.install = install
-VueMango.version = '__VERSION__'
+MangoPlugin.install = install
+MangoPlugin.version = '__VERSION__'
 
 // automatic install if added via script tag
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(VueMango)
+  window.Vue.use(MangoPlugin)
 }

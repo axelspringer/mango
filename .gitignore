@@ -29,6 +29,7 @@ npm-debug.log
 npm-debug.log.*
 yarn-error.log
 lighthouse.*
+.rpt2_cache
 
 # Coverage
 /coverage
@@ -38,6 +39,7 @@ lighthouse.*
 dist
 public
 !icon/
+types
 
 # Doc #
 /doc

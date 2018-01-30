@@ -1,17 +1,19 @@
 {
   "name": "@axelspringer/mango-vue",
-  "version": "0.1.10",
+  "version": "0.1.0",
   "description": "Vue.js components for Mango",
   "main": "dist/mango-vue.common.js",
   "web": "dist/mango-vue.js",
   "module": "dist/mango-vue.esm.js",
-  "types": "types/index.d.ts",
+  "types": "dist/main.d.ts",
   "scripts": {
     "build": "rollup -c scripts/config.js",
+    "build:types": "npm run tsc -- -p tsconfig.json --declaration --declarationDir ./types",
     "clean:dist": "npm run rimraf -- dist",
     "prebuild": "npm run clean:dist",
     "rimraf": "rimraf",
     "start": "npm run watch",
+    "tsc": "tsc",
     "watch": "rollup -w -c scripts/config.js"
   },
   "publishConfig": {
@@ -28,24 +30,13 @@
     "node": ">=6.9.13",
     "npm": ">=3.10.7"
   },
-  "peerDependencies": {
-    "vue": "^2.5.13",
-    "vue-apollo": "^3.0.0-alpha.3"
-  },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^8.5.2",
-    "babel-core": "^6.26.0",
     "graphql-tag": "^2.6.1",
-    "lodash": "^4.17.4",
     "rimraf": "^2.6.2",
     "rollup": "^0.55.1",
-    "rollup-plugin-babel": "^3.0.3",
-    "rollup-plugin-commonjs": "^8.3.0",
-    "rollup-plugin-node-resolve": "^3.0.2",
-    "rollup-plugin-replace": "^2.0.0",
-    "rollup-plugin-typescript": "^0.8.1",
-    "rollup-plugin-vue": "^3.0.0",
+    "rollup-plugin-typescript2": "^0.10.0",
     "typescript": "^2.6.2",
     "vue": "^2.5.13",
     "vue-apollo": "^3.0.0-alpha.3",
@@ -53,7 +44,15 @@
     "vue-property-decorator": "^6.0.0",
     "vue-router": "^3.0.1"
   },
-  "typescript": {
-    "definition": "types/index.d.ts"
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "lodash": "^4.17.4",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^8.3.0",
+    "rollup-plugin-node-resolve": "^3.0.2",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-plugin-vue": "^3.0.0",
+    "typescript": "^2.6.2"
   }
 }
