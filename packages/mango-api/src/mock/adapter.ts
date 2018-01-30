@@ -7,9 +7,8 @@ import { HttpMethods } from './types'
 export class MockAdapter {
 
   private defaultAdapter
-  // private delayResponse = 0
 
-  private handlers: { [index: string]: any } = {}
+  public handlers: { [index: string]: any } = {}
 
   constructor(public client: AxiosInstance, public options) {
     if (client) {
@@ -50,7 +49,7 @@ export class MockAdapter {
   }
 
   // add a handler
-  private addHandler(method, url, data, exact) {
+  public addHandler(method, url, data, exact) {
     if (!this.handlers[method]) {
       this.handlers[method] = []
     }
@@ -65,6 +64,19 @@ export class MockAdapter {
 
     // return the handler
     return newHandler
+  }
+
+  // remove a handler
+  public removeHandler(method, url) {
+    if (!this.handlers[method]) { // just for safty
+      this.handlers[method] = []
+    }
+    const search = this.handlers[method].findIndex(handler => handler.url === url)
+    if (search !== -1) {
+      return this.handlers[method].splice(search, 1)
+    }
+
+    return -1
   }
 
 }
