@@ -36,6 +36,7 @@ lighthouse.*
 # Public, AoT, Dll's etc.
 .webpack.json
 dist
+public
 !icon/
 
 # Doc #
