@@ -8,6 +8,7 @@ import Mango from '@axelspringer/mango-vue'
 // inject mango
 Vue.use(Mango)
 
+
 // create function
 export default function () {
   // route state store
