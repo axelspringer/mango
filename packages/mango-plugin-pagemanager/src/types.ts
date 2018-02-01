@@ -1,5 +1,5 @@
 const { GraphQLObjectType, GraphQLUnionType, GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
-import { PostType } from '@axelspringer/mango-api'
+const { PostType } = require('@axelspringer/mango-api')
 
 enum BlockTypes {
   SelectedArticles = 'selected_articles'

@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json --outDir ./dist",
+    "clean": "npm run rimraf -- dist node_modules",
     "clean:dist": "npm run rimraf -- dist",
     "prebuild": "npm run clean:dist",
     "rimraf": "rimraf",
@@ -19,19 +20,17 @@
     "npm": ">=3.10.7"
   },
   "author": "Axel Springer SE",
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
   "peerDependencies": {
     "@axelspringer/mango-api": "^0.0.13",
+    "graphql-iso-date": "^3.3.0",
     "graphql": "^0.12.3"
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-api": "^0.0.13",
     "@types/node": "^9.4.0",
     "concurrently": "^3.5.1",
     "cross-env": "^5.1.3",

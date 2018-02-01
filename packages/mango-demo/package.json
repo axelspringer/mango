@@ -39,7 +39,7 @@
     "cross-env": "cross-env",
     "dev": "cross-env NODE_ENV=development",
     "docker": "docker",
-    "mock": "cross-env NODE_ENV=development ./node_modules/.bin/mango-api -m --plugin pagemanager",
+    "mock": "cross-env NODE_ENV=development ./node_modules/.bin/mango-api -m --plugin navigation --plugin pagemanager",
     "help": "node node_modules/npm-scripts-help",
     "jest": "jest",
     "rimraf": "rimraf",
@@ -55,6 +55,9 @@
     "webpack-dev-server": "webpack-dev-server",
     "webpack": "webpack"
   },
+  "peerDependencies": {
+    "graphql": "^0.11.7"
+  },
   "dependencies": {
     "@axelspringer/mango-api": "^0.1.10",
     "@axelspringer/mango-plugin-navigation": "^0.1.8",
@@ -65,7 +68,6 @@
     "apollo-client": "^2.0.4",
     "apollo-link-http": "^1.3.1",
     "core-js": "^2.5.1",
-    "graphql": "^0.11.7",
     "graphql-tag": "^2.6.0",
     "isomorphic-fetch": "^2.2.1",
     "lazysizes": "^4.0.1",

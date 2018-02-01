@@ -1,53 +1,27 @@
 const { GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
-import { PageManagerBlock } from './types'
+import { NavMenuType, NavMenuLocation } from './types'
 
 export const Query = {
-  pageManagerCategory: {
-    type: new GraphQLList(PageManagerBlock),
+  menu: {
+    type: NavMenuType,
     args: {
       id: {
         type: GraphQLInt
-      },
-      language: {
-        type: GraphQLString
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getPageManagerCategories(ctx, args.id, args)
+    resolve: (_, args, ctx) => ctx.loader.getNavMenu(ctx, args.id)
   },
-  pageManagerTag: {
-    type: new GraphQLList(PageManagerBlock),
+  menuLocation: {
+    type: NavMenuType,
     args: {
-      id: {
-        type: GraphQLInt
-      },
-      language: {
+      name: {
         type: GraphQLString
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getPageManagerTags(ctx, args.id, args)
+    resolve: (_, args, ctx) => ctx.loader.getNavLocation(ctx, args.name)
   },
-  pageManagerPage: {
-    type: new GraphQLList(PageManagerBlock),
-    args: {
-      id: {
-        type: GraphQLInt
-      },
-      language: {
-        type: GraphQLString
-      }
-    },
-    resolve: (_root, args, ctx) => ctx.loader.getPageManagerPages(ctx, args.id, args)
+  menuLocations: {
+    type: new GraphQLList(NavMenuLocation),
+    resolve: (_root, _args, ctx) => ctx.loader.getNavLocations(ctx)
   },
-  pageManagerPost: {
-    type: new GraphQLList(PageManagerBlock),
-    args: {
-      id: {
-        type: GraphQLInt
-      },
-      language: {
-        type: GraphQLString
-      }
-    },
-    resolve: (_root, args, ctx) => ctx.loader.getPageManagerPosts(ctx, args.id, args)
-  }
 }

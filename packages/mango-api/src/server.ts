@@ -2,13 +2,11 @@
 import { parseArgs } from './args'
 import { Middleware } from './middleware'
 import { Plugin } from './plugin'
-import { createLoader, API, WP } from './loader'
+import { createLoader } from './loader'
 import * as http from 'http'
 import * as https from 'https'
 import axios from 'axios'
 import { isDev, loadPlugin } from './utils'
-import { MockAdapter } from './mock/adapter'
-import { PostType, SettingsType, NavMenuLocation, NavMenuItemType } from './type'
 
 // use default for import
 const { createLogger, format, transports } = require('winston')
@@ -66,13 +64,3 @@ const ctx = {
 // run middlware
 const middleware = new Middleware(ctx, config, logger)
 middleware.run()
-
-export {
-  API,
-  MockAdapter,
-  NavMenuItemType,
-  NavMenuLocation,
-  PostType,
-  SettingsType,
-  WP
-}
