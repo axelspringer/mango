@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-plugin-navigation",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Mango API plugign for navigation extensitons to WP REST",
   "main": "dist/index.js",
   "scripts": {
