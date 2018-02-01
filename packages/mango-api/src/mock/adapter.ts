@@ -79,4 +79,12 @@ export class MockAdapter {
     return -1
   }
 
+  // remove all handlers
+  public removeAllHandlers() {
+    const oldHandlers = this.handlers
+    this.handlers = []
+
+    return oldHandlers
+  }
+
 }
