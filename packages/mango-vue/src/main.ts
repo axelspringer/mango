@@ -18,3 +18,7 @@ MangoPlugin.version = '__VERSION__'
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(MangoPlugin)
 }
+
+export {
+  MangoHome
+} from './components'
