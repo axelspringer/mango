@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-vue",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Vue.js components for Mango",
   "main": "dist/mango-vue.common.js",
   "web": "dist/mango-vue.js",
