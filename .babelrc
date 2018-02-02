@@ -1,19 +1,9 @@
 {
   "presets": [
-    [
-      "env",
-      {
-        "targets": {
-          "browsers": [
-            "last 4 versions",
-            "safari >= 7"
-          ]
-        },
-        "modules": false
-      }
-    ]
+    "env"
   ],
   "plugins": [
-    "external-helpers"
+    "transform-vue-jsx",
+    "syntax-dynamic-import"
   ]
 }

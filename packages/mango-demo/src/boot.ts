@@ -1,13 +1,8 @@
-import Vue from 'vue'
 import { App } from './components/app'
-import store from './store'
-import router from './router'
 import { sync } from 'vuex-router-sync'
-import Mango from '@axelspringer/mango-vue'
-
-// inject mango
-Vue.use(Mango)
-
+import router from './router'
+import store from './store'
+import Vue from 'vue'
 
 // create function
 export default function () {

@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } = require('graphql')
 const { UserType } = require('@axelspringer/mango-api')
-import { GraphQLDateTime } from 'graphql-iso-date'
+const { GraphQLDateTime } = require('graphql-iso-date')
 
 export const NavMenuLocation = new GraphQLObjectType({
   name: 'NavigationMenuLocation',

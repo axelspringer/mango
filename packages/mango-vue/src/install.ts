@@ -20,9 +20,15 @@ export function install(Vue) {
 
   this.install.installed = true
 
-  Object.defineProperty(Vue.prototype, '$mango', {
-    get() { return this._mango }
-  })
+  // Object.defineProperty(Vue.prototype, '$mango', {
+  //   get() {
+  //     if ( !this._mango ) {
+
+  //     }
+
+  //     return this._mango
+  //   }
+  // })
 
   Vue.mixin(mixin)
 
