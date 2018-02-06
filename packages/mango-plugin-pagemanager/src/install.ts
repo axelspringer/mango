@@ -1,4 +1,7 @@
-import { registerComponent } from './utils/plugins'
+import { registerComponents } from './utils/plugins'
+// import { isDef } from './utils/def'
+import mixin from './mixin'
+import PageManagerRenderer from './components/renderer'
 
 export let _Vue
 
@@ -6,12 +9,25 @@ export function install(Vue) {
 
   _Vue = Vue
 
-  if (this.install.installed && _Vue === Vue) {
+  if (install.prototype.installed && _Vue === Vue) {
     return
   }
 
   // register component
-  // registerComponent(Vue)
+  registerComponents(Vue, {
+    'pagemanager-renderer': PageManagerRenderer
+  })
 
-  this.install.installed = true
+  install.prototype.installed = true
+
+  Object.defineProperty(Vue.prototype, '$pagemanager', {
+    get() { return this._pagemanager }
+  })
+
+  Vue.mixin(mixin)
+
+  // use object-based merge strategy
+  const strats = Vue.config.optionMergeStrategies
+  strats.i18n = strats.methods
+
 }

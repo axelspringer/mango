@@ -1,9 +1,15 @@
 {
   "presets": [
-    "env"
+    [
+      "env",
+      {
+        "modules": false
+      }
+    ]
   ],
   "plugins": [
     "transform-vue-jsx",
-    "syntax-dynamic-import"
+    "syntax-dynamic-import",
+    "external-helpers"
   ]
 }

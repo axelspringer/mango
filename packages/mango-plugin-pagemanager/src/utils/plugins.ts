@@ -1,8 +1,8 @@
 export function registerComponent(Vue, name, def) {
-  Vue._bootstrap_vue_components_ = Vue._bootstrap_vue_components_ || {}
-  const loaded = Vue._bootstrap_vue_components_[name]
+  Vue._pagemanager_components_ = Vue._pagemanager_components_ || {}
+  const loaded = Vue._pagemanager_components_[name]
   if (!loaded && def && name) {
-    Vue._bootstrap_vue_components_[name] = true
+    Vue._pagemanager_components_[name] = true
     Vue.component(name, def)
   }
   return loaded

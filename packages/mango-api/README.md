@@ -59,6 +59,10 @@ Sets the `X-MANGO-SECRET` to the value provided by [WP Mango](https://github.com
 
 Uses a differen adapter for the mock data. This should implement and overload.
 
+### `--plugin` `MANGO_PLUGINS` (string)
+
+Loads an installed plugin (e.g. mango-plugin-pagemanager). If used multiple times, it loads multiple plugins. `MANGO_PLUGINS` should be used as follows `export MANGO_PLUGINS='pagemanager,navigation'`.
+
 ```javascript
 const api = require('@axelspringer/mango-api');
 
