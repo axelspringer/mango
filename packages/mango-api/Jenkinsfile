@@ -4,4 +4,5 @@ monorepoMango {
     buildDisplayName = "Mango Api"
     buildDescription = "Mango Api Build"
     containerName = "tortuga-mango-api"
+    buildDir = "packages/mango-api/"
 }
