@@ -6,7 +6,7 @@ export class App extends Vue {
 
   public render(h) {
     return (
-      <div id='app'>
+      <div>
         <router-view></router-view>
       </div>
     )

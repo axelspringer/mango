@@ -24,6 +24,7 @@ export function parseArgs() {
     })
     .options('plugin', {
       string: true,
+      default: process.env.MANGO_PLUGINS ? process.env.MANGO_PLUGINS.split(',').map(plugin => plugin.trim()) : undefined || [],
       desc: 'Plugin'
     })
     .options('host', {

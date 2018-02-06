@@ -11,14 +11,11 @@
   "author": {
     "name": "Axel Springer SE"
   },
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
-  "bundlesize": [
-    {
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
+  "bundlesize": [{
       "path": "./public/client/vendor.*.js",
       "maxSize": "400 kB"
     },
@@ -28,7 +25,7 @@
     }
   ],
   "homepage": "https://github.com/axelspringer/mango",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build:docker": "npm run build && docker build --squash -t mango:latest .",
     "build:server": "cross-env NODE_ENV=production webpack --progress --profile --bail --debug",
@@ -59,7 +56,8 @@
     "webpack": "webpack"
   },
   "peerDependencies": {
-    "graphql": "^0.11.7"
+    "graphql": "^0.11.7",
+    "graphql-iso-date": "^3.3.0"
   },
   "dependencies": {
     "@axelspringer/mango-api": "^0.1.14",

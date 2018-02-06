@@ -1,12 +1,14 @@
 import { warn } from './util/log'
 import mixin from './mixin'
+import { MangoHome } from './components/home'
 
 export let _Vue
 
 export function install(Vue) {
 
-  const version = (Vue.version && Number(Vue.version.split('.')[0])) || -1
+  _Vue = Vue
 
+  const version = (Vue.version && Number(Vue.version.split('.')[0])) || -1
   if (this.install.installed && _Vue === Vue) {
     return
   }
@@ -18,7 +20,17 @@ export function install(Vue) {
 
   this.install.installed = true
 
+  // Object.defineProperty(Vue.prototype, '$mango', {
+  //   get() {
+  //     if ( !this._mango ) {
+
+  //     }
+
+  //     return this._mango
+  //   }
+  // })
+
   Vue.mixin(mixin)
 
-  _Vue = Vue
+  Vue.component('MangoHome', MangoHome)
 }
