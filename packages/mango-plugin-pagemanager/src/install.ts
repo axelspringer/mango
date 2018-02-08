@@ -24,10 +24,13 @@ export function install(Vue) {
     get() { return this._pagemanager }
   })
 
+  Object.defineProperty(Vue.prototype, '$pageblock', {
+    get() { return this._pageblock }
+  })
+
   Vue.mixin(mixin)
 
   // use object-based merge strategy
   const strats = Vue.config.optionMergeStrategies
   strats.i18n = strats.methods
-
 }

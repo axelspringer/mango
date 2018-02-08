@@ -1,4 +1,6 @@
-// import _Vue from 'vue'
+// import _Vue from 'Vue'
+// import { Component } from 'vue-property-decorator'
+// import { __decorate } from 'tslib'
 
 export default {
   name: 'pagemanager-renderer',
@@ -23,9 +25,22 @@ export default {
     let children = []
 
     if (props.blocks && Array.isArray(props.blocks)) {
-      children = props.blocks.map(block => {
+      children = props.blocks.map((block) => {
         const cmp = options.blocks.find(b => b.pageBlock === block['page_block'])
-        return h(cmp.component)
+
+        if (cmp === undefined) {
+          return null
+        }
+
+        const newCmp = cmp.component
+        const vnode = h(newCmp)
+        const newNode = vnode
+        const Ctor = newNode.componentOptions.Ctor
+        Ctor.options.pageBlocks = Ctor.options.pageBlocks || {}
+        Ctor.options.pageBlocks[block['page_block']] = Ctor.options.pageBlocks[block['page_block']] || []
+        Ctor.options.pageBlocks[block['page_block']].push(block)
+
+        return newNode
       })
     }
 

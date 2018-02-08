@@ -23,10 +23,12 @@
     "npm": ">=3.10.7"
   },
   "author": "Axel Springer SE",
-  "contributors": [{
-    "name": "Sebastian Döll",
-    "email": "sebastian.doell@axelspringer.com"
-  }],
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
   "peerDependencies": {
     "@axelspringer/mango-api": "^0.0.13",
     "graphql": "^0.12.3",
@@ -57,6 +59,7 @@
     "vue": "^2.5.13"
   },
   "dependencies": {
-    "tslib": "^1.8.0"
+    "tslib": "^1.8.0",
+    "vue-property-decorator": "^6.0.0"
   }
 }
