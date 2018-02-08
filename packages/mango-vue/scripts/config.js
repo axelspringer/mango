@@ -48,7 +48,7 @@ if (!fs.existsSync(dist)) {
 }
 
 module.exports = {
-  input: path.resolve(src, 'main.ts'),
+  input: path.resolve(src, 'index.ts'),
   watch: {
     useChokidar: false,
     exclude: ['node_modules/**']

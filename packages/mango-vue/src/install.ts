@@ -1,6 +1,6 @@
-import { warn } from './util/log'
+// import { registerComponents } from './utils/plugins'
+// import { isDef } from './utils/def'
 import mixin from './mixin'
-import { MangoHome } from './components/home'
 
 export let _Vue
 
@@ -8,29 +8,15 @@ export function install(Vue) {
 
   _Vue = Vue
 
-  const version = (Vue.version && Number(Vue.version.split('.')[0])) || -1
-  if (this.install.installed && _Vue === Vue) {
+  if (install.prototype.installed && _Vue === Vue) {
     return
   }
 
-  if (process.env.NODE_ENV !== 'production' && version < 2) {
-    warn(`vue-i18n (${this.version}) need to use Vue 2.0 or later (Vue: ${Vue.version}).`)
-    return
-  }
+  install.prototype.installed = true
 
-  this.install.installed = true
+  Vue.mixin(mixin())
 
-  // Object.defineProperty(Vue.prototype, '$mango', {
-  //   get() {
-  //     if ( !this._mango ) {
-
-  //     }
-
-  //     return this._mango
-  //   }
-  // })
-
-  Vue.mixin(mixin)
-
-  Vue.component('MangoHome', MangoHome)
+  // use object-based merge strategy
+  const strats = Vue.config.optionMergeStrategies
+  strats.i18n = strats.methods
 }

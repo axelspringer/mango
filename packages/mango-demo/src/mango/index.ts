@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import PageManager from '@axelspringer/mango-plugin-pagemanager'
+import Mango from '@axelspringer/mango-vue'
 import { SelectedArticles } from '../components/selectedArticles'
 
 // inject mango
 Vue.use(PageManager)
+Vue.use(Mango)
 
-export default new PageManager({
+export const pagemanager = new PageManager({
   blocks: [
     {
       pageBlock: 'selected_articles',
@@ -13,3 +15,5 @@ export default new PageManager({
     }
   ]
 })
+
+export const mango = new Mango({})

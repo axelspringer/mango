@@ -3,7 +3,7 @@ import { sync } from 'vuex-router-sync'
 import router from './router'
 import store from './store'
 import Vue from 'vue'
-import pagemanager from './mango'
+import { pagemanager, mango } from './mango'
 
 // create function
 export default function () {
@@ -15,6 +15,7 @@ export default function () {
     router,
     store,
     pagemanager,
+    mango,
     render: (h) => h(App)
   })
 

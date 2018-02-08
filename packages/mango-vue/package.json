@@ -19,17 +19,16 @@
     "access": "public"
   },
   "author": "Axel Springer SE",
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
   "engines": {
     "node": ">=6.9.13",
     "npm": ">=3.10.7"
   },
   "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^8.5.2",
     "babel-core": "^6.26.0",
