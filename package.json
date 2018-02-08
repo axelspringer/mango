@@ -43,21 +43,19 @@
     "url": "https://github.com/axelspringer/mango.git"
   },
   "scripts": {
-    "postinstall": "lerna bootstrap",
+    "postinstall": "lerna bootstrap --ignore @axelspringer/mango-demo",
     "publish": "lerna publish --yes",
-    "build": "lerna run build",
+    "build": "lerna run build --ignore @axelspringer/mango-demo",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "engines": {
     "node": ">=6.9.13",
     "npm": ">=3.10.7"
   },
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
   "dependencies": {
     "pino-http": "^3.0.1",
     "vue-server-renderer": "^2.5.13",
