@@ -28,7 +28,7 @@ export function install(Vue) {
     get() { return this._pageblock }
   })
 
-  Vue.mixin(mixin)
+  Vue.mixin(mixin(Vue))
 
   // use object-based merge strategy
   const strats = Vue.config.optionMergeStrategies
