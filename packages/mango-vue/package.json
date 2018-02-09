@@ -19,12 +19,10 @@
     "access": "public"
   },
   "author": "Axel Springer SE",
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
   "engines": {
     "node": ">=6.9.13",
     "npm": ">=3.10.7"
