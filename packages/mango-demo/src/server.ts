@@ -12,6 +12,8 @@ export default context => {
         return reject({ code: 404 })
       }
 
+      let js = ''
+
       Promise.all([
         // vuex store prefetch
         ...matchedComponents.map(cmp => cmp.preFetch && cmp.preFetch(store)),
