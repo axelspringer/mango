@@ -52,10 +52,12 @@
     "node": ">=6.9.13",
     "npm": ">=3.10.7"
   },
-  "contributors": [{
-    "name": "Sebastian Döll",
-    "email": "sebastian.doell@axelspringer.com"
-  }],
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
   "dependencies": {
     "pino-http": "^3.0.1",
     "vue-server-renderer": "^2.5.13",

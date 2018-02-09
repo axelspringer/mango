@@ -4,9 +4,17 @@ import { sync } from 'vuex-router-sync'
 import router from './router'
 import store from './store'
 import Vue from 'vue'
+import VueApollo from 'vue-apollo'
+import { createApolloClient } from './apollo'
 
 // create function
-export default function () {
+export default function (ctx) {
+  // apollo
+  const apolloClient = createApolloClient(ctx || false)
+  const apolloProvider = new VueApollo({
+    defaultClient: apolloClient,
+  })
+
   // route state store
   sync(store, router)
 
@@ -15,9 +23,10 @@ export default function () {
     router,
     store,
     pagemanager,
+    apolloProvider,
     mango,
     render: (h) => h(App)
   })
 
-  return { app, router, store }
+  return { app, router, store, apolloProvider }
 }

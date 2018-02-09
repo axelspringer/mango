@@ -3,6 +3,9 @@
     [
       "env",
       {
+        "targets": {
+          "node": "6.9.2"
+        },
         "modules": false
       }
     ]

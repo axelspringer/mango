@@ -15,6 +15,7 @@ declare var __DEV__: boolean;
 // Window
 interface Window {
   __INITIAL_STATE__: any;
+  __APOLLO_STATE__: any;
 }
 
 interface SystemJS {

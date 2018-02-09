@@ -26,7 +26,7 @@ export default {
 
     if (props.blocks && Array.isArray(props.blocks)) {
       children = props.blocks.map((block) => {
-        const cmp = options.blocks.find(b => b.pageBlock === block['page_block'])
+        const cmp = options.blocks.find(b => b.pageBlock === block.pageBlock)
 
         if (cmp === undefined) {
           return null
@@ -37,8 +37,8 @@ export default {
         const newNode = vnode
         const Ctor = newNode.componentOptions.Ctor
         Ctor.options.pageBlocks = Ctor.options.pageBlocks || {}
-        Ctor.options.pageBlocks[block['page_block']] = Ctor.options.pageBlocks[block['page_block']] || []
-        Ctor.options.pageBlocks[block['page_block']].push(block)
+        Ctor.options.pageBlocks[block.pageBlock] = Ctor.options.pageBlocks[block.pageBlock] || []
+        Ctor.options.pageBlocks[block.pageBlock].push(block)
 
         return newNode
       })
