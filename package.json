@@ -15,6 +15,7 @@
     "lerna": "^2.5.1",
     "lodash": "^4.17.4",
     "nodemon": "^1.14.7",
+    "pino-http": "^3.0.1",
     "prettier": "^1.9.2",
     "rimraf": "^2.6.2",
     "rollup": "^0.53.3",
@@ -31,7 +32,10 @@
     "rollup-plugin-vue": "^3.0.0",
     "tslint": "^5.8.0",
     "tslint-config-prettier": "^1.6.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "vue-router": "^3.0.1",
+    "vue-server-renderer": "^2.5.13",
+    "webpack-dev-middleware": "^2.0.4"
   },
   "author": "Axel Springer SE",
   "license": "MIT",
@@ -57,10 +61,5 @@
       "name": "Sebastian Döll",
       "email": "sebastian.doell@axelspringer.com"
     }
-  ],
-  "dependencies": {
-    "pino-http": "^3.0.1",
-    "vue-server-renderer": "^2.5.13",
-    "webpack-dev-middleware": "^2.0.4"
-  }
+  ]
 }
