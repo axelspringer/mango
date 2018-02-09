@@ -20,6 +20,7 @@ export default context => {
           route: router.currentRoute,
         }, matchedComponents),
       ]).then(() => {
+        context.apolloState = apolloProvider.exportStates()
         context.state = store.state
         resolve(app)
       }).catch(reject)
