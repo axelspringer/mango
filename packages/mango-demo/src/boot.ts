@@ -15,6 +15,10 @@ export default function (ctx) {
     defaultClient: apolloClient,
   })
 
+  if (typeof window !== 'undefined' && window.__INITIAL_STATE__) {
+    store.replaceState(window.__INITIAL_STATE__)
+  }
+
   // route state store
   sync(store, router)
 
