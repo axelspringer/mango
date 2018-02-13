@@ -14,7 +14,7 @@ export class Post extends Vue {
         <div class='row'>
           <div class='col'>
             <div class={biggerClass}>
-              asdasd
+              This is a post
             </div>
           </div>
         </div>

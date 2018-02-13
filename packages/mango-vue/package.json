@@ -43,7 +43,6 @@
     "rollup-plugin-vue": "^3.0.0",
     "typescript": "^2.6.2",
     "vue": "^2.5.13",
-    "vue-apollo": "^3.0.0-alpha.3",
     "vue-functional-data-merge": "^2.0.3",
     "vue-property-decorator": "^6.0.0"
   }

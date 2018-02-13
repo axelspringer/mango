@@ -1,3 +1,3 @@
-import MangoRouter from './router'
+import Router from './router'
 
-export default new MangoRouter()
+export default new Router()

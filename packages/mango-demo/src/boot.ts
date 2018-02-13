@@ -27,7 +27,7 @@ export default function (ctx) {
     router,
     store,
     pagemanager,
-    apolloProvider,
+    // provide: apolloProvider.provide(),
     mango,
     render: (h) => h(App)
   })
