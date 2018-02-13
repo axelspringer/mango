@@ -9,6 +9,8 @@ export function polyfills() {
 
 export function vendor() {
   return [
+    'vue',
+    'vue-apollo',
     'vuex'
   ]
 }

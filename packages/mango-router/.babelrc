@@ -3,11 +3,10 @@
     [
       "env",
       {
+        "modules": false,
         "targets": {
-          "node": "6.9.2",
           "browsers": ["last 2 versions", "safari >= 7"]
-        },
-        "modules": false
+        }
       }
     ]
   ],

@@ -53,7 +53,7 @@ module.exports = {
     useChokidar: false,
     exclude: ['node_modules/**']
   },
-  external: Object.keys(dependencies || {}).filter(dep => externalExcludes.indexOf(dep) === -1),
+  external: externalExcludes,
   plugins: [
     typescript({
       clean: true,

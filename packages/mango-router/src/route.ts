@@ -1,9 +1,8 @@
 import { RouteConfig } from 'vue-router/types'
-import { Component } from 'vue/types'
 
 export class Route {
-  constructor(public cmp: Component, public config: RouteConfig) {
-    this.config.component = cmp
+  constructor(public cmp, public config: RouteConfig) {
+    this.config.component = this.cmp
   }
 }
 
@@ -13,7 +12,7 @@ export class Home extends Route {
     name: 'home'
   }
 
-  constructor(cmp: Component, path: string, config = {}) {
+  constructor(cmp, path: string, config = {}) {
     super(cmp, Object.assign({}, { path }, Home.default, config))
   }
 }
@@ -24,7 +23,7 @@ export class Category extends Route {
     name: 'category'
   }
 
-  constructor(cmp: Component, path: string, config = {}) {
+  constructor(cmp, path: string, config = {}) {
     super(cmp, Object.assign({}, { path }, Category.default, config))
   }
 }
@@ -35,7 +34,7 @@ export class Tag extends Route {
     name: 'tag'
   }
 
-  constructor(cmp: Component, path: string, config = {}) {
+  constructor(cmp, path: string, config = {}) {
     super(cmp, Object.assign({}, { path }, Category.default, config))
   }
 }
@@ -46,7 +45,7 @@ export class Year extends Route {
     name: 'year'
   }
 
-  constructor(cmp: Component, path: string, config = {}) {
+  constructor(cmp, path: string, config = {}) {
     super(cmp, Object.assign({}, { path }, Category.default, config))
   }
 }
@@ -57,7 +56,7 @@ export class Month extends Route {
     name: 'month'
   }
 
-  constructor(cmp: Component, path: string, config = {}) {
+  constructor(cmp, path: string, config = {}) {
     super(cmp, Object.assign({}, { path }, Category.default, config))
   }
 }
@@ -68,7 +67,7 @@ export class Day extends Route {
     name: 'day'
   }
 
-  constructor(cmp: Component, path: string, config = {}) {
+  constructor(cmp, path: string, config = {}) {
     super(cmp, Object.assign({}, { path }, Category.default, config))
   }
 }
@@ -79,7 +78,7 @@ export class Post extends Route {
     name: 'post'
   }
 
-  constructor(cmp: Component, path: string, config = {}) {
+  constructor(cmp, path: string, config = {}) {
     super(cmp, Object.assign({}, { path }, Category.default, config))
   }
 }

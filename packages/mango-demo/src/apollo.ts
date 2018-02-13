@@ -33,6 +33,7 @@ export function createApolloClient(isSSR = false) {
   const apolloClient = new ApolloClient({
     link: httpLink,
     cache,
+    connectToDevTools: true,
     ...(isSSR ? {
       // Set this on the server to optimize queries when SSR
       ssrMode: true,
