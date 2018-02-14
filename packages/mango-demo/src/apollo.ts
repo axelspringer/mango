@@ -7,7 +7,7 @@ import { Config } from './config'
 import 'isomorphic-fetch'
 
 // Install the vue plugin
-Vue.use(VueApollo)
+// Vue.use(VueApollo)
 
 // Create the apollo client
 export function createApolloClient(isSSR = false) {

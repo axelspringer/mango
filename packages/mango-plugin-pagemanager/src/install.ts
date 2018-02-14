@@ -1,5 +1,4 @@
 import { registerComponents } from './utils/plugins'
-// import { isDef } from './utils/def'
 import mixin from './mixin'
 import PageManagerRenderer from './components/renderer'
 
@@ -32,5 +31,5 @@ export function install(Vue) {
 
   // use object-based merge strategy
   const strats = Vue.config.optionMergeStrategies
-  strats.i18n = strats.methods
+  strats.pagemanager = strats.methods
 }

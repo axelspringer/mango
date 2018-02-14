@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Component from 'vue-class-component'
 import { Getter } from 'vuex-class'
 import gql from 'graphql-tag'
-import { HomeProvider } from '@axelspringer/mango-router'
 
 import { biggerClass } from './style'
 
@@ -35,7 +34,7 @@ export class Home extends Vue {
 
   public render(h) {
     return (
-      <HomeProvider>
+      <home-provider>
         <div class='container-fluid'>
           <pagemanager-renderer blocks={this.pageManagerCategory} />
           <div class='row'>
@@ -47,7 +46,7 @@ export class Home extends Vue {
             </div>
           </div>
         </div>
-      </HomeProvider>
+      </home-provider>
     )
   }
 }
