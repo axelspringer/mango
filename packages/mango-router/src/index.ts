@@ -4,17 +4,11 @@ import { inBrowser } from './utils/dom'
 import { install } from './install'
 import { Component } from 'vue/types'
 import { Route, Home, Category, Tag, Year, Month, Day, Post } from './route'
-import DayProvider from './provider/day'
-import HomeProvider from './provider/home'
-import MonthProvider from './provider/month'
-import PostProvider from './provider/post'
-import TagProvider from './provider/tag'
-import YearProvider from './provider/year'
 
 export type Options = {
 }
 
-class RouterPlugin {
+export default class Router {
 
   private _resolver = cmp => cmp
   private _routes = []
@@ -33,8 +27,8 @@ class RouterPlugin {
 
   public init(app: any /* Vue component instance */) {
     process.env.NODE_ENV !== 'production' && assert(
-      RouterPlugin.install.prototype.installed,
-      `not installed. Make sure to call \`Vue.use(PageManager)\` ` +
+      Router.install.prototype.installed,
+      `not installed. Make sure to call \`Vue.use(MangoRouter)\` ` +
       `before creating root instance.`
     )
 
@@ -121,21 +115,9 @@ class RouterPlugin {
   }
 }
 
-RouterPlugin.install = install
-RouterPlugin.version = '__VERSION__'
-
-export default new RouterPlugin()
-
-export {
-  DayProvider,
-  HomeProvider,
-  MonthProvider,
-  PostProvider,
-  RouterPlugin,
-  TagProvider,
-  YearProvider
-}
+Router.install = install
+Router.version = '__VERSION__'
 
 if (inBrowser && window.Vue) {
-  window.Vue.use(Plugin)
+  window.Vue.use(Router)
 }
