@@ -14,6 +14,7 @@ import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 
 // custom
 import ping from './ping'
+import health from './health'
 import { isProd } from './utils'
 
 // schema
@@ -50,6 +51,9 @@ export class Middleware extends EventEmitter {
         console.log('error')
       }
     })
+
+    // Health
+    this.router.get('/', health)
 
     // Ping
     this.router.get('/ping', ping)
