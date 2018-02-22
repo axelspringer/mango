@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-plugin-pagemanager",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "Mango API plugin for the Page Manager",
   "main": "dist/pagemanager.common.js",
   "web": "dist/pagemanager.js",
@@ -35,13 +35,13 @@
     }
   ],
   "peerDependencies": {
-    "@axelspringer/mango-api": "^0.1.17",
+    "@axelspringer/mango-api": "^0.1.20",
     "graphql": "^0.12.3",
     "graphql-iso-date": "^3.3.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-api": "^0.1.17",
+    "@axelspringer/mango-api": "^0.1.20",
     "@types/node": "^9.4.0",
     "babel-core": "^6.26.0",
     "concurrently": "^3.5.1",

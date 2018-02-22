@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-vue",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "description": "Vue.js components for Mango",
   "main": "dist/mango-vue.common.js",
   "web": "dist/mango-vue.js",
@@ -19,10 +19,12 @@
     "access": "public"
   },
   "author": "Axel Springer SE",
-  "contributors": [{
-    "name": "Sebastian Döll",
-    "email": "sebastian.doell@axelspringer.com"
-  }],
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
   "engines": {
     "node": ">=6.9.13",
     "npm": ">=3.10.7"
