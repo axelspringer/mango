@@ -7,7 +7,9 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 # install
-RUN npm install --only production
+RUN npm install --only production \
+  && npm i graphql \
+  && npm i graphql-iso-date
 
 # assets
 COPY . .
