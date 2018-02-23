@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-plugin-navigation",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "description": "Mango API plugign for navigation extensitons to WP REST",
   "main": "dist/navigation.common.js",
   "web": "dist/navigation.js",
@@ -15,6 +15,11 @@
     "tsc": "tsc",
     "watch": "rollup -w -c scripts/config.js"
   },
+  "files": [
+    "data/*.json",
+    "dist/*.js",
+    "types/*.d.ts"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -30,13 +35,13 @@
     }
   ],
   "peerDependencies": {
-    "@axelspringer/mango-api": "^0.1.20",
+    "@axelspringer/mango-api": "^0.1.21",
     "graphql": "^0.12.3",
     "graphql-iso-date": "^3.3.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-api": "^0.1.20",
+    "@axelspringer/mango-api": "^0.1.21",
     "@types/node": "^8.5.2",
     "babel-core": "^6.26.0",
     "concurrently": "^3.5.1",
