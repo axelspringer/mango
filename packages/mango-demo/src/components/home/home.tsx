@@ -40,8 +40,7 @@ export class Home extends Vue {
           <div class='row'>
             <div class='col'>
               <div class={biggerClass}>
-                This is the Home.
-              {this.message}
+                {this.message}
               </div >
             </div>
           </div>
