@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-apollo",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Mango apollo client",
   "typings": "types/index.d.ts",
   "main": "dist/mango-apollo.common.js",
