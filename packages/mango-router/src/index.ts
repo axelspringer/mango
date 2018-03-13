@@ -97,7 +97,7 @@ export default class Router {
 
   public post(cmp: Component) {
     this._addUrl(Post.path)
-    this._addRoute(new Category(cmp, this._url))
+    this._addRoute(new Post(cmp, this._url))
 
     return this // chain
   }

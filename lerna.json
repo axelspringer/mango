@@ -1,7 +1,11 @@
 {
   "lerna": "2.5.1",
   "packages": [
-    "packages/*"
+    "packages/mango-api",
+    "packages/mango-plugin-navigation",
+    "packages/mango-plugin-pagemanager",
+    "packages/mango-ssr",
+    "packages/mango-router"
   ],
   "version": "0.2.2"
 }

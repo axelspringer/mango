@@ -54,7 +54,6 @@
     "url": "https://github.com/axelspringer/mango.git"
   },
   "scripts": {
-    "postinstall": "lerna bootstrap --ignore @axelspringer/mango-demo",
     "publish": "lerna publish --yes",
     "build": "lerna run build --ignore @axelspringer/mango-demo",
     "test": "echo \"Error: no test specified\" && exit 0"

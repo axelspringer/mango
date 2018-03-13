@@ -24,9 +24,8 @@ The API and the components are highly integrated. You will thus need the gateway
 
 > also you should use the [WP Mango](https://github.com/axelspringer/wp-mango) plugin to authenticate protected endpoints in your [WP REST API](http://v2.wp-api.org/)
 
-```bash
-# this starts the dev mode for gateway so as for the components
-lerna run start --stream
+```
+lerna bootstrap
 ```
 
 ## License
