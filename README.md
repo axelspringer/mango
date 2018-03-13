@@ -14,9 +14,8 @@ Packages:
 
 * [API](https://github.com/axelspringer/mango/tree/master/packages/mango-api#README)
 * [SSR](https://github.com/axelspringer/mango/tree/master/packages/mango-ssr#README)
-* [Vue](https://github.com/axelspringer/mango/tree/master/packages/mango-vue#README)
-* [Page Manager](https://github.com/axelspringer/mango/tree/master/packages/mango-plugin-pagemanager#README)
-* [Navigation](https://github.com/axelspringer/mango/tree/master/packages/mango-plugin-navigation#README)
+* [Page Manager Plugin](https://github.com/axelspringer/mango/tree/master/packages/mango-plugin-pagemanager#README)
+* [Navigation Plugin](https://github.com/axelspringer/mango/tree/master/packages/mango-plugin-navigation#README)
 
 ## Development
 
@@ -25,7 +24,15 @@ The API and the components are highly integrated. You will thus need the gateway
 > also you should use the [WP Mango](https://github.com/axelspringer/wp-mango) plugin to authenticate protected endpoints in your [WP REST API](http://v2.wp-api.org/)
 
 ```
-lerna bootstrap
+npm i && npm i graphql graphql-iso-date && lerna bootstrap
+```
+
+```
+lerna run build
+```
+
+```
+lerna run start --stream --scope @axelspringer/mango-api
 ```
 
 ## License
