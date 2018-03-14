@@ -1,5 +1,3 @@
-import 'babel-polyfill'
-
 import { install } from './install'
 import { inBrowser } from './utils/dom'
 import { Component } from 'vue/types'

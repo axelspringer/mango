@@ -14,6 +14,12 @@
   "plugins": [
     "transform-vue-jsx",
     "syntax-dynamic-import",
-    "external-helpers"
+    "external-helpers",
+    "transform-regenerator", ["transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": "rollup-regenerator-runtime"
+    }]
   ]
 }
