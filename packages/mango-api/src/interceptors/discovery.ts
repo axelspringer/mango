@@ -18,11 +18,11 @@ export class RandomDiscoveryStrategy extends DiscoveryStrategy {
   public async resolve(config, wp, dnsCache) {
     return new Promise(function (resolve, _) {
       dnsCache.resolveSrv(wp, function (err, records) {
-        if (err) {
-          resolve(config)
+        if (err || !records) {
+          return resolve(config)
         }
         config.baseURL = DiscoveryStrategy.getSrvURI(records[RandomDiscoveryStrategy.getRandomInt(0, records.length)])
-        resolve(config)
+        return resolve(config)
       })
     })
   }
