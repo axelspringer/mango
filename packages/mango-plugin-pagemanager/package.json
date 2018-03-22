@@ -15,6 +15,7 @@
     "build": "rollup -c scripts/config.js",
     "build:types": "npm run tsc -- -p tsconfig.json --declaration --declarationDir ./types",
     "clean:dist": "npm run rimraf -- dist",
+    "clean": "npm run rimraf -- dist node_modules",
     "prebuild": "npm run clean:dist",
     "rimraf": "rimraf",
     "start": "npm run watch",
@@ -36,15 +37,14 @@
     }
   ],
   "peerDependencies": {
-    "@axelspringer/mango-api": "^0.2.2",
+    "@axelspringer/mango-api": "^0.4.2",
     "graphql": "^0.12.3",
     "graphql-iso-date": "^3.3.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-api": "^0.2.2",
+    "@axelspringer/mango-api": "^0.4.2",
     "@types/node": "^9.4.0",
-    "babel-polyfill": "^6.26.0",
     "concurrently": "^3.5.1",
     "cross-env": "^5.1.3",
     "lodash": "^4.17.4",

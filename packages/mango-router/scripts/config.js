@@ -7,7 +7,7 @@ import babel from 'rollup-plugin-babel'
 // import CleanCSS from 'clean-css'
 import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
-import typescript from 'rollup-plugin-typescript2'
+import typescript from 'rollup-plugin-typescript'
 
 import vue from 'rollup-plugin-vue'
 import replace from 'rollup-plugin-replace'
@@ -55,10 +55,7 @@ module.exports = {
   },
   external: externalExcludes,
   plugins: [
-    typescript({
-      clean: true,
-      tsconfigOverride: override
-    }),
+    typescript(),
     vue({
       cssModules: {
         generateScopedName: '[name]__[local]'

@@ -7,7 +7,9 @@ import * as cors from '@koa/cors'
 import logger from './logger'
 import { EventEmitter } from 'events'
 import { Winston } from 'winston'
-import { Mock, MockAdapter } from './mock'
+import { addDefaultMocks, addPluginMocks, MockAdapter } from './mock'
+// import { Discovery, RandomStrategy } from './discovery'
+import * as GracefulShutdown from 'http-graceful-shutdown'
 
 // apollo
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
@@ -24,18 +26,32 @@ export class Middleware extends EventEmitter {
 
   private app: Koa
   private router: koaRouter
+  private adapter: any
 
   constructor(public ctx, public config, public log: Winston) {
     super()
 
-    // call to inject mock
+    // use mock adapter
     if (this.config.mock) {
-      Middleware.injectMock(this.ctx.axios, this.config)
+      this.adapter = new MockAdapter(this.ctx.axios, this.config)
+      addDefaultMocks(this.adapter)
+      addPluginMocks(this.adapter, this.config)
     }
 
     // Koa
     this.app = new Koa()
     this.router = new koaRouter()
+
+    // graceful shutdown
+    GracefulShutdown(this.app, {
+      development: !isProd,
+      finally: function () {
+        console.log('Server gracefully shut down ....')
+      }
+    })
+
+    // Microservice resolver
+    // new Discovery(new RandomStrategy(), this.ctx)
 
     // Middlewares
     this.app.use(logger())
@@ -73,14 +89,5 @@ export class Middleware extends EventEmitter {
   public run() {
     // listen
     this.app.listen(this.config.port)
-  }
-
-  // inject mock
-  public static injectMock(axios, config) {
-    const adapter = new MockAdapter(axios, config)
-    new Mock(adapter)
-    config.plugin.forEach(plugin => {
-      new plugin.mock(adapter)
-    })
   }
 }

@@ -7,6 +7,7 @@ import * as http from 'http'
 import * as https from 'https'
 import axios from 'axios'
 import { isDev, loadPlugin } from './utils'
+import { Discovery, RandomDiscoveryStrategy } from './interceptors'
 
 // use default for import
 const { createLogger, format, transports } = require('winston')
@@ -28,7 +29,7 @@ const logger = createLogger({
     // new winston.transports.File({ filename: 'error.log', level: 'error' }),
     // new winston.transports.File({ filename: 'combined.log' })
   ]
-});
+})
 
 // add console transport in dev
 if (isDev) {
@@ -48,16 +49,20 @@ const agent = {
   keepAlive: true
 }
 
+const fetch = axios.create({
+  baseURL: config.wp,
+  headers
+})
+
+fetch.interceptors.request.use(...new Discovery(config.wp, new RandomDiscoveryStrategy()).use())
+
 // construct context
-const ctx = {
+let ctx = {
   config,
   timeout: 1 * 1000, // only wait 1 second before timeout
   httpAgent: new http.Agent(agent),
   httpsAgent: new https.Agent(agent),
-  axios: axios.create({
-    baseURL: config.wp,
-    headers
-  }),
+  axios: fetch,
   loader: createLoader(config.plugin)
 }
 

@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-ssr",
-  "version": "0.2.2",
+  "version": "0.4.2",
   "description": "Mango WordPress Server Side Renderer",
   "main": "dist/main.js",
   "bin": {
@@ -10,6 +10,7 @@
     "build": "tsc -p tsconfig.json --outDir ./dist",
     "build:docker": "docker build --squash -t axelspringer/mango-ssr .",
     "clean:dist": "npm run rimraf -- dist",
+    "clean": "npm run rimraf -- dist node_modules",
     "prebuild": "npm run clean:dist",
     "rimraf": "rimraf",
     "server:dev": "cross-env NODE_ENV=development ./node_modules/.bin/nodemon ./dist/server.js",
