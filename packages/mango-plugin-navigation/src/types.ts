@@ -94,7 +94,7 @@ export const NavMenuItemType = new GraphQLObjectType({
       resolve: item => item.filter
     },
     menuItemParent: {
-      type: NavMenuType,
+      type: GraphQLString,
       resolve: item => item.menu_item_parent
     },
     type: {
