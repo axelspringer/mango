@@ -1,73 +1,51 @@
-const { GraphQLObjectType, GraphQLUnionType, GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
-const { PostType } = require('@axelspringer/mango-api')
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLList,
+  GraphQLScalarType,
+  GraphQLNonNull
+} = require('graphql')
 
-enum BlockTypes {
-  SelectedArticles = 'selected_articles'
-}
+//const { PostType } = require('@axelspringer/mango-api')
 
-export const SelectedArticlesSettings = new GraphQLObjectType({
-  name: 'SelectedArticlesSettings',
-  description: 'Selected articles settings',
-  fields: () => ({
-    formats: {
-      type: new GraphQLList(GraphQLString),
-      resolve: settings => settings.formats
-    }
-  })
-})
-
-export const SelectedArticlesWidget = new GraphQLObjectType({
-  name: 'SelectedArticlesWidget',
-  description: 'This contains the selected articles widget settings',
-  fields: () => ({
-    type: {
-      type: GraphQLString,
-      resolve: widget => widget.type
-    },
-    name: {
-      type: GraphQLString,
-      resolve: widget => widget.name
-    },
-    value: {
-      type: new GraphQLList(GraphQLInt),
-      resolve: widget => widget.value
-    },
-    settings: {
-      type: SelectedArticlesSettings,
-      resolve: widget => widget.settings
-    }
-  })
-})
-
-export const SelectedArticles = new GraphQLObjectType({
-  name: 'SelectedArticles',
-  description: 'This is a Page Manager Block which contains selected articles',
-  fields: () => ({
-    pageBlock: {
-      type: GraphQLString,
-      resolve: block => block.page_block
-    },
-    widgetSettings: {
-      type: new GraphQLList(SelectedArticlesWidget),
-      resolve: block => block.widget_settings
-    },
-    language: {
-      type: GraphQLString,
-      resolve: block => block.language
-    },
-    result: {
-      type: new GraphQLList(PostType),
-      resolve: block => block.result
-    }
-  })
-})
-
-export const PageManagerBlock = new GraphQLUnionType({
-  name: 'PageManagerBlock',
-  types: [SelectedArticles],
-  resolveType(value) {
-    if (value.page_block === BlockTypes.SelectedArticles) {
-      return SelectedArticles
-    }
+export const PageManagerMeta = new GraphQLObjectType({
+  name: 'PageManagerMeta',
+  fields: {
+    language: { type: new GraphQLNonNull(GraphQLString) },
+    scope: { type: GraphQLString },
+    type: { type: GraphQLString }
   }
+})
+
+export const WidgetValueType = new GraphQLScalarType({
+  name: 'WidgetValueType',
+  parseValue: value => value,
+  serialize: value => value,
+  parseLiteral: ast => ast.value
+})
+
+export const WidgetType = new GraphQLObjectType({
+  name: 'WidgetType',
+  fields: {
+    name: { type: new GraphQLNonNull(GraphQLString) },
+    type: { type: new GraphQLNonNull(GraphQLString) },
+    value: { type: WidgetValueType }
+  }
+})
+
+export const PageManagerBlock = new GraphQLObjectType({
+  name: 'PageManagerBlock',
+  fields: {
+    page_block: { type: new GraphQLNonNull(GraphQLString) },
+    result: { type: GraphQLList(WidgetType) }
+  }
+})
+
+export const PageManager = new GraphQLObjectType({
+  name: 'PageManager',
+  description: 'Common PageManager interface',
+  fields: () => ({
+    meta: { type: PageManagerMeta },
+    data: { type: GraphQLList(PageManagerBlock) }
+  })
 })

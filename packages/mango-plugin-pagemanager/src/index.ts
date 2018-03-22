@@ -9,9 +9,16 @@ export enum PageManagerBlockTypes {
   SelectedArticles = 'selected_articles'
 }
 
+export type Widget = {
+  name: string,
+  type: string,
+  value: any
+}
+
 export type PageManagerBlock = {
   component: string,
-  pageBlock: Component
+  pageBlock: Component,
+  result: Widget[]
 }
 
 export enum PageManagerMode {

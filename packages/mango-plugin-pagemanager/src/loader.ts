@@ -5,7 +5,8 @@ export enum API {
   PageManagerPosts = '/page-manager/posts',
   PageManagerPages = '/page-manager/pages',
   PageManagerTags = '/page-manager/tags',
-  PageManagerSettings = '/page-manager/settings'
+  PageManagerSettings = '/page-manager/settings',
+  PageManagerGlobal = '/page-manager/global'
 }
 
 export const Loader = {
@@ -35,5 +36,10 @@ export const Loader = {
     const result = await this._fetcher(ctx, [API.PageManagerPages, id].join('/'), args)
     // this is a hack for later
     return result.data
+  },
+
+  // fetch page manager data for global settings (e.g. for home)
+  getPageManagerGlobal: async function (ctx: GraphQLContext, section: string, args = {}) {
+    return await this._fetcher(ctx, [API.PageManagerGlobal, section].join('/'), args)
   }
 }
