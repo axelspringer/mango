@@ -68,9 +68,7 @@ module.exports = {
     }),
     commonjs(),
     babel({
-      exclude: 'node_modules/**',
-      externalHelpers: true,
-      runtimeHelpers: true
+      exclude: 'node_modules/**'
     })
   ],
   output: [{
