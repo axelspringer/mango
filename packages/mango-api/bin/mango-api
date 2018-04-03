@@ -1,3 +1,4 @@
 #!/usr/bin/env node
 
+require("regenerator-runtime/runtime");
 require('../dist/server.js')
