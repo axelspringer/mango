@@ -39,7 +39,6 @@ lighthouse.*
 dist
 public
 !icon/
-types
 *.js.map
 
 # Doc #
