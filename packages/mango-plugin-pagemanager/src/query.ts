@@ -1,5 +1,5 @@
 const { GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
-import { PageManagerBlock, PageManager } from './types'
+import { PageManagerBlock, PageManager, PageManagerLanguage } from './types'
 
 export const Query = {
   pageManagerCategory: {
@@ -61,5 +61,9 @@ export const Query = {
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.getPageManagerGlobal(ctx, args.section, args)
+  },
+  pageManagerLanguages: {
+    type: new GraphQLList(PageManagerLanguage),
+    resolve: (_root, args, ctx) => ctx.loader.getPageManagerLanguages(ctx, args)
   }
 }
