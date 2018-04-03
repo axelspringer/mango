@@ -1,7 +1,3 @@
-// import _Vue from 'Vue'
-// import { Component } from 'vue-property-decorator'
-// import { __decorate } from 'tslib'
-
 export default {
   name: 'pagemanager-renderer',
   functional: true,

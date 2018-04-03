@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "module": "commonjs",
+    "module": "es2015",
     "moduleResolution": "node",
     "importHelpers": true,
     "noEmitHelpers": true,

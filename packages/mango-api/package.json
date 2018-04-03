@@ -1,9 +1,9 @@
 {
   "name": "@axelspringer/mango-api",
-  "version": "0.5.2",
+  "version": "0.5.7",
   "description": "An API Gateway for WordPress",
   "main": "dist/main.js",
-  "typings": "./mango-api.d.ts",
+  "typings": "types/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json --outDir ./dist",
     "build:docker": "docker build --squash -t axelspringer/mango-api .",
@@ -18,6 +18,13 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "bin",
+    "data",
+    "dist",
+    "types",
+    "scripts"
+  ],
   "bin": {
     "mango-api": "./bin/mango-api"
   },
@@ -38,8 +45,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-plugin-navigation": "^0.5.2",
-    "@axelspringer/mango-plugin-pagemanager": "^0.5.2",
+    "@axelspringer/mango-plugin-navigation": "^0.5.7",
+    "@axelspringer/mango-plugin-pagemanager": "^0.5.7",
     "@types/koa": "^2.0.43",
     "@types/node": "^8.5.2",
     "@types/winston": "^2.3.7",
@@ -64,6 +71,7 @@
     "koa-bodyparser": "^4.2.0",
     "koa-pino-logger": "^2.1.1",
     "koa-router": "^7.3.0",
+    "regenerator-runtime": "^0.11.1",
     "rimraf": "^2.6.2",
     "ts-node": "^4.1.0",
     "tslib": "^1.8.0",
