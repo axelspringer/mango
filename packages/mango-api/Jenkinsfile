@@ -1,8 +1,0 @@
-@Library("jenkins-shared-libraries") _
-monorepoMango {
-    projectName = "tortuga-mango-api"
-    buildDisplayName = "Mango Api"
-    buildDescription = "Mango Api Build"
-    containerName = "tortuga-mango-api"
-    buildDir = "packages/mango-api/"
-}
