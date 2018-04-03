@@ -53,8 +53,14 @@ export const PageManager = new GraphQLObjectType({
 export const PageManagerLanguage = new GraphQLObjectType({
   name: 'PageManagerLanguage',
   fields: {
-    locale: GraphQLString,
-    name: GraphQLString,
-    slug: GraphQLString
+    locale: {
+      type: GraphQLString
+    },
+    name: {
+      type: GraphQLString
+    },
+    slug: {
+      type: GraphQLString
+    }
   }
 })
