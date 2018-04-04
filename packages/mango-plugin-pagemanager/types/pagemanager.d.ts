@@ -16,8 +16,8 @@ export type PageManagerBlock = {
 }
 
 export type PageManagerOption = {
-  component: string;
-  pageBlock: Component;
+  component: Component;
+  pageBlock: string;
 }
 
 export interface RouterOptions {
