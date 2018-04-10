@@ -5,6 +5,7 @@ export * from './postType'
 export * from './queryType'
 export * from './settingsType'
 export * from './userType'
+export * from './termType'
 
 export const createQuery = plugins => {
   const pluginQuery = plugins.reduce((query, plugin) => Object.assign(query, plugin.query), {})

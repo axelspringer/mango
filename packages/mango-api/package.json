@@ -6,6 +6,7 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json --outDir ./dist",
+    "build:types": "tsc -p tsconfig.json --declaration --declarationDir ./types",
     "build:docker": "docker build --squash -t axelspringer/mango-api .",
     "clean": "npm run rimraf -- dist node_modules",
     "clean:dist": "npm run rimraf -- dist",
