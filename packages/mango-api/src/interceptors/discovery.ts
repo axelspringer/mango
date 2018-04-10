@@ -1,4 +1,5 @@
 import * as DNSCache from 'dnscache'
+import { URL } from 'url'
 
 export class DiscoveryStrategy {
 
@@ -17,11 +18,13 @@ export class RandomDiscoveryStrategy extends DiscoveryStrategy {
 
   public async resolve(config, wp, dnsCache) {
     return new Promise(function (resolve, _) {
-      dnsCache.resolveSrv(wp, function (err, records) {
+      const url = new URL(wp)
+      dnsCache.resolveSrv(url.hostname, function (err, records) {
         if (err || !records) {
           return resolve(config)
         }
-        config.baseURL = DiscoveryStrategy.getSrvURI(records[RandomDiscoveryStrategy.getRandomInt(0, records.length)])
+        url.host = DiscoveryStrategy.getSrvURI(records[RandomDiscoveryStrategy.getRandomInt(0, records.length)])
+        config.baseURL = url.toString()
         return resolve(config)
       })
     })
