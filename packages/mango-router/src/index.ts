@@ -3,7 +3,7 @@ import { assert } from './utils/warn'
 import { inBrowser } from './utils/dom'
 import { install } from './install'
 import { Component } from 'vue/types'
-import { Route, Home, Category, Tag, Year, Month, Day, Post } from './route'
+import { Route, Home, Category, Tag, Year, Month, Day, Post, Language } from './route'
 
 export type Options = {
 }
@@ -98,6 +98,13 @@ export default class Router {
   public post(cmp: Component) {
     this._addUrl(Post.path)
     this._addRoute(new Post(cmp, this._url))
+
+    return this // chain
+  }
+
+  public language(cmp: Component) {
+    this._addUrl(Language.path)
+    this._addRoute(new Language(cmp, this._url))
 
     return this // chain
   }

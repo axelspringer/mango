@@ -5,4 +5,5 @@ export default class MangoUrl {
   public static Post = '/:wpPost'
   public static Tag = '/:wpTag'
   public static Year = '/:wpYear'
+  public static Language = '/:lang'
 }

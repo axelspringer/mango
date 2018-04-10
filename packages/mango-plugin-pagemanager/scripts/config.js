@@ -30,12 +30,6 @@ const externalExcludes = [
   'vue'
 ]
 
-const override = {
-  compilerOptions: {
-    declaration: true
-  }
-}
-
 const banner =
   '/*!\n' +
   ' * Mango Plugin Page Manager v' + version + '\n' +
@@ -57,7 +51,6 @@ module.exports = {
   plugins: [
     typescript({
       clean: true,
-      tsconfigOverride: override
     }),
     vue({
       cssModules: {
@@ -75,9 +68,7 @@ module.exports = {
     }),
     commonjs(),
     babel({
-      exclude: 'node_modules/**',
-      externalHelpers: false,
-      runtimeHelpers: true
+      exclude: 'node_modules/**'
     })
   ],
   output: [{
