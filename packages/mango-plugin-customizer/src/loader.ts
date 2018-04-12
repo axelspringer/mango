@@ -1,7 +1,7 @@
 import { GraphQLContext } from 'graphql'
 
 export enum API {
-  Customizer = '/mango/v1/customizer',
+  Customizer = '/mango/v1/customizer'
 }
 
 export const Loader = {
