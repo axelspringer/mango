@@ -94,6 +94,10 @@ export const PostType = new GraphQLObjectType({
     format: {
       type: GraphQLString,
       resolve: post => post.format
+    },
+    pagemanager: {
+      type: new GraphQLList(GraphQLString),
+      resolve: post => post.pagemanager.settings.name
     }
   }),
 })
