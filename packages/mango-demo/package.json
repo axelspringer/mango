@@ -40,7 +40,7 @@
     "cross-env": "cross-env",
     "dev": "cross-env NODE_ENV=development",
     "docker": "docker",
-    "mock": "cross-env NODE_ENV=development ./node_modules/@axelspringer/mango-api/bin/mango-api -m --plugin navigation --plugin pagemanager",
+    "mock": "cross-env NODE_ENV=development ./node_modules/@axelspringer/mango-api/bin/mango-api -m --plugin navigation --plugin pagemanager --plugin customizer",
     "help": "node node_modules/npm-scripts-help",
     "jest": "jest",
     "rimraf": "rimraf",
@@ -61,9 +61,10 @@
     "graphql-iso-date": "^3.3.0"
   },
   "dependencies": {
-    "@axelspringer/mango-api": "^0.1.14",
-    "@axelspringer/mango-plugin-navigation": "^0.1.19",
-    "@axelspringer/mango-plugin-pagemanager": "^0.1.19",
+    "@axelspringer/mango-api": "^0.8.1",
+    "@axelspringer/mango-plugin-navigation": "^0.8.1",
+    "@axelspringer/mango-plugin-pagemanager": "^0.8.1",
+    "@axelspringer/mango-plugin-customizer": "^0.8.1",
     "@axelspringer/mango-ssr": "^0.1.19",
     "@axelspringer/mango-vue": "^0.1.19",
     "core-js": "^2.5.1",
