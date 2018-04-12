@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-plugin-customizer",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "description": "Mango API plugign for customizer extensitons to WP REST",
   "main": "dist/customizer.common.js",
   "web": "dist/customizer.js",
@@ -42,7 +42,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-api": "^0.8.1",
+    "@axelspringer/mango-api": "^0.8.2",
     "@types/node": "^9.4.7",
     "babel-core": "^6.26.0",
     "lodash": "^4.17.4",
