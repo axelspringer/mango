@@ -4,6 +4,7 @@ import { Loader } from './loader'
 export enum API {
   Posts = '/wp/v2/posts',
   Categories = '/wp/v2/categories',
+  Tags = '/wp/v2/tags',
   Users = '/wp/v2/users',
   Settings = '/wp/v2/settings'
 }
@@ -19,6 +20,11 @@ export class WP extends Loader {
   // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: number[] = [], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.Categories, id].join('/')), args))
+  }
+
+  // fetch tags
+  public async getTags(ctx: GraphQLContext, ids: number[] = [], args = {}) {
+    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Tags, id].join('/')), args))
   }
 
   // fetch category

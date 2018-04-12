@@ -2,6 +2,7 @@ const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLIn
 import { GraphQLDateTime } from 'graphql-iso-date'
 import { CategoryType } from './catType'
 import { UserType } from './userType'
+import { TagType } from './tagType'
 
 export const PostType = new GraphQLObjectType({
   name: 'Post',
@@ -95,9 +96,13 @@ export const PostType = new GraphQLObjectType({
       type: GraphQLString,
       resolve: post => post.format
     },
-    pagemanager: {
-      type: new GraphQLList(GraphQLString),
-      resolve: post => post.pagemanager.settings.name
+    tags: {
+      type: new GraphQLList(TagType),
+      resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root.tags, args)
+    },
+    img: {
+      type: GraphQLString,
+      resolve: post => post._links['wp:attachment'][0].href
     }
   }),
 })
