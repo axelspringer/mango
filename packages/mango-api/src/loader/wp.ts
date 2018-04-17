@@ -5,6 +5,7 @@ export enum API {
   Posts = '/wp/v2/posts',
   Categories = '/wp/v2/categories',
   Tags = '/wp/v2/tags',
+  Media = '/wp/v2/media',
   Users = '/wp/v2/users',
   Settings = '/wp/v2/settings'
 }
@@ -30,6 +31,11 @@ export class WP extends Loader {
   // fetch category
   public async getCategory(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [API.Categories, id].join('/'), args)
+  }
+
+  // fetch image
+  public async getImage(ctx: GraphQLContext, id: number, args = {}) {
+    return this._fetcher(ctx, [API.Media, id].join('/'), args)
   }
 
   // fetch users

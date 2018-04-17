@@ -17,5 +17,3 @@ export const defaultQuery = {
     resolve: (_root, _args, ctx) => ctx.loader.getSettings(ctx)
   }
 }
-
-

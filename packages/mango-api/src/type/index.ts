@@ -4,6 +4,7 @@ const { GraphQLObjectType } = require('graphql')
 
 export * from './postType'
 export * from './tagType'
+export * from './imgType'
 export * from './queryType'
 export * from './settingsType'
 export * from './userType'

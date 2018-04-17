@@ -3,13 +3,15 @@ import { GraphQLDateTime } from 'graphql-iso-date'
 import { CategoryType } from './catType'
 import { UserType } from './userType'
 import { TagType } from './tagType'
+import { ImgType } from './imgType'
 
 export const PostType = new GraphQLObjectType({
   name: 'Post',
   description: 'Contains a Post from WordPress',
   fields: () => ({
     date: {
-      type: GraphQLDateTime,
+      //type: GraphQLDateTime,
+      type: GraphQLString,
       resolve: post => post.date
     },
     dateGmt: {
@@ -101,8 +103,8 @@ export const PostType = new GraphQLObjectType({
       resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root.tags, args)
     },
     img: {
-      type: GraphQLString,
-      resolve: post => post._links['wp:attachment'][0].href
+      type: ImgType,
+      resolve: (root, args, ctx) => ctx.loader.getImage(ctx, root.featured_media, args)
     }
   }),
 })
