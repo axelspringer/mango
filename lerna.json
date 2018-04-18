@@ -2,7 +2,6 @@
   "lerna": "2.5.1",
   "packages": [
     "packages/mango-api",
-    "packages/mango-plugin-customizer",
     "packages/mango-plugin-navigation",
     "packages/mango-plugin-pagemanager",
     "packages/mango-ssr",

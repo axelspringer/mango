@@ -46,7 +46,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-plugin-customizer": "^0.8.2",
     "@axelspringer/mango-plugin-navigation": "^0.8.2",
     "@axelspringer/mango-plugin-pagemanager": "^0.8.2",
     "@types/koa": "^2.0.43",
