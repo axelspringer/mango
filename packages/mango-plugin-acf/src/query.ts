@@ -1,25 +1,23 @@
-const { GraphQLString, GraphQLInt } = require('graphql')
-import { ACF } from './types'
+const { GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
+import { ACFPostFields } from './types'
 
 export const Query = {
-  acfPost: {
-    type: ACF,
+  getAcfPostFields: {
+    type: ACFPostFields,
     args: {
       id: {
-        type: GraphQLInt
+        type: new GraphQLList(GraphQLInt)
       },
       language: {
         type: GraphQLString
       }
     },
     resolve: function (_root, args, ctx) {
-      const rs = ctx.loader.getACFPosts(ctx, args.id, args)
-      console.log(rs)
-      return rs
+      return ctx.loader.getACFPosts(ctx, args.id, args)
     }
   },
   acfGlobal: {
-    type: ACF,
+    type: ACFPostFields,
     args: {
       language: {
         type: GraphQLString
