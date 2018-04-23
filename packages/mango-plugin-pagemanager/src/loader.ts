@@ -39,7 +39,7 @@ export const Loader = {
   },
 
   // fetch page manager data for global settings (e.g. for home)
-  getPageManagerGlobal: async function (ctx: GraphQLContext, section: string, args = {}) {
-    return await this._fetcher(ctx, [API.PageManagerGlobal, section].join('/'), args)
+  getPageManagerGlobal: async function (ctx: GraphQLContext, section: string, language: string, args = {}) {
+    return await this._fetcher(ctx, [API.PageManagerGlobal, section, language].join('/'), args)
   }
 }

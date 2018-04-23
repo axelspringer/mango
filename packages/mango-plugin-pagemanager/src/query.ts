@@ -60,6 +60,6 @@ export const Query = {
         type: GraphQLString
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getPageManagerGlobal(ctx, args.section, args)
+    resolve: (_root, args, ctx) => ctx.loader.getPageManagerGlobal(ctx, args.section, args.language, args)
   }
 }
