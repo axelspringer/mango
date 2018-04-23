@@ -8,6 +8,8 @@ export * from './imgType'
 export * from './queryType'
 export * from './settingsType'
 export * from './userType'
+export * from './languageType'
+export * from './postByPermalinkType'
 
 export const createQuery = plugins => {
   const pluginQuery = plugins.reduce((query, plugin) => Object.assign(query, plugin.query), {})

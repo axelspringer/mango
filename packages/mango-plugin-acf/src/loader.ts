@@ -19,19 +19,15 @@ export const Loader = {
 
   // fetch page manager tags
   getACFTags: async function (ctx: GraphQLContext, id: number, args = {}) {
-    console.log([API.ACFTags, id].join('/'))
     const result = await this._fetcher(ctx, [API.ACFTags, id].join('/'), args)
     // this is a hack for later
     return result.acf
   },
 
   // fetch page manager posts
-  getACFPosts: async function (ctx: GraphQLContext, id: number, args = {}) {
-    console.log([API.ACFPosts, id].join('/'))
-    const result = await this._fetcher(ctx, [API.ACFPosts, id].join('/'), args)
+  getACFPosts: async function (ctx: GraphQLContext, ids: number[], args = {}) {
+    return Promise.all(ids.map(id => this._fetcher(ctx, [API.ACFPosts, id].join('/')), args))
     // this is a hack for later
-    console.log(result.acf)
-    return result
   },
 
   // fetch page manager pages
