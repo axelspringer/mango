@@ -34,6 +34,7 @@ export const Loader = {
   // fetch page manager pages
   getPageManagerPages: async function (ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [API.PageManagerPages, id].join('/'), args)
+    console.log(result)
     // this is a hack for later
     return result.data
   },

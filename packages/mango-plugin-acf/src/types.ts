@@ -1,7 +1,6 @@
 const {
   GraphQLObjectType,
-  GraphQLString,
-  // GraphQLList,
+  GraphQLString
 } = require('graphql')
 
 export const WidgetTypeACF = new GraphQLObjectType({

@@ -27,7 +27,6 @@ export const Loader = {
   // fetch page manager posts
   getACFPosts: async function (ctx: GraphQLContext, ids: number[], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.ACFPosts, id].join('/')), args))
-    // this is a hack for later
   },
 
   // fetch page manager pages

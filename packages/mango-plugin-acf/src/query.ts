@@ -1,6 +1,5 @@
 const { GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
 import { ACFPostFields } from './types'
-import { GraphQLList } from 'graphql';
 
 export const Query = {
   acfPostFields: {
