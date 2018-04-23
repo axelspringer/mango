@@ -6,7 +6,8 @@ export enum API {
   Categories = '/wp/v2/categories',
   Users = '/wp/v2/users',
   Settings = '/wp/v2/settings',
-  Terms = '/wp/v2/tags'
+  Terms = '/wp/v2/tags',
+  Media = '/wp/v2/media'
 }
 
 // posts loader
@@ -40,5 +41,10 @@ export class WP extends Loader {
   // fetch terms
   public async getTerms(ctx: GraphQLContext, ids: number[] = [], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.Terms, id].join('/')), args))
+  }
+
+  // fetch media
+  public async getMedia(ctx: GraphQLContext, id: number, args = {}) {
+    return this._fetcher(ctx, [API.Media, id].join('/'), args)
   }
 }
