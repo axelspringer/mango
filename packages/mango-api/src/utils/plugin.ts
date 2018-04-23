@@ -7,7 +7,9 @@ export const loadPlugin = plugin => {
     rootPath: repo.rootPath,
     packageConfigs: [
       `${repo.rootPath}/node_modules/@axelspringer/mango-plugin-${plugin}`,
-      `packages/mango-plugin-${plugin}`
+      `packages/mango-plugin-${plugin}`,
+      `/usr/local/lib/node_modules/@axelspringer/mango-plugin-${plugin}`,
+      `node_modules/@axelspringer/mango-plugin-${plugin}`,
     ]
   })
 
