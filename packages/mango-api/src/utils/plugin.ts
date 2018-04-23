@@ -1,5 +1,5 @@
 export const loadPlugin = plugin => {
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'development') {
     const { main } = require(`../../../mango-plugin-${plugin}/package.json`)
     return require(`../../../mango-plugin-${plugin}/${main}`)
   }
