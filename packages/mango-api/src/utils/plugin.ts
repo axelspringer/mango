@@ -12,7 +12,12 @@ export const loadPlugin = plugin => {
   })
 
   if (!loadedPackages.length) {
-    throw new Error(`Requested plugin ${plugin} not found`)
+    try {
+      // try require globally installed module
+      return require(`@axelspringer/mango-plugin-${plugin}`)
+    } catch (e) {
+      throw new Error(`Requested plugin ${plugin} not found`)
+    }
   }
 
   const pack = loadedPackages[0];
