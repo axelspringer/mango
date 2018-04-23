@@ -7,17 +7,14 @@ export const loadPlugin = plugin => {
     rootPath: repo.rootPath,
     packageConfigs: [
       `${repo.rootPath}/node_modules/@axelspringer/mango-plugin-${plugin}`,
-      `packages/mango-plugin-${plugin}`
+      `packages/mango-plugin-${plugin}`,
+      `/usr/local/lib/node_modules/@axelspringer/mango-plugin-${plugin}`,
+      `node_modules/@axelspringer/mango-plugin-${plugin}`,
     ]
   })
 
   if (!loadedPackages.length) {
-    try {
-      // try require globally installed module
-      return require(`@axelspringer/mango-plugin-${plugin}`)
-    } catch (e) {
-      throw new Error(`Requested plugin ${plugin} not found`)
-    }
+    throw new Error(`Requested plugin ${plugin} not found`)
   }
 
   const pack = loadedPackages[0];
