@@ -4,8 +4,8 @@ import { MediaDetailType } from './mediaDetailType'
 import { GraphQLDateTime } from 'graphql-iso-date'
 
 export const MediaType = new GraphQLObjectType({
-  name: 'Media',
-  description: 'Wordpress Media object',
+  name: 'WPMedia',
+  description: 'Wordpress media object https://developer.wordpress.org/rest-api/reference/media/',
   fields: () => ({
     id: {
       type: GraphQLString

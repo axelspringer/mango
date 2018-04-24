@@ -4,6 +4,7 @@ import { PostType } from './postType'
 import { SettingsType } from './settingsType'
 import { CategoryType } from './catType'
 import { MediaType } from './mediaType'
+import { TermType } from './termType'
 
 export const defaultQuery = {
   posts: {
@@ -18,6 +19,10 @@ export const defaultQuery = {
   settings: {
     type: SettingsType,
     resolve: (_root, _args, ctx) => ctx.loader.getSettings(ctx)
+  },
+  terms: {
+    type: TermType,
+    resolve: (_root, _args, ctx) => ctx.loader.getTerms(ctx)
   },
   category: {
     type: CategoryType,

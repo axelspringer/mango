@@ -2,7 +2,7 @@ import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql'
 
 export const TermType = new GraphQLObjectType({
   name: 'WPTerm',
-  description: 'Wordpress Terms object',
+  description: 'Wordpress term object',
   fields: () => ({
     term_id: {
       type: GraphQLInt

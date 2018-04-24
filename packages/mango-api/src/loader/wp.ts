@@ -7,6 +7,7 @@ export enum API {
   Users = '/wp/v2/users',
   Settings = '/wp/v2/settings',
   Terms = '/wp/v2/tags',
+  Tags = '/wp/v2/tags',
   Media = '/wp/v2/media'
 }
 
@@ -41,6 +42,11 @@ export class WP extends Loader {
   // fetch terms
   public async getTerms(ctx: GraphQLContext, ids: number[] = [], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.Terms, id].join('/')), args))
+  }
+
+  // fetch tags
+  public async getTags(ctx: GraphQLContext, ids: number[] = [], args = {}) {
+    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Tags, id].join('/')), args))
   }
 
   // fetch media
