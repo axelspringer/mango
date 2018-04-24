@@ -10,15 +10,15 @@ export const PostTypeACF = new GraphQLObjectType({
   fields: {
     subline: {
       type: GraphQLString,
-      resolve: acf => acf.subline
+      resolve: acf => acf.acf.subline
     },
     active_from: {
       type: GraphQLString,
-      resolve: acf => acf.active_from
+      resolve: acf => acf.acf.active_from
     },
     active_till: {
       type: GraphQLString,
-      resolve: acf => acf.active_till
+      resolve: acf => acf.acf.active_till
     }
   }
 })
