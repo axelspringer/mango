@@ -1,33 +1,34 @@
 sudo: false
 language: node_js
-
 node_js:
-  - node
-  - '8'
-  - '7'
-  - '6'
-
+- node
+- 8
+- 7
+- 6
 notifications:
   email: false
   slack:
     secure: MLygbQpA7rbRB0fiyRWvAj11TahA9E01xDlut6vB2IXtV7AsGKgllEiX0/p4Gj6cHKQMMAF0hVp9DOn/lAfrkve1pvgqfjFNe9jZlVv1bs9NiXX8FDSO5C82Ql3Ov86H8jD7RpLqe890z32pv8OdyMaW5pmsLpyc3gQKsed1ZifJ/Flfi4Ghxs5NlnH6gzc18pow1vzVAknVsCpeSnjd2govqdJFI39xQ8S0ZwH56EQZw6w531qJ4LMyXnA+w0MBg4SZN/U+X8Z7HD0RaEsxH5rkMa2AoS0AmgMofEHHFp5nhBFUuwmLsGS64Ljh3cTNGg+oBJ3HMw0b91ma84g+Qz4Nwj3M8ZAi20zjIpytgesAtzBvodci4Bn/Z995cEFU4gRZ/Jj1D4ncbCEEEn8BWfb+GA0+nLHjZMbfHs2yicUISUMhyDKCh4K/0cphbIXAVYz7RpFpTqH/QxEfv2/bPqp1oW8jlE1HeNyXeHlnDr1P55lrTc1/l/eGLZE2lE61qRM5qIZHYv6co1escszLckKKJ5n2PzPvy0ee8vzntG5l64R2XrhNWtn/8TCdztd58GSoxxwlxTk7c/jQKqZDPmEGKUn6LkPZ8+haV8cH8ZkClQCBVlvibpXkUzT3OJiHZNU4m8tUUcg1OA9XsjjU/xzDxuLDPwP2WhppusbPJ/M=
-
 cache:
   directories:
-    - node_modules
-    - "$HOME/.npm"
-
+  - node_modules
+  - "$HOME/.npm"
 env:
   global:
-
+    secure: uzPQWdoI84SJaxif7LstyxQXnDYPuLuU2w9fptXBzUzGKXmfG0LgUoYrAy0dFV2qWNQg7SKbvaiP5mi0hN/iEVcHZb1zYgLXyWvjsgyUcRWQlm9om65etVLZJ9dt4RoK3j3k2RKl9WIKyZefwgQpFvcNYzFsDx7J33fXIfIXa8hhetBJnsJdT2jBBI476IimyKIVb8Io6BBD+YX/coBaWToVIY8VXU13UBgBRmqdVJfY73XQopnHsozgBTP++MwK4jq2xzciw5J7ozelGY9mXg7dWKfit+Yki2SB1fpz9lLhCWwdKrM02oQM3E2nf/t76TwA8lKeNiza9CFY3Al1/WO6K6MfbjydbcGKF1UF6qTrMdZXtgWVbx1/U/+QLyKc7D623fFndmZMlxQrZHxzcXl6AJB6Lyez3sQd3tDDQy+7yrkdbtvt5ty/hd56NUIIhndGzYGHLb8UbaIt201cubZGRtDnEGanABIgPFtXTHrco+QkRFdfBTCCS//pTkz0wFndhGICJAHkQ18h9S0HsnZtYvNbInII5sgrCK6LDdwR1MgwPU9/6JnERa0pVKzoJCdr9SDNMWEn6g4WvzkAUVYQvn7N1no0k81aKAU6PEJ12DsJVP4Khmg3tiNigChuOx4uvFUraPPJJOL6NYqZU1AODvJybfHfFqVYe6nuuY0=
 matrix:
   fast_finish: true
-
 before_install:
-  - if [[ `node -v` == v6* ]]; then npm i -g npm@latest-4; fi
-  - if [[ `node -v` == v8* ]]; then npm i -g npm@latest-5; fi
-  - npm i
-
+- if [[ `node -v` == v6* ]]; then npm i -g npm@latest-4; fi
+- if [[ `node -v` == v8* ]]; then npm i -g npm@latest-5; fi
+- npm i
 script:
-  - npm run build
-  - npm run test
+- npm run build
+- npm run test
+deploy:
+ provider: script
+ skip_cleanup: true
+ script: scripts/deploy.sh
+ on:
+   branch: master
+   tags: false
