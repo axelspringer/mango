@@ -2,7 +2,7 @@ const Repository = require('lerna/lib/Repository')
 const PackageUtilities = require('lerna/lib/PackageUtilities')
 
 export const loadPlugin = plugin => {
-  if (process.env.NODE_ENV !== 'development') {
+  if (!process.env.NODE_ENV || process.env.NODE_ENV !== 'development') {
     try {
       // try require globally installed module
       const { main } = require(`@axelspringer/mango-plugin-${plugin}/package.json`)
@@ -22,7 +22,7 @@ export const loadPlugin = plugin => {
   })
 
   if (!loadedPackages.length) {
-    throw new Error(`Requested plugin ${plugin} not found`)
+    throw new Error(`Requested plugin ${plugin} not found.`)
   }
 
   const pack = loadedPackages[0];
