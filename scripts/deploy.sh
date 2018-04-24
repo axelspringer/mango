@@ -27,7 +27,7 @@ make_version() {
 
   # Run the deploy build and increment the package versions
   # %s is the placeholder for the created tag
-  lerna publish --yes --cd-version patch -m "chore: release version %s"
+  lerna publish --canary --yes --cd-version patch -m "chore: release version %s"
 }
 
 upload_files() {
