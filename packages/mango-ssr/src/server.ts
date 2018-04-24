@@ -6,6 +6,8 @@ import chalk from 'chalk'
 
 // logging
 const log = console.log
+const error = chalk.bold.red;
+const warning = chalk.keyword('orange');
 
 // config ssr
 let ssrConfig: Config
@@ -21,11 +23,11 @@ try {
 } catch (err) {
   // exit on
   if (err.code !== 'MODULE_NOT_FOUND') {
-    log(chalk.red(err))
+    log(error(err))
     process.exit(1)
   }
 
-  log(chalk.yellow(`No config file found, or provided by '--config.'`))
+  log(warning(`No config file found, or provided by '--config.' Using command line arguments.`))
   ssrConfig = new Config(args) // use command line args
 }
 
