@@ -3,7 +3,7 @@ import { ACFPostFields } from './types'
 
 export const Query = {
   acfPostFields: {
-    type: new GraphQLList(ACFPostFields),
+    type: ACFPostFields,
     args: {
       id: {
         type: new GraphQLList(GraphQLInt)

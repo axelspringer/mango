@@ -1,4 +1,3 @@
-import { registerComponents } from './utils/plugins'
 import mixin from './mixin'
 
 export let _Vue

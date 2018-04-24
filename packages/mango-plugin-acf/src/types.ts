@@ -1,10 +1,11 @@
 const {
   GraphQLObjectType,
-  GraphQLString
+  GraphQLString,
+  GraphQLList
 } = require('graphql')
 
-export const WidgetTypeACF = new GraphQLObjectType({
-  name: 'WidgetTypeACF',
+export const PostTypeACF = new GraphQLObjectType({
+  name: 'PostTypeACF',
   description: 'name-value paring of result',
   fields: {
     subline: {
@@ -27,8 +28,8 @@ export const ACFPostFields = new GraphQLObjectType({
   description: 'Common ACF interface',
   fields: () => ({
     acf: {
-      type: WidgetTypeACF,
-      resolve: acf => acf.acf
+      type: new GraphQLList(PostTypeACF),
+      resolve: acf => acf
     }
   })
 })
