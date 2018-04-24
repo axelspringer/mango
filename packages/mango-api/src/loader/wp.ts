@@ -20,8 +20,12 @@ export class WP extends Loader {
     return this._fetcher(ctx, API.Posts, args)
   }
   // fetch postlist by ids
-  public async getPost(ctx: GraphQLContext, ids: number[], args = {}) {
+  public async getPostListById(ctx: GraphQLContext, ids: number[], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.Posts, id].join('/')), args))
+  }
+
+  public async getPostListByCategoryId(ctx: GraphQLContext, id: number, args = {}) {
+    return this._fetcher(ctx, [API.Posts, 'categories=' + id].join('?'), args)
   }
   // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: number[] = [], args = {}) {

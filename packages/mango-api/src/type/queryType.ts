@@ -4,7 +4,7 @@ import { SettingsType } from './settingsType'
 import { PostByPermalinkResult } from './postByPermalinkType'
 
 export const defaultQuery = {
-  posts: {
+  postList: {
     type: new GraphQLList(PostType),
     args: {
       lang: {
@@ -13,14 +13,23 @@ export const defaultQuery = {
     },
     resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args)
   },
-  post: {
+  postListById: {
     type: new GraphQLList(PostType),
     args: {
       id: {
         type: new GraphQLList(GraphQLInt)
       }
     },
-    resolve: (_, args, ctx) => ctx.loader.getPost(ctx, args.id, args)
+    resolve: (_, args, ctx) => ctx.loader.getPostListById(ctx, args.id, args)
+  },
+  postListByCategoryId: {
+    type: new GraphQLList(PostType),
+    args: {
+      id: {
+        type: GraphQLInt
+      }
+    },
+    resolve: (_, args, ctx) => ctx.loader.getPostListByCategoryId(ctx, args.id, args)
   },
   postByPermalink: {
     type: PostByPermalinkResult,
