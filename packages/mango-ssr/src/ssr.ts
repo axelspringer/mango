@@ -2,7 +2,7 @@ import * as express from 'express'
 import * as pino from 'express-pino-logger'
 import * as fs from 'fs'
 import { serve, resolve, relative, createRenderer } from './helpers'
-import { SSRConfig } from './config'
+import { Config } from './config'
 import { setupDevServer } from './webpack'
 
 // server side renderer
@@ -13,7 +13,7 @@ export class SSR {
   public app = express()
   public server
 
-  constructor(public config: SSRConfig) { }
+  constructor(public config: Config) { }
 
   public createRenderer() {
     if (!this.config.dev) {
@@ -81,5 +81,3 @@ export class SSR {
   }
 
 }
-
-export { SSRConfig }

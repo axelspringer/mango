@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "@std/esm": "^0.19.6",
+    "chalk": "^2.4.0",
     "express": "^4.16.2",
     "express-pino-logger": "^3.0.1",
     "express-static-gzip": "^0.3.2",

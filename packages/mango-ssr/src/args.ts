@@ -3,6 +3,12 @@ import * as argv from 'yargs'
 export function parseArgs() {
   return argv
     .usage('Usage: $0 [options]')
+    .options('config', {
+      string: true,
+      alias: 'c',
+      default: process.env.MANGO_CONFIG,
+      desc: 'Mango config'
+    })
     .options('serve', {
       string: true,
       alias: 's',

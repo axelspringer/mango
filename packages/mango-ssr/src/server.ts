@@ -1,16 +1,34 @@
 import { parseArgs } from './args'
 import { resolve } from './helpers'
-import { SSRConfig } from './config'
-import { SSR } from './main'
+import { Config, IConfig } from './config'
+import { SSR } from './ssr'
+import chalk from 'chalk'
 
+// logging
+const log = console.log
+
+// config ssr
+let ssrConfig: Config
+
+// parse arguments
 const args = parseArgs()
 
-const serve = resolve(args.serve)
-const bundle = resolve(args.bundle)
-const manifest = resolve(args.manifest)
-const template = resolve(args.template)
-const webpack = resolve(args.webpack)
+// check for config
+try {
+  const configFile = args.config || './mango.config.js'
+  const config: IConfig = require(resolve(configFile))
+  ssrConfig = new Config(config)
+} catch (err) {
+  // exit on
+  if (err.code !== 'MODULE_NOT_FOUND') {
+    log(chalk.red(err))
+    process.exit(1)
+  }
 
-const config = new SSRConfig(serve, bundle, manifest, template, webpack)
-const app = new SSR(config)
+  log(chalk.yellow(`No config file found, or provided by '--config.'`))
+  ssrConfig = new Config(args) // use command line args
+}
+
+// init new server-side renderer
+const app = new SSR(ssrConfig)
 app.start()
