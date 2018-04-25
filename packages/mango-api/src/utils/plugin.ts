@@ -8,6 +8,7 @@ export const loadPlugin = plugin => {
       const { main } = require(`@axelspringer/mango-plugin-${plugin}/package.json`)
       return require(`@axelspringer/mango-plugin-${plugin}/${main}`)
     } catch (e) {
+      console.log(e)
       throw new Error(`Requested plugin ${plugin} not found. Is it installed globally?`)
     }
   }
