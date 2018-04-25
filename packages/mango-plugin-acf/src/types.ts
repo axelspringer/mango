@@ -19,6 +19,10 @@ export const PostTypeACF = new GraphQLObjectType({
         active_till: {
             type: GraphQLString,
             resolve: acf => acf.acf.active_till
+        },
+        icon_choice: {
+            type: GraphQLString,
+            resolve: acf => acf.acf.icon_choice
         }
     }
 })
