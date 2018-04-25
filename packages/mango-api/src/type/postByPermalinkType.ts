@@ -1,8 +1,6 @@
-import { PageManager } from '../../../mango-plugin-pagemanager/src/types';
+// import { PageManager } from '../../../mango-plugin-pagemanager/src/types';
 import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'graphql';
-import { Language } from './languageType'
-import { CategoryType } from './catType';
-import { TagType } from '.';
+import { CategoryType, TagType, Language } from '.';
 
 export const PostByPermalinkResult = new GraphQLObjectType({
     name: 'PostByPermalink',
@@ -61,9 +59,9 @@ export const PostByPermalinkResult = new GraphQLObjectType({
         },
         tags: {
             type: new GraphQLList(TagType)
-        },
+        }/*,
         pagemanager: {
             type: PageManager
-        }
+        }*/
     })
 })
