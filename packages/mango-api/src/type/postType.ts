@@ -48,7 +48,12 @@ export const PostType = new GraphQLObjectType({
     },
     excerpt: {
       type: GraphQLString,
-      resolve: post => post.excerpt.rendered
+      resolve: post => {
+        if (post.hasOwnProperty('excerpt')) {
+          return post.excerpt.rendered
+        }
+        return ''
+      }
     },
     featuredMedia: {
       type: GraphQLInt,
@@ -64,7 +69,12 @@ export const PostType = new GraphQLObjectType({
     },
     title: {
       type: GraphQLString,
-      resolve: post => post.title.rendered
+      resolve: post => {
+        if (post.hasOwnProperty('title')) {
+          return post.title.rendered
+        }
+        return ''
+      }
     },
     sticky: {
       type: GraphQLBoolean,

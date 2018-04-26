@@ -35,19 +35,39 @@ export const ImgType = new GraphQLObjectType({
         },
         thumbnail: {
             type: ImgSizeType,
-            resolve: img => img.media_details.sizes.thumbnail
+            resolve: (img) => {
+                if (img.hasOwnProperty('media_details')) {
+                    return img.media_details.sizes.thumbnail
+                }
+                return 0
+            }
         },
         medium: {
             type: ImgSizeType,
-            resolve: img => img.media_details.sizes.medium
+            resolve: (img) => {
+                if (img.hasOwnProperty('media_details')) {
+                    return img.media_details.sizes.medium
+                }
+                return 0
+            }
         },
         medium_large: {
             type: ImgSizeType,
-            resolve: img => img.media_details.sizes.medium_large
+            resolve: (img) => {
+                if (img.hasOwnProperty('media_details')) {
+                    return img.media_details.sizes.medium_large
+                }
+                return 0
+            }
         },
         full: {
             type: ImgSizeType,
-            resolve: img => img.media_details.sizes.full
+            resolve: (img) => {
+                if (img.hasOwnProperty('media_details')) {
+                    return img.media_details.sizes.full
+                }
+                return 0
+            }
         }
     })
 })
