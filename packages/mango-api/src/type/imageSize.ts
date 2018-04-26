@@ -1,6 +1,4 @@
-const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
-
-import { ImageMetaType } from './imageMeta'
+const { GraphQLObjectType, GraphQLString, GraphQLInt } = require('graphql')
 
 export const ImageSize = new GraphQLObjectType({
   name: 'ImageSize',

@@ -18,11 +18,11 @@ export const MediaDetailType = new GraphQLObjectType({
     sizes: {
       type: GraphQLList(ImageSize),
       resolve: media => {
-        let sizes = []
+        const sizes = []
 
-        for (let propertyName in media.sizes) {
+        for (const propertyName in media.sizes) {
           if (media.sizes.hasOwnProperty(propertyName)) {
-            let size = media.sizes[propertyName]
+            const size = media.sizes[propertyName]
 
             size.name = propertyName
 
