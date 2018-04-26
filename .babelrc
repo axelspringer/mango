@@ -13,6 +13,7 @@
   ],
   "plugins": [
     "transform-vue-jsx",
+    "transform-object-rest-spread",
     "syntax-dynamic-import",
     "external-helpers"
   ]

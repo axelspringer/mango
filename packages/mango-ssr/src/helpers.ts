@@ -1,7 +1,14 @@
 import * as path from 'path'
 import * as express from 'express'
+import * as process from 'process'
 import * as compress from 'express-static-gzip'
 import { Config } from './config'
+import chalk from 'chalk'
+import { IServerSideRenderer } from './ssr';
+
+export const log = console.log // logging
+export const error = chalk.bold.red;
+export const warning = chalk.keyword('orange');
 
 export const isProd = process.env.NODE_ENV === 'production'
 export const resolve = file => path.resolve(process.cwd(), file)
@@ -28,4 +35,21 @@ export const createRenderer = (bundle, template, options) => {
     // recommended for performance
     runInNewContext: false
   }))
+}
+
+/**
+ * Shutdown server helper
+ *
+ * @param server An Express server
+ * @param log A console logger
+ * @param number A timeout
+ */
+export function shutdownServer(app: IServerSideRenderer, log, timeout = 30 * 1000) {
+  app.stop() // try to server
+
+  // set timeout for shutdown
+  setTimeout(() => {
+    log(`Cloud not close connections in time (${timeout}), forcefully shutting down.`)
+    process.exit(1)
+  }, timeout)
 }

@@ -1,21 +1,50 @@
 import * as express from 'express'
 import * as pino from 'express-pino-logger'
 import * as fs from 'fs'
-import { serve, resolve, relative, createRenderer } from './helpers'
+import { serve, log, resolve, relative, createRenderer } from './helpers'
 import { Config } from './config'
 import { setupDevServer } from './webpack'
 
+
+export interface IServerSideRenderer {
+  ready: Promise<any>
+
+  createRenderer(): void
+  start(): void
+  stop(): void
+}
+
 // server side renderer
-export class SSR {
+export class ServerSideRenderer implements IServerSideRenderer {
 
   public ready: Promise<any>
   public renderer
-  public app = express()
   public server
+  public log
+  public middlewares = []
+  public timeout
 
-  constructor(public config: Config) { }
+  /**
+   *
+   * @param config - The SSR config
+   * @param app - A Express server for delivery
+   */
+  constructor(public config: Config, public app = undefined) {
+    // create new express server, if not already one provided
+    this.app = app || express()
+    this.log = log
 
+    // register server events
+    process.on('SIGTERM', this.stop.bind(this));
+    process.on('SIGINT', this.stop.bind(this));
+  }
+
+  /**
+   * Creates a new renderer
+   *
+   */
   public createRenderer() {
+    // if this is production
     if (!this.config.dev) {
       const bundle = require(relative(this.config.bundle))
       const clientManifest = require(relative(this.config.manifest))
@@ -24,13 +53,21 @@ export class SSR {
         clientManifest
       })
       this.ready = Promise.resolve()
-    } else {
-      this.ready = setupDevServer(this.app, this.config, (bundle, template, options) => {
+    }
+
+    // if this is development
+    if (this.config.dev) {
+      this.ready = setupDevServer(this.app, this.middlewares, this.config, (bundle, template, options) => {
         this.renderer = createRenderer(bundle, template, options)
       })
     }
   }
 
+  /**
+   * Starts a new renderer
+   *
+   * @return
+   */
   public start() {
     // logging
     this.app.use(pino())
@@ -66,18 +103,34 @@ export class SSR {
         .pipe(res)
     })
 
+    // attach server
     this.server = this.app.listen(this.config.port, () => {
-      console.log(`server started at http://localhost:${this.config.port}`)
+      log(`server started at http://localhost:${this.config.port}`)
     })
 
+    // return promise
     return this.ready
   }
 
+  /**
+   * Stopping the renderer
+   */
   public stop() {
-    if (!this.server) {
-      return
+    if (this.config.dev) { // just exit in dev
+      process.exit()
     }
-    this.server.close()
-  }
 
+    log(`Closing remaining connections.`)
+    this.middlewares.forEach(middleware => !middleware.close || middleware.close())
+    this.server.close(() => process.exit()) // close connections
+
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
+
+    this.timeout = setTimeout(() => { // set timeout to close connections
+      log(`Failed to close connections after ${this.config.timeout / 1000}s. Forcing shutdown.`)
+      process.exit()
+    }, this.config.timeout)
+  }
 }

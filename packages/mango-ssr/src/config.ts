@@ -1,4 +1,4 @@
-import { isProd } from './helpers'
+import { isProd, resolve } from './helpers'
 import * as process from 'process'
 
 export interface IConfig {
@@ -11,6 +11,7 @@ export interface IConfig {
   serve: string
   template: string
   webpack: string
+  timeout: number
 }
 
 export class Config implements IConfig {
@@ -24,8 +25,10 @@ export class Config implements IConfig {
   public cache = true
   public maxAge = isProd ? 60 * 60 * 24 * 30 : 0
   public port = process.env.PORT || isProd ? 8080 : 3000
+  public timeout = 10 * 1000
 
   constructor({ serve, bundle, manifest, template, webpack, dev, cache, maxAge, port }) {
+    // defaults
     this.serve = serve || this.serve
     this.bundle = bundle || this.bundle
     this.manifest = manifest || this.manifest
@@ -35,5 +38,12 @@ export class Config implements IConfig {
     this.cache = cache !== undefined ? cache : this.cache
     this.maxAge = maxAge || this.maxAge
     this.port = port || this.port
+
+    // resolve paths
+    this.serve = resolve(this.serve)
+    this.bundle = resolve(this.bundle)
+    this.manifest = resolve(this.manifest)
+    this.template = resolve(this.template)
+    this.webpack = resolve(this.webpack)
   }
 }

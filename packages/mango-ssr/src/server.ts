@@ -1,13 +1,8 @@
 import { parseArgs } from './args'
 import { resolve } from './helpers'
 import { Config, IConfig } from './config'
-import { SSR } from './ssr'
-import chalk from 'chalk'
-
-// logging
-const log = console.log
-const error = chalk.bold.red;
-const warning = chalk.keyword('orange');
+import { ServerSideRenderer } from './ssr'
+import { log, error, warning } from './helpers'
 
 // config ssr
 let ssrConfig: Config
@@ -32,5 +27,5 @@ try {
 }
 
 // init new server-side renderer
-const app = new SSR(ssrConfig)
+const app = new ServerSideRenderer(ssrConfig)
 app.start()
