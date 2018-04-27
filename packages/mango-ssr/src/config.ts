@@ -12,6 +12,7 @@ export interface IConfig {
   template: string
   webpack: string
   timeout: number
+  stream: boolean
 }
 
 export class Config implements IConfig {
@@ -25,9 +26,10 @@ export class Config implements IConfig {
   public cache = true
   public maxAge = isProd ? 60 * 60 * 24 * 30 : 0
   public port = process.env.PORT || isProd ? 8080 : 3000
+  public stream = false
   public timeout = 10 * 1000
 
-  constructor({ serve, bundle, manifest, template, webpack, dev, cache, maxAge, port }) {
+  constructor({ serve, bundle, stream, manifest, template, webpack, dev, cache, maxAge, port }) {
     // defaults
     this.serve = serve || this.serve
     this.bundle = bundle || this.bundle
@@ -38,6 +40,7 @@ export class Config implements IConfig {
     this.cache = cache !== undefined ? cache : this.cache
     this.maxAge = maxAge || this.maxAge
     this.port = port || this.port
+    this.stream = stream || this.stream
 
     // resolve paths
     this.serve = resolve(this.serve)

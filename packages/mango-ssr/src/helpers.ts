@@ -10,6 +10,17 @@ export const log = console.log // logging
 export const error = chalk.bold.red;
 export const warning = chalk.keyword('orange');
 
+export function errorHandler(err) {
+  if (err && err.code === 404) {
+    this.res.status(404).end('404 | Page Not Found')
+  } else {
+    // Render Error Page or Redirect
+    this.res.status(500).end('500 | Internal Server Error')
+    console.error(`error during render : ${this.req.url}`)
+    console.error(err)
+  }
+}
+
 export const isProd = process.env.NODE_ENV === 'production'
 export const resolve = file => path.resolve(process.cwd(), file)
 export const relative = file => path.relative(__dirname, file)
@@ -42,14 +53,11 @@ export const createRenderer = (bundle, template, options) => {
  *
  * @param server An Express server
  * @param log A console logger
- * @param number A timeout
  */
-export function shutdownServer(app: IServerSideRenderer, log, timeout = 30 * 1000) {
-  app.stop() // try to server
+export function shutdownServer(app: IServerSideRenderer) {
+  if (!app.server) {
+    process.exit()
+  }
 
-  // set timeout for shutdown
-  setTimeout(() => {
-    log(`Cloud not close connections in time (${timeout}), forcefully shutting down.`)
-    process.exit(1)
-  }, timeout)
+  app.stop() // try to server
 }

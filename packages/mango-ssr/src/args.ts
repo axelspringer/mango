@@ -9,6 +9,10 @@ export function parseArgs() {
       default: process.env.MANGO_CONFIG,
       desc: 'Mango config'
     })
+    .options('stream', {
+      default: process.env.MANGO_STREAM || false,
+      desc: 'Use renderer streaming'
+    })
     .options('serve', {
       string: true,
       alias: 's',

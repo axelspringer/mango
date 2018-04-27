@@ -1,13 +1,13 @@
 import * as express from 'express'
 import * as pino from 'express-pino-logger'
 import * as fs from 'fs'
-import { serve, log, resolve, relative, createRenderer } from './helpers'
+import { serve, log, resolve, relative, warning, createRenderer, error, errorHandler } from './helpers'
 import { Config } from './config'
 import { setupDevServer } from './webpack'
 
-
 export interface IServerSideRenderer {
   ready: Promise<any>
+  server
 
   createRenderer(): void
   start(): void
@@ -33,10 +33,6 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // create new express server, if not already one provided
     this.app = app || express()
     this.log = log
-
-    // register server events
-    process.on('SIGTERM', this.stop.bind(this));
-    process.on('SIGINT', this.stop.bind(this));
   }
 
   /**
@@ -44,23 +40,21 @@ export class ServerSideRenderer implements IServerSideRenderer {
    *
    */
   public createRenderer() {
-    // if this is production
-    if (!this.config.dev) {
-      const bundle = require(relative(this.config.bundle))
-      const clientManifest = require(relative(this.config.manifest))
-      const template = fs.readFileSync(resolve(this.config.template), 'utf-8')
-      this.renderer = createRenderer(bundle, template, {
-        clientManifest
-      })
-      this.ready = Promise.resolve()
-    }
-
-    // if this is development
-    if (this.config.dev) {
+    if (this.config.dev) { // dev
       this.ready = setupDevServer(this.app, this.middlewares, this.config, (bundle, template, options) => {
         this.renderer = createRenderer(bundle, template, options)
       })
+
+      return
     }
+
+    const bundle = require(relative(this.config.bundle))
+    const clientManifest = require(relative(this.config.manifest))
+    const template = fs.readFileSync(resolve(this.config.template), 'utf-8')
+    this.renderer = createRenderer(bundle, template, {
+      clientManifest
+    })
+    this.ready = Promise.resolve()
   }
 
   /**
@@ -80,28 +74,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
 
     // config requests
     // render to
-    this.app.get('*', (req, res) => {
-      if (!this.renderer) {
-        return res.end('waiting for compilation... refresh in a moment.')
-      }
-
-      res.setHeader('Content-Type', 'text/html')
-
-      const errorHandler = err => {
-        if (err && err.code === 404) {
-          res.status(404).end('404 | Page Not Found')
-        } else {
-          // Render Error Page or Redirect
-          res.status(500).end('500 | Internal Server Error')
-          console.error(`error during render : ${req.url}`)
-          console.error(err)
-        }
-      }
-
-      this.renderer.renderToStream({ url: req.url })
-        .on('error', errorHandler)
-        .pipe(res)
-    })
+    this.app.get('*', this.render.bind(this))
 
     // attach server
     this.server = this.app.listen(this.config.port, () => {
@@ -113,23 +86,62 @@ export class ServerSideRenderer implements IServerSideRenderer {
   }
 
   /**
+   *  Render context
+   */
+  public async render(req, res) {
+    if (!this.renderer) {
+      return res.end('waiting for compilation... refresh in a moment.')
+    }
+    res.setHeader('Content-Type', 'text/html')
+
+    // use streaming...
+    if (this.config.stream) {
+      // register on stream
+      this.renderer.renderToStream({ url: req.url })
+        .on('error', errorHandler.bind({ req, res }))
+        .pipe(res)
+
+      return
+    }
+
+    // use rendered string
+    try {
+      // should do 404
+      const html = await this.renderString({ url: req.url })
+      res.send(html).end()
+    } catch (err) {
+      // should do 404
+      errorHandler.call({ req, res }, err)
+    }
+  }
+
+  /**
+   * Render to string
+   *
+   */
+  public async renderString(ctx: any, cb?): Promise<string> {
+    return this.renderer.renderToString(ctx, cb)
+  }
+
+  /**
    * Stopping the renderer
    */
   public stop() {
     if (this.config.dev) { // just exit in dev
+      log(warning(`Forcing shutdown in development.`))
       process.exit()
     }
 
-    log(`Closing remaining connections.`)
+    log(warning(`Closing remaining connections.`))
     this.middlewares.forEach(middleware => !middleware.close || middleware.close())
     this.server.close(() => process.exit()) // close connections
 
-    if (this.timeout) {
+    if (this.timeout) { // clear existing timeout
       clearTimeout(this.timeout)
     }
 
     this.timeout = setTimeout(() => { // set timeout to close connections
-      log(`Failed to close connections after ${this.config.timeout / 1000}s. Forcing shutdown.`)
+      log(error(`Failed to close connections after ${this.config.timeout / 1000}s. Forcing shutdown.`))
       process.exit()
     }, this.config.timeout)
   }
