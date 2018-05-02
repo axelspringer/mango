@@ -10,19 +10,27 @@ export const PostTypeACF = new GraphQLObjectType({
     fields: {
         subline: {
             type: GraphQLString,
-            resolve: acf => acf.subline
+            resolve: acf => acf.acf.subline
         },
         active_from: {
             type: GraphQLString,
-            resolve: acf => acf.active_from
+            resolve: acf => acf.acf.active_from
         },
         active_till: {
             type: GraphQLString,
-            resolve: acf => acf.active_till
+            resolve: acf => acf.acf.active_till
         },
         icon_choice: {
             type: GraphQLString,
-            resolve: acf => acf.icon_choice
+            resolve: acf => acf.acf.icon_choice
+        },
+        background_choice: {
+            type: GraphQLString,
+            resolve: acf => acf.acf.background_choice
+        },
+        linked_teaser: {
+            type: GraphQLString,
+            resolve: acf => acf.acf.linked_teaser
         }
     }
 })
