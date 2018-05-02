@@ -9,7 +9,8 @@ export enum API {
   Users = '/wp/v2/users',
   Settings = '/wp/v2/settings',
   Pages = '/wp/v2/pages',
-  PostByPermalink = '/mango/v1/posts/post-by-permalink'
+  PostByPermalink = '/mango/v1/posts/post-by-permalink?permalink=',
+  CategoryByPermalink = '/mango/v1/categories/category-by-permalink?permalink='
 }
 
 // posts loader
@@ -61,8 +62,14 @@ export class WP extends Loader {
   public async getSettings(ctx: GraphQLContext, args = {}) {
     return this._fetcher(ctx, API.Settings, args)
   }
-  public async getPostByPermalink(ctx: GraphQLContext, args = {}) {
-    const result = await this._fetcher(ctx, API.PostByPermalink, args)
+
+  public async getPostByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
+    const result = await this._fetcher(ctx, API.PostByPermalink + permalink, args)
+    return result;
+  }
+
+  public async getCategoryByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
+    const result = await this._fetcher(ctx, API.CategoryByPermalink + permalink, args)
     return result;
   }
 }

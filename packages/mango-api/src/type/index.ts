@@ -10,6 +10,7 @@ export * from './settingsType'
 export * from './userType'
 export * from './languageType'
 export * from './postByPermalinkType'
+export * from './categoryByPermalinkType'
 export * from './catType'
 
 export const createQuery = plugins => {

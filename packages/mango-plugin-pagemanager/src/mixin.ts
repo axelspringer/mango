@@ -15,6 +15,7 @@ export default function (Vue) {
         const block = pagemanager.options.blocks.find(b => b.component.name === cmp)
 
         if (block !== undefined) {
+          console.table(options)
           Vue.util.defineReactive(this, '_pageblock', options.pageBlocks[block.pageBlock].shift())
         }
       }

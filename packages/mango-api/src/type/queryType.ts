@@ -2,6 +2,7 @@ const { GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
 import { PostType } from './postType'
 import { SettingsType } from './settingsType'
 import { PostByPermalinkResult } from './postByPermalinkType'
+import { CategoryByPermalinkResult } from './categoryByPermalinkType'
 
 export const defaultQuery = {
   postList: {
@@ -38,7 +39,16 @@ export const defaultQuery = {
         type: GraphQLString
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getPostByPermalink(ctx, args)
+    resolve: (_root, args, ctx) => ctx.loader.getPostByPermalink(ctx, args.permalink, args)
+  },
+  categoryByPermalink: {
+    type: CategoryByPermalinkResult,
+    args: {
+      permalink: {
+        type: GraphQLString
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getCategoryByPermalink(ctx, args.permalink, args)
   },
   settings: {
     type: SettingsType,
