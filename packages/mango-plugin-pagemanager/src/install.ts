@@ -16,6 +16,8 @@ export function install(Vue) {
 
   install.prototype.installed = true
 
+  if (Vue.prototype.$pagemanager && Vue.prototype.$pageblock) return
+
   Object.defineProperty(Vue.prototype, '$pagemanager', {
     get() { return this._pagemanager }
   })
