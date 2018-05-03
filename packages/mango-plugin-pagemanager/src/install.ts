@@ -16,15 +16,17 @@ export function install(Vue) {
 
   install.prototype.installed = true
 
-  if (Vue.prototype.$pagemanager && Vue.prototype.$pageblock) return
+  if (!Vue.prototype.hasOwnProperty('$pagemanager')) {
+    Object.defineProperty(Vue.prototype, '$pagemanager', {
+      get() { return this._pagemanager }
+    })
+  }
 
-  Object.defineProperty(Vue.prototype, '$pagemanager', {
-    get() { return this._pagemanager }
-  })
-
-  Object.defineProperty(Vue.prototype, '$pageblock', {
-    get() { return this._pageblock }
-  })
+  if (!Vue.prototype.hasOwnProperty('$pageblock')) {
+    Object.defineProperty(Vue.prototype, '$pageblock', {
+      get() { return this._pageblock }
+    })
+  }
 
   Vue.mixin(mixin(Vue))
 
