@@ -7,7 +7,7 @@ export let _Vue
 export function install(Vue) {
   if (install.prototype.installed && _Vue === Vue) return
 
-  _Vue = Vue
+  _Vue = Vue // register
 
   // register component
   registerComponents(Vue, {
