@@ -5,12 +5,9 @@ import PageManagerRenderer from './components/renderer'
 export let _Vue
 
 export function install(Vue) {
+  if (install.prototype.installed && _Vue === Vue) return
 
   _Vue = Vue
-
-  if (install.prototype.installed && _Vue === Vue) {
-    return
-  }
 
   // register component
   registerComponents(Vue, {
