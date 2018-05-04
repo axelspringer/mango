@@ -54,7 +54,7 @@ export const SettingsType = new GraphQLObjectType({
     },
     defaultPingStatus: {
       type: GraphQLString,
-      resolve: setting => setting.default_ping_statug // todo(katallaxie) add custom type
+      resolve: setting => setting.default_ping_status // todo(katallaxie) add custom type
     },
     defaultCommentStatus: {
       type: GraphQLString,

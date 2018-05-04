@@ -14,7 +14,7 @@ export default function (Vue) {
         const cmp = this.$vnode.componentOptions.Ctor.name
         const block = pagemanager.options.blocks.find(b => b.component.name === cmp)
 
-        if (block !== undefined) {
+        if (block !== undefined && Array.isArray(options.pageBlocks[block.pageBlock])) {
           Vue.util.defineReactive(this, '_pageblock', options.pageBlocks[block.pageBlock].shift())
         }
       }

@@ -49,3 +49,18 @@ export const PageManager = new GraphQLObjectType({
     data: { type: GraphQLList(PageManagerBlock) }
   })
 })
+
+export const PageManagerLanguage = new GraphQLObjectType({
+  name: 'PageManagerLanguage',
+  fields: {
+    locale: {
+      type: GraphQLString
+    },
+    name: {
+      type: GraphQLString
+    },
+    slug: {
+      type: GraphQLString
+    }
+  }
+})

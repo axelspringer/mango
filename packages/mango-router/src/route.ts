@@ -2,7 +2,9 @@ import { RouteConfig } from 'vue-router/types'
 
 export class Route {
   constructor(public cmp, public config: RouteConfig) {
-    this.config.component = this.cmp
+    if (this.cmp) {
+      this.config.component = this.cmp
+    }
   }
 }
 
@@ -80,5 +82,17 @@ export class Post extends Route {
 
   constructor(cmp, path: string, config = {}) {
     super(cmp, Object.assign({}, { path }, Category.default, config))
+  }
+}
+
+export class Language extends Route {
+  public static path = '/:lang?'
+  public static default = {
+    name: 'de',
+    template: ''
+  }
+
+  constructor(cmp, path: string, config = {}) {
+    super(cmp, Object.assign({}, { path }, Language.default, config))
   }
 }

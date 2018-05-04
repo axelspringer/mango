@@ -1,7 +1,9 @@
+
 const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLInt } = require('graphql')
 import { GraphQLDateTime } from 'graphql-iso-date'
 import { CategoryType } from './catType'
 import { UserType } from './userType'
+import { TagType } from './tagType'
 
 export const PostType = new GraphQLObjectType({
   name: 'Post',
@@ -74,6 +76,10 @@ export const PostType = new GraphQLObjectType({
     categories: {
       type: new GraphQLList(CategoryType),
       resolve: (root, args, ctx) => ctx.loader.getCategories(ctx, root.categories, args)
+    },
+    tags: {
+      type: new GraphQLList(TagType),
+      resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root.tags, args)
     },
     template: {
       type: GraphQLString,
