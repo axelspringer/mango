@@ -1,9 +1,10 @@
 import * as express from 'express'
 import * as pino from 'express-pino-logger'
 import * as fs from 'fs'
-import { serve, log, resolve, relative, warning, createRenderer, error, errorHandler } from './helpers'
+import { serve, log, resolve, relative, createRenderer, errorHandler } from './helpers'
 import { Config } from './config'
 import { setupDevServer } from './webpack'
+import * as GracefulShutdown from 'http-graceful-shutdown'
 
 export interface IServerSideRenderer {
   ready: Promise<any>
@@ -11,7 +12,6 @@ export interface IServerSideRenderer {
 
   createRenderer(): void
   start(): void
-  stop(): void
 }
 
 // server side renderer
@@ -33,6 +33,14 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // create new express server, if not already one provided
     this.app = app || express()
     this.log = log
+
+    // graceful shutdown
+    GracefulShutdown(this.app, {
+      development: this.config.dev,
+      finally: function () {
+        log('Server gracefully shut down ....')
+      }
+    })
   }
 
   /**
@@ -121,28 +129,5 @@ export class ServerSideRenderer implements IServerSideRenderer {
    */
   public async renderString(ctx: any, cb?): Promise<string> {
     return this.renderer.renderToString(ctx, cb)
-  }
-
-  /**
-   * Stopping the renderer
-   */
-  public stop() {
-    if (this.config.dev) { // just exit in dev
-      log(warning(`Forcing shutdown in development.`))
-      process.exit()
-    }
-
-    log(warning(`Closing remaining connections.`))
-    this.middlewares.forEach(middleware => !middleware.close || middleware.close())
-    this.server.close(() => process.exit()) // close connections
-
-    if (this.timeout) { // clear existing timeout
-      clearTimeout(this.timeout)
-    }
-
-    this.timeout = setTimeout(() => { // set timeout to close connections
-      log(error(`Failed to close connections after ${this.config.timeout / 1000}s. Forcing shutdown.`))
-      process.exit()
-    }, this.config.timeout)
   }
 }

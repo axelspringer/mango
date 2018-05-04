@@ -1,6 +1,6 @@
 import { GraphQLContext } from 'graphql'
 
-export class Loader {
+export default class Loader {
 
   public addResolver(name, func) {
     this[name] = func.bind(this)

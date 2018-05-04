@@ -2,7 +2,7 @@ const { GraphQLString, GraphQLList } = require('graphql')
 import { PostType } from './postType'
 import { SettingsType } from './settingsType'
 
-export const defaultQuery = {
+export default {
   posts: {
     type: new GraphQLList(PostType),
     args: {

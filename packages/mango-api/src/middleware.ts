@@ -17,10 +17,7 @@ import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 // custom
 import ping from './ping'
 import health from './health'
-import { isProd } from './utils'
-
-// schema
-import createSchema from './schema'
+import { isDev, isProd } from './utils'
 
 export class Middleware extends EventEmitter {
 
@@ -28,15 +25,15 @@ export class Middleware extends EventEmitter {
   private router: koaRouter
   private adapter: any
 
-  constructor(public ctx, public config, public log: Winston) {
+  constructor(public ctx, public config, public schema, public log: Winston) {
     super()
 
     // use mock adapter
-    if (this.config.mock) {
-      this.adapter = new MockAdapter(this.ctx.axios, this.config)
-      addDefaultMocks(this.adapter)
-      addPluginMocks(this.adapter, this.config)
-    }
+    // if (this.config.mock) {
+    //   this.adapter = new MockAdapter(this.ctx.axios, this.config)
+    //   addDefaultMocks(this.adapter)
+    //   addPluginMocks(this.adapter, this.config)
+    // }
 
     // Koa
     this.app = new Koa()
@@ -75,18 +72,26 @@ export class Middleware extends EventEmitter {
     this.router.get('/ping', ping)
 
     // GraphQL
-    this.router.post('/graphql', koaBody(), graphqlKoa({ schema: createSchema(this.config.plugin), context: this.ctx }))
-    this.router.get('/graphql', graphqlKoa({ schema: createSchema(this.config.plugin), context: this.ctx }))
+    this.router.post('/graphql', koaBody(), graphqlKoa({
+      schema, context: this.ctx,
+      tracing: isDev,
+      cacheControl: !isDev
+    }))
 
+    this.router.get('/graphql', graphqlKoa({
+      schema, context: this.ctx,
+      tracing: isDev,
+      cacheControl: !isDev
+    }))
 
-    // GraphiQL (if not in production)
-    if (!isProd) {
+    // enable graphiql only in dev
+    if (isDev) {
       this.router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
     }
   }
 
   // run the middleware
-  public run() {
+  public start() {
     // listen
     this.app.listen(this.config.port)
   }

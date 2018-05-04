@@ -1,16 +1,7 @@
 import { GraphQLContext } from 'graphql'
+import API from './api'
 
-export enum API {
-  PageManagerCategories = '/page-manager/categories',
-  PageManagerPosts = '/page-manager/posts',
-  PageManagerPages = '/page-manager/pages',
-  PageManagerTags = '/page-manager/tags',
-  PageManagerSettings = '/page-manager/settings',
-  PageManagerGlobal = '/page-manager/global',
-  PageManagerLanguages = '/page-manager/languages'
-}
-
-export const Loader = {
+export default {
   // fetch page manager categories
   getPageManagerCategories: async function (ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [API.PageManagerCategories, id].join('/'), args)

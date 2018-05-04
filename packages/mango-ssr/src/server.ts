@@ -2,7 +2,7 @@ import { parseArgs } from './args'
 import { resolve } from './helpers'
 import { Config, IConfig } from './config'
 import { ServerSideRenderer } from './ssr'
-import { log, error, warning, shutdownServer } from './helpers'
+import { log, error, warning } from './helpers'
 
 // config ssr
 let ssrConfig: Config
@@ -29,7 +29,3 @@ try {
 // init new server-side renderer
 const app = new ServerSideRenderer(ssrConfig)
 app.start()
-
-// register server events
-process.on('SIGTERM', shutdownServer.bind(this, app));
-process.on('SIGINT', shutdownServer.bind(this, app));

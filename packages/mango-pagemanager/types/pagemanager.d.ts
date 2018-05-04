@@ -1,8 +1,6 @@
-import Vue, { Component, ComponentOptions, PluginFunction, AsyncComponent } from 'vue';
+import Vue, { Component, ComponentOptions, PluginFunction, AsyncComponent } from "vue";
 
-export declare enum PageManagerMode {
-  Strict = 'STRICT'
-}
+export type PageManagerMode = "STRICT"
 
 export type PageManagerOptions = {
   blocks?: PageManagerOption[],
@@ -18,11 +16,6 @@ export type PageManagerBlock = {
 export type PageManagerOption = {
   component: Component;
   pageBlock: string;
-}
-
-export interface RouterOptions {
-  blocks?: PageManagerBlock[],
-  mode?: PageManagerMode,
 }
 
 export declare class PageManager {

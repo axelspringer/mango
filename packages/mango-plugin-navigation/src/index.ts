@@ -1,4 +1,4 @@
-export * from './loader'
-export * from './mock'
-export * from './query'
+import use from './use'
+
 export * from './types'
+export { use }

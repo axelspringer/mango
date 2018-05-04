@@ -1,11 +1,11 @@
 {
-  "name": "@axelspringer/mango-router",
+  "name": "@axelspringer/mango-pagemanager",
   "version": "1.0.0-alpha.0",
-  "description": "Mango router",
+  "description": "Mango Page Manager",
   "typings": "types/index.d.ts",
-  "main": "dist/mango-router.common.js",
-  "web": "dist/mango-router.js",
-  "module": "dist/mango-router.esm.js",
+  "main": "dist/mango-pagemanager.common.js",
+  "web": "dist/mango-pagemanager.js",
+  "module": "dist/mango-pagemanager.esm.js",
   "scripts": {
     "build": "rollup -c scripts/config.js",
     "build:types": "npm run tsc -- -p tsconfig.json --declaration --declarationDir ./types",
@@ -30,9 +30,6 @@
   "engines": {
     "node": ">=6.9.13",
     "npm": ">=3.10.7"
-  },
-  "peerDependencies": {
-    "vue-router": "^3.0.1"
   },
   "license": "MIT",
   "devDependencies": {

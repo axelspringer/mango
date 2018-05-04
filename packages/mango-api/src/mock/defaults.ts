@@ -1,4 +1,4 @@
-import { API } from '../loader'
+import API from '../loader/api'
 
 export function addDefaultMocks(adapter) {
   adapter.get(API.Posts, require('../../data/posts.json')).reply(200)

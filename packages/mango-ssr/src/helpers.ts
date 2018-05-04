@@ -4,7 +4,6 @@ import * as process from 'process'
 import * as compress from 'express-static-gzip'
 import { Config } from './config'
 import chalk from 'chalk'
-import { IServerSideRenderer } from './ssr';
 
 export const log = console.log // logging
 export const error = chalk.bold.red;
@@ -46,18 +45,4 @@ export const createRenderer = (bundle, template, options) => {
     // recommended for performance
     runInNewContext: false
   }))
-}
-
-/**
- * Shutdown server helper
- *
- * @param server An Express server
- * @param log A console logger
- */
-export function shutdownServer(app: IServerSideRenderer) {
-  if (!app.server) {
-    process.exit()
-  }
-
-  app.stop() // try to server
 }

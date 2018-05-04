@@ -4,8 +4,9 @@
     "packages/mango-api",
     "packages/mango-plugin-navigation",
     "packages/mango-plugin-pagemanager",
+    "packages/mango-pagemanager",
     "packages/mango-ssr",
     "packages/mango-router"
   ],
-  "version": "0.12.3"
+  "version": "1.0.0-alpha.0"
 }
