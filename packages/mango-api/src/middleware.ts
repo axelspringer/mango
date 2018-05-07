@@ -84,7 +84,7 @@ export class Middleware extends EventEmitter {
       cacheControl: !isDev
     }))
 
-    // enable graphiql only in dev
+    // enable GraphiQL only in dev
     if (isDev) {
       this.router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
     }

@@ -1,4 +1,5 @@
-import { isProd, resolve } from './helpers'
+import { isProd } from './utils/env'
+import { resolve } from './utils/path'
 import * as process from 'process'
 
 export interface IConfig {

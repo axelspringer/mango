@@ -1,9 +1,9 @@
 import * as mfs from 'memory-fs'
 import * as webpack from 'webpack'
-import * as webpackHotMiddleware from 'webpack-hot-middleware'
-import { relative } from './helpers'
+import { devMiddleware, hotMiddleware } from 'koa-webpack-middleware'
+import { relative } from './utils/path'
 
-export function setupDevServer(app, middlewares, config, cb) {
+export default (app, config, cb) => {
   let bundle
   let clientManifest
   let template
@@ -20,7 +20,7 @@ export function setupDevServer(app, middlewares, config, cb) {
     cb(...args)
   }
 
-  const { ssrConfig, devConfig } = require(relative(config.webpack)).default
+  const { ssrConfig, devConfig } = require(relative(__dirname, config.webpack)).default
 
   // modify client config to work with hot middleware
   devConfig.entry.app = ['webpack-hot-middleware/client?reload=true', ...devConfig.entry.app]
@@ -28,20 +28,18 @@ export function setupDevServer(app, middlewares, config, cb) {
 
   // dev middleware
   const clientCompiler = webpack(devConfig)
-  const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
+  const webpackDev = devMiddleware(clientCompiler, {
     publicPath: devConfig.output.publicPath,
     noInfo: true,
     stats: {
       colors: true,
       chunks: false
-    },
-    serverSideRender: true
+    }
   })
-  middlewares.push(devMiddleware)
-  app.use(devMiddleware)
+  app.use(webpackDev)
 
   clientCompiler.plugin('done', () => {
-    const fs = devMiddleware.fileSystem
+    const fs = webpackDev.fileSystem
     const readFile = (file) => fs.readFileSync(file, 'utf-8')
     clientManifest = JSON.parse(readFile(config.manifest))
     template = readFile(config.template)
@@ -53,9 +51,7 @@ export function setupDevServer(app, middlewares, config, cb) {
   })
 
   // hot middleware
-  const hotMiddlware = webpackHotMiddleware(clientCompiler)
-  middlewares.push(hotMiddlware)
-  app.use(webpackHotMiddleware(clientCompiler))
+  app.use(hotMiddleware(clientCompiler))
 
   // watch and update server renderer
   const serverCompiler = webpack(ssrConfig)
