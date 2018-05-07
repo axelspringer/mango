@@ -24,8 +24,8 @@ export const WidgetValueType = new GraphQLScalarType({
   parseLiteral: ast => ast.value
 })
 
-export const WidgetType = new GraphQLObjectType({
-  name: 'WidgetType',
+export const WidgetTypePageManager = new GraphQLObjectType({
+  name: 'WidgetTypePageManager',
   fields: {
     name: { type: new GraphQLNonNull(GraphQLString) },
     type: { type: new GraphQLNonNull(GraphQLString) },
@@ -37,7 +37,7 @@ export const PageManagerBlock = new GraphQLObjectType({
   name: 'PageManagerBlock',
   fields: {
     page_block: { type: new GraphQLNonNull(GraphQLString) },
-    result: { type: GraphQLList(WidgetType) }
+    result: { type: GraphQLList(WidgetTypePageManager) }
   }
 })
 

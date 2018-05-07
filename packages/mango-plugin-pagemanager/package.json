@@ -66,6 +66,8 @@
     "vue": "^2.5.13"
   },
   "dependencies": {
+    "regenerator-runtime": "^0.11.1",
+    "rollup-regenerator-runtime": "^6.23.1",
     "tslib": "^1.8.0",
     "vue-property-decorator": "^6.0.0"
   }

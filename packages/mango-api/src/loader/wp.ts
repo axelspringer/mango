@@ -1,5 +1,6 @@
 import { GraphQLContext } from 'graphql'
 import { Loader } from './loader'
+import { regeneratorRuntime } from 'regenerator-runtime'
 
 export enum API {
   Posts = '/wp/v2/posts',
@@ -8,7 +9,10 @@ export enum API {
   Settings = '/wp/v2/settings',
   Terms = '/wp/v2/tags',
   Tags = '/wp/v2/tags',
-  Media = '/wp/v2/media'
+  Media = '/wp/v2/media',
+  Pages = '/wp/v2/pages',
+  PostByPermalink = '/mango/v1/posts/post-by-permalink?permalink=',
+  CategoryByPermalink = '/mango/v1/categories/category-by-permalink?permalink='
 }
 
 // posts loader
@@ -18,7 +22,14 @@ export class WP extends Loader {
   public async getPosts(ctx: GraphQLContext, args = {}) {
     return this._fetcher(ctx, API.Posts, args)
   }
+  // fetch postlist by ids
+  public async getPostListById(ctx: GraphQLContext, ids: number[], args = {}) {
+    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Posts, id].join('/')), args))
+  }
 
+  public async getPostListByCategoryId(ctx: GraphQLContext, id: number, args = {}) {
+    return this._fetcher(ctx, [API.Posts, 'categories=' + id].join('?'), args)
+  }
   // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: number[] = [], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.Categories, id].join('/')), args))
@@ -29,9 +40,19 @@ export class WP extends Loader {
     return this._fetcher(ctx, [API.Categories, id].join('/'), args)
   }
 
+  // fetch image
+  public async getImage(ctx: GraphQLContext, id: number, args = {}) {
+    return this._fetcher(ctx, [API.Media, id].join('/'), args)
+  }
+
   // fetch users
   public async getUser(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [API.Users, id].join('/'), args)
+  }
+
+  // fetch page
+  public async getPage(ctx: GraphQLContext, id: number, args = {}) {
+    return this._fetcher(ctx, [API.Pages, id].join('/'), args)
   }
 
   // fetch settings
@@ -52,5 +73,15 @@ export class WP extends Loader {
   // fetch media
   public async getMedia(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [API.Media, id].join('/'), args)
+  }
+
+  public async getPostByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
+    const result = await this._fetcher(ctx, API.PostByPermalink + permalink, args)
+    return result;
+  }
+
+  public async getCategoryByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
+    const result = await this._fetcher(ctx, API.CategoryByPermalink + permalink, args)
+    return result;
   }
 }

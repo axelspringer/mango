@@ -1,4 +1,6 @@
 import { GraphQLContext } from 'graphql'
+import regeneratorRuntime from 'regenerator-runtime'
+regeneratorRuntime.args
 
 export enum API {
   PageManagerCategories = '/page-manager/categories',

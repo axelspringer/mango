@@ -48,6 +48,7 @@
   "devDependencies": {
     "@axelspringer/mango-plugin-navigation": "^0.11.7",
     "@axelspringer/mango-plugin-pagemanager": "^0.11.7",
+    "@axelspringer/mango-plugin-acf": "file:../mango-plugin-acf",
     "@types/koa": "^2.0.43",
     "@types/node": "^8.5.2",
     "@types/winston": "^2.3.7",

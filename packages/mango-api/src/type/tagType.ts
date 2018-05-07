@@ -1,4 +1,4 @@
-import { GraphQLObjectType, GraphQLString, GraphQLInt } from 'graphql'
+const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
 
 export const TagType = new GraphQLObjectType({
   name: 'WPTag',
