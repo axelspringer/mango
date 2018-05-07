@@ -3,8 +3,6 @@ import Query from './query'
 
 // apply
 export default (loader, query) => {
-  const plugin = Query()
-
   for (const prop in Loader) { // attach loaders
     if (Loader.hasOwnProperty(prop)) {
       // code here
@@ -12,9 +10,9 @@ export default (loader, query) => {
     }
   }
 
-  for (const prop in plugin) {
-    if (plugin.hasOwnProperty(prop)) {
-      query[prop] = plugin[prop]
+  for (const prop in Query) {
+    if (Query.hasOwnProperty(prop)) {
+      query[prop] = Query[prop]
     }
   }
 }
