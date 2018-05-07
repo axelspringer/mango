@@ -1,14 +1,18 @@
+
 const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLInt } = require('graphql')
 import { GraphQLDateTime } from 'graphql-iso-date'
 import { CategoryType } from './catType'
 import { UserType } from './userType'
+import { TagType } from './tagType'
+import { ImgType } from './imgType'
 
 export const PostType = new GraphQLObjectType({
   name: 'Post',
   description: 'Contains a Post from WordPress',
   fields: () => ({
     date: {
-      type: GraphQLDateTime,
+      //type: GraphQLDateTime,
+      type: GraphQLString,
       resolve: post => post.date
     },
     dateGmt: {
@@ -75,6 +79,10 @@ export const PostType = new GraphQLObjectType({
       type: new GraphQLList(CategoryType),
       resolve: (root, args, ctx) => ctx.loader.getCategories(ctx, root.categories, args)
     },
+    tags: {
+      type: new GraphQLList(TagType),
+      resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root.tags, args)
+    },
     template: {
       type: GraphQLString,
       resolve: post => post.template
@@ -94,6 +102,14 @@ export const PostType = new GraphQLObjectType({
     format: {
       type: GraphQLString,
       resolve: post => post.format
+    },
+    pagemanager: {
+      type: new GraphQLList(GraphQLString),
+      resolve: post => post.pagemanager.settings.name
+    },
+    img: {
+      type: ImgType,
+      resolve: (root, args, ctx) => ctx.loader.getImage(ctx, root.featured_media, args)
     }
   }),
 })

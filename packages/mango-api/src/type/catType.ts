@@ -1,7 +1,8 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
 
 export const CategoryType = new GraphQLObjectType({
-  name: 'Category',
+  name: 'WPCategory',
+  description: 'Wordpress category object',
   fields: () => ({
     id: {
       type: GraphQLString,
