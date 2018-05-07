@@ -1,8 +1,8 @@
 import { parseArgs } from './args'
-import { resolve } from './utils/path'
+import { resolve } from './helpers'
 import { Config, IConfig } from './config'
 import { ServerSideRenderer } from './ssr'
-import { log, error, warning } from './utils/log'
+import { log, error, warning } from './helpers'
 
 // config ssr
 let ssrConfig: Config

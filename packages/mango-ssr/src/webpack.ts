@@ -1,9 +1,9 @@
 import * as mfs from 'memory-fs'
 import * as webpack from 'webpack'
-import { devMiddleware, hotMiddleware } from 'koa-webpack-middleware'
-import { relative } from './utils/path'
+import * as webpackHotMiddleware from 'webpack-hot-middleware'
+import { relative } from './helpers'
 
-export default (app, config, cb) => {
+export function setupDevServer(app, middlewares, config, cb) {
   let bundle
   let clientManifest
   let template
@@ -20,7 +20,7 @@ export default (app, config, cb) => {
     cb(...args)
   }
 
-  const { ssrConfig, devConfig } = require(relative(__dirname, config.webpack)).default
+  const { ssrConfig, devConfig } = require(relative(config.webpack)).default
 
   // modify client config to work with hot middleware
   devConfig.entry.app = ['webpack-hot-middleware/client?reload=true', ...devConfig.entry.app]
@@ -28,18 +28,20 @@ export default (app, config, cb) => {
 
   // dev middleware
   const clientCompiler = webpack(devConfig)
-  const webpackDev = devMiddleware(clientCompiler, {
+  const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
     publicPath: devConfig.output.publicPath,
     noInfo: true,
     stats: {
       colors: true,
       chunks: false
-    }
+    },
+    serverSideRender: true
   })
-  app.use(webpackDev)
+  middlewares.push(devMiddleware)
+  app.use(devMiddleware)
 
   clientCompiler.plugin('done', () => {
-    const fs = webpackDev.fileSystem
+    const fs = devMiddleware.fileSystem
     const readFile = (file) => fs.readFileSync(file, 'utf-8')
     clientManifest = JSON.parse(readFile(config.manifest))
     template = readFile(config.template)
@@ -51,7 +53,9 @@ export default (app, config, cb) => {
   })
 
   // hot middleware
-  app.use(hotMiddleware(clientCompiler))
+  const hotMiddlware = webpackHotMiddleware(clientCompiler)
+  middlewares.push(hotMiddlware)
+  app.use(webpackHotMiddleware(clientCompiler))
 
   // watch and update server renderer
   const serverCompiler = webpack(ssrConfig)
