@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-router",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "Mango router",
   "typings": "types/index.d.ts",
   "main": "dist/mango-router.common.js",
