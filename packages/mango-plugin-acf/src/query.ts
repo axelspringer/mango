@@ -24,6 +24,6 @@ export const Query = {
         type: GraphQLString
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getACFGlobals(ctx, args.section, args)
+    resolve: (_root, args, ctx) => ctx.loader.getACFGlobal(ctx, args.section, args)
   }
 }

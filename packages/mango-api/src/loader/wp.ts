@@ -12,24 +12,42 @@ export enum API {
   Media = '/wp/v2/media',
   Pages = '/wp/v2/pages',
   PostByPermalink = '/mango/v1/posts/post-by-permalink?permalink=',
-  CategoryByPermalink = '/mango/v1/categories/category-by-permalink?permalink='
+  CategoryByPermalink = '/mango/v1/categories/category-by-permalink?permalink=',
+  Custom = '/wp/v2'
 }
-
+type ArgsLimit = {
+  id: number;
+  offset?: number;
+  limit?: number;
+  exclude?: number[],
+  type?: string;
+}
 // posts loader
 export class WP extends Loader {
 
   // fetch posts
-  public async getPosts(ctx: GraphQLContext, args = {}) {
-    return this._fetcher(ctx, API.Posts, args)
+  public async getPosts(ctx: GraphQLContext, args: ArgsLimit) {
+    return this._fetcher(ctx, this.getUrlLimited(API.Posts, args), args)
   }
   // fetch postlist by ids
   public async getPostListById(ctx: GraphQLContext, ids: number[], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.Posts, id].join('/')), args))
   }
 
-  public async getPostListByCategoryId(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, [API.Posts, 'categories=' + id].join('?'), args)
+  public async getPostListByCategoryId(ctx: GraphQLContext, args: ArgsLimit) {
+    let url = [API.Posts, 'categories=' + args.id].join('?')
+    url = this.getUrlLimited(url, args)
+    return this._fetcher(ctx, url)
   }
+
+  // fetch postlist by ids
+  public async getCustomPostList(ctx: GraphQLContext, args: ArgsLimit) {
+    const type = (args.type === undefined) ? 'post-format' : args.type
+    let url = [API.Custom, type].join('/')
+    url = this.getUrlLimited(url, args)
+    return await this._fetcher(ctx, url)
+  }
+
   // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: number[] = [], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.Categories, id].join('/')), args))
@@ -83,5 +101,17 @@ export class WP extends Loader {
   public async getCategoryByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
     const result = await this._fetcher(ctx, API.CategoryByPermalink + permalink, args)
     return result;
+  }
+
+  private getUrlLimited(url: string, args: ArgsLimit): string {
+    url += (url.indexOf('?') > 0) ? '&' : '?'
+    url = url + 'offset=' + ((args.offset === null || args.offset === undefined) ? 0 : args.offset)
+    if (args.limit !== null && args.limit !== undefined) {
+      url = url + '&per_page=' + args.limit
+    }
+    if (args.exclude !== null && args.exclude !== undefined) {
+      url = url + '&exclude=' + args.exclude.toString()
+    }
+    return url
   }
 }

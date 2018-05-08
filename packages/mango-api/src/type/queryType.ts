@@ -13,6 +13,15 @@ export const defaultQuery = {
     args: {
       lang: {
         type: GraphQLString
+      },
+      offset: {
+        type: GraphQLInt
+      },
+      limit: {
+        type: GraphQLInt
+      },
+      exclude: {
+        type: new GraphQLList(GraphQLInt)
       }
     },
     resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args)
@@ -26,14 +35,44 @@ export const defaultQuery = {
     },
     resolve: (_, args, ctx) => ctx.loader.getPostListById(ctx, args.id, args)
   },
+  customPosts: {
+    type: new GraphQLList(PostType),
+    args: {
+      lang: {
+        type: GraphQLString
+      },
+      type: {
+        type: GraphQLString
+      },
+      offset: {
+        type: GraphQLInt
+      },
+      limit: {
+        type: GraphQLInt
+      },
+      exclude: {
+        type: new GraphQLList(GraphQLInt)
+      }
+    },
+    resolve: (_, args, ctx) => ctx.loader.getCustomPostList(ctx, args)
+  },
   postListByCategoryId: {
     type: new GraphQLList(PostType),
     args: {
       id: {
         type: GraphQLInt
+      },
+      offset: {
+        type: GraphQLInt
+      },
+      limit: {
+        type: GraphQLInt
+      },
+      exclude: {
+        type: new GraphQLList(GraphQLInt)
       }
     },
-    resolve: (_, args, ctx) => ctx.loader.getPostListByCategoryId(ctx, args.id, args)
+    resolve: (_, args, ctx) => ctx.loader.getPostListByCategoryId(ctx, args)
   },
   postByPermalink: {
     type: PostByPermalinkResult,
