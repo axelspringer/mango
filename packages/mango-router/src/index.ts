@@ -3,7 +3,8 @@ import { assert } from './utils/warn'
 import { inBrowser } from './utils/dom'
 import { install } from './install'
 import { Component } from 'vue/types'
-import { Route, Home, Category, Tag, Year, Month, Day, Post, Language } from './route'
+import Route from './route'
+import { Home, Category, Tag, Year, Month, Day, Post, Language } from './routes'
 
 export type Options = {
 }

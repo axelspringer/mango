@@ -36,6 +36,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
   }
 }
