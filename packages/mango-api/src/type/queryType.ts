@@ -47,6 +47,9 @@ export const defaultQuery = {
       id: {
         type: GraphQLInt
       },
+      type: {
+        type: GraphQLString
+      },
       offset: {
         type: GraphQLInt
       },
