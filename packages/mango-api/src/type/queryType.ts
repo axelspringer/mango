@@ -14,6 +14,9 @@ export const defaultQuery = {
       lang: {
         type: GraphQLString
       },
+      type: {
+        type: GraphQLString
+      },
       offset: {
         type: GraphQLInt
       },
@@ -31,30 +34,12 @@ export const defaultQuery = {
     args: {
       id: {
         type: new GraphQLList(GraphQLInt)
-      }
-    },
-    resolve: (_, args, ctx) => ctx.loader.getPostListById(ctx, args.id, args)
-  },
-  customPosts: {
-    type: new GraphQLList(PostType),
-    args: {
-      lang: {
-        type: GraphQLString
       },
       type: {
         type: GraphQLString
-      },
-      offset: {
-        type: GraphQLInt
-      },
-      limit: {
-        type: GraphQLInt
-      },
-      exclude: {
-        type: new GraphQLList(GraphQLInt)
       }
     },
-    resolve: (_, args, ctx) => ctx.loader.getCustomPostList(ctx, args)
+    resolve: (_, args, ctx) => ctx.loader.getPostListById(ctx, args.id, args)
   },
   postListByCategoryId: {
     type: new GraphQLList(PostType),

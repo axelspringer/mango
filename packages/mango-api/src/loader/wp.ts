@@ -3,7 +3,7 @@ import { Loader } from './loader'
 import { regeneratorRuntime } from 'regenerator-runtime'
 
 export enum API {
-  Posts = '/wp/v2/posts',
+  Posts = '/wp/v2',
   Categories = '/wp/v2/categories',
   Users = '/wp/v2/users',
   Settings = '/wp/v2/settings',
@@ -12,8 +12,7 @@ export enum API {
   Media = '/wp/v2/media',
   Pages = '/wp/v2/pages',
   PostByPermalink = '/mango/v1/posts/post-by-permalink?permalink=',
-  CategoryByPermalink = '/mango/v1/categories/category-by-permalink?permalink=',
-  Custom = '/wp/v2'
+  CategoryByPermalink = '/mango/v1/categories/category-by-permalink?permalink='
 }
 type ArgsLimit = {
   id: number;
@@ -27,25 +26,20 @@ export class WP extends Loader {
 
   // fetch posts
   public async getPosts(ctx: GraphQLContext, args: ArgsLimit) {
-    return this._fetcher(ctx, this.getUrlLimited(API.Posts, args), args)
+    let url = this.getPostUrlByType(args)
+    return this._fetcher(ctx, this.getUrlLimited(url, args), args)
   }
   // fetch postlist by ids
-  public async getPostListById(ctx: GraphQLContext, ids: number[], args = {}) {
-    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Posts, id].join('/')), args))
+  public async getPostListById(ctx: GraphQLContext, ids: number[], args: ArgsLimit) {
+    let url = this.getPostUrlByType(args)
+    return Promise.all(ids.map(id => this._fetcher(ctx, [url, id].join('/')), args))
   }
 
   public async getPostListByCategoryId(ctx: GraphQLContext, args: ArgsLimit) {
-    let url = [API.Posts, 'categories=' + args.id].join('?')
+    let url = this.getPostUrlByType(args)
+    url = [url, 'categories=' + args.id].join('?')
     url = this.getUrlLimited(url, args)
     return this._fetcher(ctx, url)
-  }
-
-  // fetch postlist by ids
-  public async getCustomPostList(ctx: GraphQLContext, args: ArgsLimit) {
-    const type = (args.type === undefined) ? 'post-format' : args.type
-    let url = [API.Custom, type].join('/')
-    url = this.getUrlLimited(url, args)
-    return await this._fetcher(ctx, url)
   }
 
   // fetch categories
@@ -113,5 +107,10 @@ export class WP extends Loader {
       url = url + '&exclude=' + args.exclude.toString()
     }
     return url
+  }
+
+  private getPostUrlByType(args: ArgsLimit) {
+    const type = (args.type === undefined) ? 'posts' : args.type
+    return [API.Posts, type].join('/')
   }
 }
