@@ -2,6 +2,17 @@ import { PageManagerBlock, PageManager, PageManagerLanguage } from './types'
 const { GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
 
 export default {
+  pageManagerHome: {
+    type: PageManager,
+    description: 'Returns the PageManager block of the home',
+    args: {
+      language: {
+        description: 'The language to return the PageManager blocks for',
+        type: GraphQLString
+      },
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getPageManagerHome(ctx, args.language, args)
+  },
   pageManagerCategory: {
     type: new GraphQLList(PageManagerBlock),
     args: {
@@ -9,6 +20,7 @@ export default {
         type: GraphQLInt
       },
       language: {
+        description: 'The language to return the PageManager blocks for',
         type: GraphQLString
       }
     },

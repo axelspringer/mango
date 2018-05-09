@@ -30,6 +30,11 @@ export default {
     return result.data
   },
 
+  // fetch page manager home
+  getPageManagerHome: async function (ctx: GraphQLContext, language: string, args = {}) {
+    return await this._fetcher(ctx, [API.PageManagerGlobal, 'home', language].join('/'), args)
+  },
+
   // fetch page manager data for global settings (e.g. for home)
   getPageManagerGlobal: async function (ctx: GraphQLContext, section: string, language: string, args = {}) {
     return await this._fetcher(ctx, [API.PageManagerGlobal, section, language].join('/'), args)
