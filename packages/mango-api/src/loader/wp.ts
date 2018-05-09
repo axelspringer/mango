@@ -21,6 +21,10 @@ type ArgsLimit = {
   exclude?: number[],
   type?: string;
 }
+type ArgsPermalink = {
+  permalink: string;
+  type?: string;
+}
 // posts loader
 export class WP extends Loader {
 
@@ -92,8 +96,9 @@ export class WP extends Loader {
     return result;
   }
 
-  public async getCategoryByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
-    const result = await this._fetcher(ctx, API.CategoryByPermalink + permalink, args)
+  public async getCategoryByPermalink(ctx: GraphQLContext, args: ArgsPermalink) {
+    let url = API.CategoryByPermalink + args.permalink
+    const result = await this._fetcher(ctx, url, args)
     return result;
   }
 

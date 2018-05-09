@@ -78,7 +78,7 @@ export const defaultQuery = {
         type: GraphQLString
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getCategoryByPermalink(ctx, args.permalink, args)
+    resolve: (_root, args, ctx) => ctx.loader.getCategoryByPermalink(ctx, args)
   },
   settings: {
     type: SettingsType,
