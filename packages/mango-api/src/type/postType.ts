@@ -49,7 +49,9 @@ export const PostType = new GraphQLObjectType({
     },
     excerpt: {
       type: GraphQLString,
-      resolve: post => post.excerpt.rendered
+      resolve: post => {
+        return (post.excerpt !== undefined) ? post.excerpt.rendered : null
+      }
     },
     featuredMedia: {
       type: GraphQLInt,
