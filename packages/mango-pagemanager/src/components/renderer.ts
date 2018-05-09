@@ -34,7 +34,7 @@ export default {
         const Ctor = newNode.componentOptions.Ctor
         Ctor.options.pageBlocks = Ctor.options.pageBlocks || {}
         Ctor.options.pageBlocks[block.page_block] = Ctor.options.pageBlocks[block.page_block] || []
-        Ctor.options.pageBlocks[block.page_block].push(block)
+        Ctor.options.pageBlocks[block.page_block].push(block.result)
 
         return newNode
       })
