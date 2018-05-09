@@ -1,7 +1,8 @@
 const {
     GraphQLObjectType,
     GraphQLList,
-    GraphQLString
+    GraphQLString,
+    GraphQLInt
 } = require('graphql')
 
 export const PostTypeACF = new GraphQLObjectType({
@@ -31,6 +32,10 @@ export const PostTypeACF = new GraphQLObjectType({
         linked_teaser: {
             type: GraphQLString,
             resolve: acf => acf.acf.linked_teaser
+        },
+        add_to_sidemenu: {
+            type: GraphQLInt,
+            resolve: acf => acf.acf.add_to_sidemenu
         }
     }
 })
