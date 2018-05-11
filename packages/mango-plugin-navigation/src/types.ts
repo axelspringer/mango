@@ -169,8 +169,8 @@ export const NavMenuType = new GraphQLObjectType({
       resolve: menu => menu.description
     },
     parent: {
-      type: GraphQLInt,
-      resolve: menu => menu.parent // todo(katallaxie): make nested
+      type: NavMenuType,
+      resolve: (menu, args, ctx) => ctx.loader.getNavMenu(ctx, menu.parent, args)
     },
     count: {
       type: GraphQLInt,
