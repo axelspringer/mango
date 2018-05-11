@@ -23,7 +23,7 @@ export const NavMenuItemType = new GraphQLObjectType({
   fields: () => ({
     id: {
       type: GraphQLInt,
-      resolve: item => item.id
+      resolve: item => item.ID
     },
     postAuthor: {
       type: UserType,

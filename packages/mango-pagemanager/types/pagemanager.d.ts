@@ -7,6 +7,8 @@ export type PageManagerOptions = {
   mode?: PageManagerMode,
 }
 
+export type PageManagerResult = [] | {}
+
 export type PageManagerBlock = {
   component: string;
   pageBlock: Component;

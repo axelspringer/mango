@@ -3,12 +3,12 @@
  */
 
 import Vue from "vue";
-import { PageManager, PageManagerBlock } from "./index";
+import { PageManager, PageManagerResult } from "./index";
 
 declare module "vue/types/vue" {
   interface Vue {
     $pagemanager?: PageManager;
-    $pageblock?: PageManagerBlock;
+    $pageblock?: PageManagerResult;
   }
 }
 
