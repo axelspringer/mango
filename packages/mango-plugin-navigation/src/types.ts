@@ -94,8 +94,8 @@ export const NavMenuItemType = new GraphQLObjectType({
       resolve: item => item.filter
     },
     menuItemParent: {
-      type: GraphQLString,
-      resolve: item => item.menu_item_parent
+      type: NavMenuType,
+      resolve: (item, args, ctx) => ctx.loader.getNavMenu(ctx, item.menu_item_parent, args)
     },
     type: {
       type: GraphQLString, // todo(katallaxie): could be its own type
