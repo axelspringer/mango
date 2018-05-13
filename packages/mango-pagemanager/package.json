@@ -34,5 +34,8 @@
   "license": "MIT",
   "devDependencies": {
     "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "vue": "^2.5.16"
   }
 }

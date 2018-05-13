@@ -3,7 +3,8 @@
  */
 
 import Vue from "vue";
-import { PageManager, PageManagerResult } from "./index";
+import PageManager from "./index";
+import { PageManagerResult } from "./index";
 
 declare module "vue/types/vue" {
   interface Vue {
