@@ -2,7 +2,6 @@ import inBrowser from '../../utils/dom'
 
 function getTags(vm) {
   const { tags } = vm
-  console.log(tags)
   if (tags) {
     return typeof tags === 'function'
       ? tags.call(vm)

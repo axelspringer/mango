@@ -1,5 +1,5 @@
 import title from './mixins/title'
-import tags from './mixins/title'
+import tags from './mixins/tags'
 
 export let _Vue
 
