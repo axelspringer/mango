@@ -38,7 +38,7 @@ const override = {
 
 const banner =
   '/*!\n' +
-  ' * Mango PageManager v' + version + '\n' +
+  ' * Mango Head v' + version + '\n' +
   ' * (c) 2017-' + new Date().getFullYear() + ' Axel Springer SE\n' +
   ' * Released under the MIT License.\n' +
   ' */'

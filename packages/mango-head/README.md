@@ -1,4 +1,4 @@
-# :smiley_cat: Mango Page Manager
+# :smiley_cat: Mango Head
 
 <br/>
 
@@ -15,7 +15,7 @@
 
 ```bash
 # Install the base package and the plugin (could also be global -g)
-npm i @axelspringer/mango-router
+npm i @axelspringer/mango-head
 ```
 
 ## Usage
@@ -24,24 +24,11 @@ Create a `router.ts` file with the following content.
 
 ```javascript
 import Vue from 'vue'
-import IFrame from '../components/post'
-import MangoPageManager from '@axelspringer/mango-pagemanager'
+import MangoHead from '@axelspringer/mango-router'
 
-// use pagemanager
-Vue.use(PageManager)
-
-export default new PageManager({
-  blocks: [
-    {
-      pageBlock: 'inline_frame',
-      component: iFrame
-    }
-  ]
-})
+Vue.use(MangoHead) // init head
 
 ```
-
-This configures the `vue-router` under the hood to match `/` to the `Home` component and `/:post` to the `Post` component. The partial paths of the route are constructed by chaining the routes.
 
 ## License
 [MIT](/LICENSE)
