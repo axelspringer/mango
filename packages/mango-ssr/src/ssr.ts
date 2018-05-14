@@ -49,7 +49,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
    */
   public createRenderer() {
     if (this.config.dev) { // dev
-      this.ready = setupDevServer(this.app, this.middlewares, this.config, (bundle, template, options) => {
+      this.ready = setupDevServer(this.app, this.config, (bundle, template, options) => {
         this.renderer = createRenderer(bundle, template, options)
       })
 
