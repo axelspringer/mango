@@ -3,7 +3,7 @@ import * as webpack from 'webpack'
 import * as webpackHotMiddleware from 'webpack-hot-middleware'
 import { relative } from './helpers'
 
-export function setupDevServer(app, middlewares, config, cb) {
+export function setupDevServer(app, config, cb) {
   let bundle
   let clientManifest
   let template
@@ -37,7 +37,6 @@ export function setupDevServer(app, middlewares, config, cb) {
     },
     serverSideRender: true
   })
-  middlewares.push(devMiddleware)
   app.use(devMiddleware)
 
   clientCompiler.plugin('done', () => {
@@ -53,8 +52,6 @@ export function setupDevServer(app, middlewares, config, cb) {
   })
 
   // hot middleware
-  const hotMiddlware = webpackHotMiddleware(clientCompiler)
-  middlewares.push(hotMiddlware)
   app.use(webpackHotMiddleware(clientCompiler))
 
   // watch and update server renderer

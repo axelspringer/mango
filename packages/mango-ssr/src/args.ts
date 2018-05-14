@@ -19,6 +19,11 @@ export function parseArgs() {
       default: process.env.MANGO_SERVE,
       desc: 'Static asset folder'
     })
+    .options('servePath', {
+      string: true,
+      default: process.env.MANGO_SERVE_PATH || '/static',
+      desc: 'Path to serve static folder on'
+    })
     .options('bundle', {
       string: true,
       alias: 'b',

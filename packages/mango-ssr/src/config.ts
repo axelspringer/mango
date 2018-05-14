@@ -13,6 +13,7 @@ export interface IConfig {
   webpack: string
   timeout: number
   stream: boolean
+  servePath: string
 }
 
 export class Config implements IConfig {
@@ -28,6 +29,7 @@ export class Config implements IConfig {
   public port = process.env.PORT || isProd ? 8080 : 3000
   public stream = false
   public timeout = 10 * 1000
+  public servePath = '/static'
 
   constructor({ serve, bundle, stream, manifest, template, webpack, dev, cache, maxAge, port }) {
     // defaults

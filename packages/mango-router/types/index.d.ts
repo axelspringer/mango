@@ -35,7 +35,7 @@ declare class Route {
 declare class Router {
   public options: MangoRouter.Options
 
-  constructor(options: MangoRouter.Options)
+  constructor(options?: MangoRouter.Options)
 
   static install: (Vue) => void
   static version: string
