@@ -1,6 +1,13 @@
 import { isProd, resolve } from './helpers'
 import * as process from 'process'
 
+export interface IPlugin {
+  route: string
+  header: any
+  render: any
+  template?: string
+}
+
 export interface IConfig {
   bundle: string
   cache: boolean
@@ -14,6 +21,7 @@ export interface IConfig {
   timeout: number
   stream: boolean
   servePath: string
+  plugins: IPlugin[]
 }
 
 export class Config implements IConfig {
@@ -30,8 +38,9 @@ export class Config implements IConfig {
   public stream = false
   public timeout = 10 * 1000
   public servePath = '/static'
+  public plugins: IPlugin[] = []
 
-  constructor({ serve, bundle, stream, manifest, template, webpack, dev, cache, maxAge, port }) {
+  constructor({ serve, bundle, plugins, stream, manifest, template, webpack, dev, cache, maxAge, port }) {
     // defaults
     this.serve = serve || this.serve
     this.bundle = bundle || this.bundle
@@ -43,6 +52,7 @@ export class Config implements IConfig {
     this.maxAge = maxAge || this.maxAge
     this.port = port || this.port
     this.stream = stream || this.stream
+    this.plugins = plugins || this.plugins
 
     // resolve paths
     this.serve = resolve(this.serve)

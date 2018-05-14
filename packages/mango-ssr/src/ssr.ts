@@ -1,27 +1,35 @@
-import * as express from 'express'
-import * as pino from 'express-pino-logger'
-import * as fs from 'fs'
-import { serve, log, resolve, relative, createRenderer, errorHandler } from './helpers'
 import { Config } from './config'
+import { serve, log, resolve, relative } from './helpers'
 import { setupDevServer } from './webpack'
+import { createRenderer } from 'vue-server-renderer'
+import * as _ from 'lodash'
+import * as express from 'express'
+import * as fs from 'fs'
 import * as GracefulShutdown from 'http-graceful-shutdown'
+import * as pino from 'express-pino-logger'
+import createBundleRenderer from './utils/createRenderer'
+import errorHandler from './utils/errorHandler'
+import renderPlugin from './utils/renderPlugin'
 
 export interface IServerSideRenderer {
   ready: Promise<any>
   server
+  renderer
+  pluginRenderer // this is a general renderer
 
   createRenderer(): void
   start(): void
 }
+
 
 // server side renderer
 export class ServerSideRenderer implements IServerSideRenderer {
 
   public ready: Promise<any>
   public renderer
+  public pluginRenderer // this is the general renderer
   public server
   public log
-  public middlewares = []
   public timeout
 
   /**
@@ -33,6 +41,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // create new express server, if not already one provided
     this.app = app || express()
     this.log = log
+    this.pluginRenderer = createRenderer()
 
     // graceful shutdown
     GracefulShutdown(this.app, {
@@ -50,7 +59,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
   public createRenderer() {
     if (this.config.dev) { // dev
       this.ready = setupDevServer(this.app, this.config, (bundle, template, options) => {
-        this.renderer = createRenderer(bundle, template, options)
+        this.renderer = createBundleRenderer(bundle, template, options)
       })
 
       return
@@ -59,7 +68,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
     const bundle = require(relative(this.config.bundle))
     const clientManifest = require(relative(this.config.manifest))
     const template = fs.readFileSync(resolve(this.config.template), 'utf-8')
-    this.renderer = createRenderer(bundle, template, {
+    this.renderer = createBundleRenderer(bundle, template, {
       clientManifest
     })
     this.ready = Promise.resolve()
@@ -80,9 +89,11 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // create renderer
     this.createRenderer()
 
-    // config requests
-    // render to
-    this.app.get('*', this.render.bind(this))
+    // config render plugins
+    this.configPlugins()
+
+    // config last to render bundle
+    this.app.get('*', this.render.bind(this)) //
 
     // attach server
     this.server = this.app.listen(this.config.port, () => {
@@ -91,6 +102,15 @@ export class ServerSideRenderer implements IServerSideRenderer {
 
     // return promise
     return this.ready
+  }
+
+  /**
+   *  Config plugins
+   */
+  public async configPlugins() {
+    this.config.plugins.forEach(plugin => { // configure plugins
+      this.app.get(plugin.route, renderPlugin.bind(Object.assign(this, { plugin })))
+    })
   }
 
   /**
@@ -121,6 +141,28 @@ export class ServerSideRenderer implements IServerSideRenderer {
       // should do 404
       errorHandler.call({ req, res }, err)
     }
+  }
+
+  /**
+   * Render to string
+   *
+   */
+  public async renderPluginToString(render: any, template: any, ctx: {}): Promise<string> {
+    const compiled = _.template(template)
+    let rendered = {}
+
+    function cb(rendered, prop) {
+      return (err, output) => {
+        console.log(err)
+        rendered[prop] = output
+      }
+    }
+
+    await Promise.all([...Object.keys(render).map(key => this.pluginRenderer.renderToString(render[key], ctx, cb(rendered, key)))])
+
+    console.log(rendered)
+
+    return compiled(rendered)
   }
 
   /**
