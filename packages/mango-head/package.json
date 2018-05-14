@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-head",
-  "version": "1.0.0-alpha.15",
+  "version": "1.0.0-alpha.16",
   "description": "Mango Head",
   "main": "dist/mango-head.common.js",
   "web": "dist/mango-head.js",
