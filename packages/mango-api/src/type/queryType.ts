@@ -1,4 +1,4 @@
-const { GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
+const { GraphQLString, GraphQLList, GraphQLInt, GraphQLBoolean } = require('graphql')
 import { PostType } from './postType'
 import { SettingsType } from './settingsType'
 import { CategoryType } from './catType'
@@ -35,11 +35,15 @@ export default {
     },
     resolve: (_, args, ctx) => ctx.loader.getPostListByCategoryId(ctx, args.id, args)
   },
+
   postByPermalink: {
     type: PostByPermalinkResult,
     args: {
       permalink: {
         type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.getPostByPermalink(ctx, args.permalink, args)
