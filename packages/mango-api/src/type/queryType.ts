@@ -48,6 +48,7 @@ export default {
     },
     resolve: (_root, args, ctx) => ctx.loader.getPostByPermalink(ctx, args.permalink, args)
   },
+
   categoryByPermalink: {
     type: CategoryByPermalinkResult,
     args: {

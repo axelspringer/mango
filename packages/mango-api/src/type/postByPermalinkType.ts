@@ -13,46 +13,46 @@ export const PostByPermalinkResult = new GraphQLObjectType({
     ID: {
       type: GraphQLInt
     },
-    post_author: {
+    author: {
       type: GraphQLString
     },
-    post_date: {
+    date: {
       type: GraphQLString
     },
-    post_date_gmt: {
+    date_gmt: {
       type: GraphQLString
     },
-    post_content: {
+    content: {
       type: GraphQLString
     },
-    post_title: {
+    title: {
       type: GraphQLString
     },
-    post_excerpt: {
+    excerpt: {
       type: GraphQLString
     },
-    post_status: {
+    status: {
       type: GraphQLString
     },
-    post_name: {
+    name: {
       type: GraphQLString
     },
-    post_modified: {
+    modified: {
       type: GraphQLString
     },
-    post_modified_gmt: {
+    modified_gmt: {
       type: GraphQLString
     },
-    post_content_filtered: {
+    content_filtered: {
       type: GraphQLString
     },
-    post_parent: {
+    parent: {
       type: GraphQLInt
     },
     guid: {
       type: GraphQLString
     },
-    post_type: {
+    type: {
       type: GraphQLString
     },
     language: {
