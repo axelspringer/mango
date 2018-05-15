@@ -1,5 +1,6 @@
 import { Config } from './config'
-import { serve, log, resolve, relative } from './helpers'
+import { log, resolve, relative } from './helpers'
+import serve from './utils/serve'
 import { setupDevServer } from './webpack'
 import { createRenderer } from 'vue-server-renderer'
 import { Renderer } from 'vue-server-renderer/types'
@@ -80,14 +81,14 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // static files
     this.app.use('/static', serve(this.config))
 
-    // create renderer
-    this.createRenderer()
-
     // config render plugins
     this.configPlugins()
 
+    // create renderer
+    this.createRenderer()
+
     // config last to render bundle
-    this.app.get('*', this.render.bind(this)) //
+    this.app.all('*', this.render.bind(this)) //
 
     // attach server
     this.server = this.app.listen(this.config.port, () => {
@@ -111,7 +112,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
    */
   public async configPlugins() {
     this.config.plugins.forEach(plugin => { // configure plugins
-      this.app.get(plugin.route, renderPlugin.bind(Object.assign(this, { plugin })))
+      this.app.all(plugin.route, renderPlugin.bind(Object.assign(this, { plugin })))
     })
   }
 
@@ -119,6 +120,10 @@ export class ServerSideRenderer implements IServerSideRenderer {
    *  Render context
    */
   public async render(req, res) {
+    if (res.finished) {
+      return // noop
+    }
+
     if (!this.renderer) {
       return res.end('waiting for compilation... refresh in a moment.')
     }
