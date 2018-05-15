@@ -2,7 +2,7 @@ import { Config } from './config'
 import { serve, log, resolve, relative } from './helpers'
 import { setupDevServer } from './webpack'
 import { createRenderer } from 'vue-server-renderer'
-import * as _ from 'lodash'
+import { Renderer } from 'vue-server-renderer/types'
 import * as express from 'express'
 import * as fs from 'fs'
 import * as GracefulShutdown from 'http-graceful-shutdown'
@@ -15,7 +15,7 @@ export interface IServerSideRenderer {
   ready: Promise<any>
   server
   renderer
-  pluginRenderer // this is a general renderer
+  universalRenderer: Renderer // this is a general renderer
 
   createRenderer(): void
   start(): void
@@ -27,7 +27,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
 
   public ready: Promise<any>
   public renderer
-  public pluginRenderer // this is the general renderer
+  public universalRenderer: Renderer // this is the general renderer
   public server
   public log
   public timeout
@@ -41,15 +41,9 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // create new express server, if not already one provided
     this.app = app || express()
     this.log = log
-    this.pluginRenderer = createRenderer()
 
-    // graceful shutdown
-    GracefulShutdown(this.app, {
-      development: this.config.dev,
-      finally: function () {
-        log('Server gracefully shut down ....')
-      }
-    })
+    // init universal Vue.js renderer
+    this.universalRenderer = createRenderer()
   }
 
   /**
@@ -100,6 +94,14 @@ export class ServerSideRenderer implements IServerSideRenderer {
       log(`server started at http://localhost:${this.config.port}`)
     })
 
+    // graceful shutdown
+    GracefulShutdown(this.app, {
+      development: this.config.dev,
+      finally: function () {
+        log('Server gracefully shut down ....')
+      }
+    })
+
     // return promise
     return this.ready
   }
@@ -141,28 +143,6 @@ export class ServerSideRenderer implements IServerSideRenderer {
       // should do 404
       errorHandler.call({ req, res }, err)
     }
-  }
-
-  /**
-   * Render to string
-   *
-   */
-  public async renderPluginToString(render: any, template: any, ctx: {}): Promise<string> {
-    const compiled = _.template(template)
-    let rendered = {}
-
-    function cb(rendered, prop) {
-      return (err, output) => {
-        console.log(err)
-        rendered[prop] = output
-      }
-    }
-
-    await Promise.all([...Object.keys(render).map(key => this.pluginRenderer.renderToString(render[key], ctx, cb(rendered, key)))])
-
-    console.log(rendered)
-
-    return compiled(rendered)
   }
 
   /**

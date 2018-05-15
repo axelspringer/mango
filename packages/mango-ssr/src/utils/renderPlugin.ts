@@ -1,4 +1,5 @@
 import errorHandler from './errorHandler'
+import renderToString from './renderToString'
 
 export default async function (req, res) {
   const { plugin } = this
@@ -10,7 +11,7 @@ export default async function (req, res) {
   }
 
   try {
-    const html = await this.renderPluginToString(plugin.render, plugin.template, req) // pass full req to render context
+    const html = await renderToString(this.universalRenderer, plugin.render, plugin.template, req) // pass full req to render context
     res.send(html).end()
   } catch (err) {
     // renderer error
