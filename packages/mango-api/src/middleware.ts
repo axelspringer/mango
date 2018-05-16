@@ -3,12 +3,10 @@ import * as Koa from 'koa'
 import * as koaRouter from 'koa-router'
 import * as koaBody from 'koa-bodyparser'
 import * as cors from '@koa/cors'
-// import * as logger from 'koa-logger'
 import logger from './logger'
 import { EventEmitter } from 'events'
 import { Winston } from 'winston'
 import { addDefaultMocks, addPluginMocks, MockAdapter } from './mock'
-// import { Discovery, RandomStrategy } from './discovery'
 import * as GracefulShutdown from 'http-graceful-shutdown'
 
 // apollo
@@ -28,13 +26,6 @@ export class Middleware extends EventEmitter {
   constructor(public ctx, public config, public schema, public log: Winston) {
     super()
 
-    // use mock adapter
-    // if (this.config.mock) {
-    //   this.adapter = new MockAdapter(this.ctx.axios, this.config)
-    //   addDefaultMocks(this.adapter)
-    //   addPluginMocks(this.adapter, this.config)
-    // }
-
     // Koa
     this.app = new Koa()
     this.router = new koaRouter()
@@ -46,9 +37,6 @@ export class Middleware extends EventEmitter {
         console.log('Server gracefully shut down ....')
       }
     })
-
-    // Microservice resolver
-    // new Discovery(new RandomStrategy(), this.ctx)
 
     // Middlewares
     this.app.use(logger())

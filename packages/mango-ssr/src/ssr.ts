@@ -132,7 +132,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // use streaming...
     if (this.config.stream) {
       // register on stream
-      this.renderer.renderToStream({ url: req.url })
+      this.renderer.renderToStream({ url: req.url, req })
         .on('error', errorHandler.bind({ req, res }))
         .pipe(res)
 
@@ -142,7 +142,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // use rendered string
     try {
       // should do 404
-      const html = await this.renderString({ url: req.url })
+      const html = await this.renderString({ url: req.url, req })
       res.send(html).end()
     } catch (err) {
       // should do 404

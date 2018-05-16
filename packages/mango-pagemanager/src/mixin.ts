@@ -4,7 +4,7 @@ export default function (Vue) {
   return {
     beforeCreate(): void {
       const options: any = this.$options
-      options.pagemanager = options.pagemanager || (options.__pagemanager ? {} : null)
+      options.pagemanager = options.pagemanager || (options._pagemanager ? {} : null)
 
       if (options.pageBlocks
         && options.parent
@@ -12,10 +12,11 @@ export default function (Vue) {
         && options.parent.$pagemanager instanceof PageManager) { /* Ok, this is foo ;-) */
         const pagemanager = options.parent.$pagemanager
         const cmp = this.$vnode.componentOptions.Ctor.name
-        const block = pagemanager.options.blocks.find(b => b.component.name === cmp)
+        const block = pagemanager.options.blocks.find(function (b) { return b.component.name === cmp })
 
         if (block !== undefined) {
-          Vue.util.defineReactive(this, '_pageblock', options.pageBlocks[block.pageBlock].shift())
+          const mapBlock = options.pageBlocks[block.pageBlock]
+          Vue.util.defineReactive(this, '_pageblock', mapBlock !== undefined ? mapBlock.shift() : [])
         }
       }
 
@@ -31,10 +32,6 @@ export default function (Vue) {
       }
     },
 
-    created(): void {
-      // noop
-    },
-
     beforeDestroy(): void {
       if (!this._pagemanager) { return }
 
@@ -42,5 +39,4 @@ export default function (Vue) {
       this._pageblock = null
     }
   }
-
 }
