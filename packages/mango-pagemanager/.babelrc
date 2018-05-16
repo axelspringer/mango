@@ -1,18 +1,11 @@
 {
   "presets": [
-    [
-      "env",
+    "vue-app", [
+      "babel-preset-env",
       {
-        "modules": false,
-        "targets": {
-          "browsers": ["last 2 versions", "safari >= 7"]
-        }
+        "modules": false
       }
     ]
   ],
-  "plugins": [
-    "transform-vue-jsx",
-    "syntax-dynamic-import",
-    "external-helpers"
-  ]
+  "plugins": ["transform-object-rest-spread"]
 }
