@@ -11,6 +11,7 @@ import * as pino from 'express-pino-logger'
 import createBundleRenderer from './utils/createRenderer'
 import errorHandler from './utils/errorHandler'
 import renderPlugin from './utils/renderPlugin'
+import SSRContext from './context'
 
 export interface IServerSideRenderer {
   ready: Promise<any>
@@ -129,10 +130,13 @@ export class ServerSideRenderer implements IServerSideRenderer {
     }
     res.setHeader('Content-Type', 'text/html')
 
+    // construct context
+    const context = new SSRContext(req)
+
     // use streaming...
     if (this.config.stream) {
       // register on stream
-      this.renderer.renderToStream({ url: req.url, req })
+      this.renderer.renderToStream(context)
         .on('error', errorHandler.bind({ req, res }))
         .pipe(res)
 
@@ -142,7 +146,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
     // use rendered string
     try {
       // should do 404
-      const html = await this.renderString({ url: req.url, req })
+      const html = await this.renderString(context)
       res.send(html).end()
     } catch (err) {
       // should do 404
