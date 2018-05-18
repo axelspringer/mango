@@ -35,6 +35,14 @@ module.exports = {
 }
 ```
 
+## Plugins
+
+Plugins can be used to render general content on routes. You find an example in `examples/rss` to render an example RSS feed on `localhost:3000/rss`.
+
+```bash
+./bin/mango-ssr --config ./examples/rss/mango.config.js
+```
+
 ## Arguments
 
 > most command line arguments have a reflection in environment variables, which allows it to be easily tested and developed in many environments
