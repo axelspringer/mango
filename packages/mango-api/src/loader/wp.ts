@@ -13,9 +13,9 @@ export default class WP extends Loader {
 
   // fetch post
   public async getPost(ctx: GraphQLContext, args: PostArguments = {}) {
-    return args.permalink
-      ? this.getPostByPermalink(ctx, args.permalink, args)
-      : this._fetcher(ctx, [API.Posts, args.id].join('/'), args)
+    return !args.id && args.permalink
+      ? await this.getPostByPermalink(ctx, args)
+      : await this._fetcher(ctx, [API.Posts, args.id].join('/'), args)
   }
 
   // fetch postlist by ids
@@ -71,13 +71,13 @@ export default class WP extends Loader {
     return this._fetcher(ctx, [API.Media, id].join('/'), args)
   }
 
-  public async getPostByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
-    const result = await this._fetcher(ctx, API.PostByPermalink + permalink, args)
+  public async getPostByPermalink(ctx: GraphQLContext, args = {}) {
+    const result = await this._fetcher(ctx, API.PostByPermalink, args)
     return result;
   }
 
-  public async getCategoryByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
-    const result = await this._fetcher(ctx, API.CategoryByPermalink + permalink, args)
+  public async getCategoryByPermalink(ctx: GraphQLContext, args = {}) {
+    const result = await this._fetcher(ctx, API.CategoryByPermalink, args)
     return result;
   }
 

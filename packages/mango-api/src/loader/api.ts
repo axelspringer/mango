@@ -7,6 +7,6 @@ export default class API {
   public static Tags = '/wp/v2/tags'
   public static Media = '/wp/v2/media'
   public static Pages = '/wp/v2/pages'
-  public static PostByPermalink = '/mango/v1/posts/post-by-permalink?permalink='
+  public static PostByPermalink = '/mango/v1/posts/post-by-permalink'
   public static CategoryByPermalink = '/mango/v1/categories/category-by-permalink?permalink='
 }

@@ -6,6 +6,7 @@ import { MediaType } from './mediaType'
 import { TermType } from './termType'
 import { PostByPermalinkResult } from './postByPermalinkType'
 import { CategoryByPermalinkResult } from './categoryByPermalinkType'
+import { QueryIdType } from './idType'
 
 export default {
   posts: {
@@ -27,8 +28,8 @@ export default {
   post: {
     type: PostType,
     args: {
-      lang: {
-        type: GraphQLString
+      id: {
+        type: GraphQLInt
       },
       permalink: {
         type: GraphQLString
