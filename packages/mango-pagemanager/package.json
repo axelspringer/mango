@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-pagemanager",
-  "version": "1.0.0-alpha.29",
+  "version": "1.0.0-alpha.30",
   "description": "Mango Page Manager",
   "typings": "types/index.d.ts",
   "main": "dist/mango-pagemanager.common.js",
