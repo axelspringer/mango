@@ -11,6 +11,7 @@ export default {
     },
     resolve: (_root, args, ctx) => ctx.loader.getNavMenu(ctx, args.id)
   },
+
   menuLocation: {
     type: NavMenuType,
     args: {
@@ -23,12 +24,13 @@ export default {
     },
     resolve: (_root, args, ctx) => ctx.loader.getNavLocation(ctx, args.name, args)
   },
+
   menuLocations: {
     type: new GraphQLList(NavMenuLocation),
     args: {
       language: {
-        type: GraphQLString
-      }
+        type: GraphQLList(GraphQLString)
+      },
     },
     resolve: (_root, args, ctx) => ctx.loader.getNavLocations(ctx, args)
   },

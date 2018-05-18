@@ -1,4 +1,4 @@
-export type PostArguments = {
+export type ListPost = {
   _embed?: boolean
   id?: number
   permalink?: string
@@ -8,9 +8,11 @@ export type Context = 'view' | 'embed' | 'edit'
 
 export type Order = 'desc' | 'asc'
 
-export type OrderBy = 'author' | 'date' | 'id' | 'include' | 'modified' | 'parent' | 'relevance' | 'slug' | 'title'
+export type OrderByPosts = 'author' | 'date' | 'id' | 'include' | 'modified' | 'parent' | 'relevance' | 'slug' | 'title'
 
 export type Status = 'publish'
+
+export type OrderByCategories = 'id' | 'include' | 'name' | 'slug' | 'term_group' | 'description' | 'count'
 
 export type ListPosts = {
   context?: Context
@@ -22,7 +24,7 @@ export type ListPosts = {
   exclude?: number[]
   include?: number[]
   offset?: number
-  orderby?: OrderBy
+  orderby?: OrderByPosts
   slug?: string[]
   status?: Status
   categories?: string[]
@@ -30,4 +32,19 @@ export type ListPosts = {
   tags?: string[]
   tags_exclude?: string[]
   order?: Order
+}
+
+export type ListCategories = {
+  context?: Context
+  page?: number
+  per_page?: number
+  search?: string
+  exclude?: number[]
+  include?: number[]
+  order?: Order
+  orderBy?: OrderByCategories
+  hide_empty?: boolean
+  parent: number
+  post: number
+  slug: string[]
 }

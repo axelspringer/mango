@@ -1,6 +1,5 @@
 import { GraphQLContext } from 'graphql'
-import { PostArguments } from './args'
-import { ListPosts } from './args'
+import { ListPosts, ListCategories, ListPost } from './args'
 import Loader from './loader'
 import API from './api'
 
@@ -13,28 +12,20 @@ export default class WP extends Loader {
   }
 
   // fetch post
-  public async getPost(ctx: GraphQLContext, args: PostArguments = {}) {
+  public async getPost(ctx: GraphQLContext, args: ListPost = {}) {
     return !args.id && args.permalink
       ? await this.getPostByPermalink(ctx, args)
       : await this._fetcher(ctx, [API.Posts, args.id].join('/'), args)
   }
 
-  // fetch postlist by ids
-  public async getPostListById(ctx: GraphQLContext, ids: number[], args = {}) {
-    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Posts, id].join('/')), args))
-  }
-
-  public async getPostListByCategoryId(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, [API.Posts, 'categories=' + id].join('?'), args)
-  }
   // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: number[] = [], args = {}) {
     return Promise.all(ids.map(id => this._fetcher(ctx, [API.Categories, id].join('/')), args))
   }
 
   // fetch category
-  public async getCategory(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, [API.Categories, id].join('/'), args)
+  public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories) {
+    return this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
   }
 
   // fetch image
@@ -74,11 +65,6 @@ export default class WP extends Loader {
 
   public async getPostByPermalink(ctx: GraphQLContext, args = {}) {
     const result = await this._fetcher(ctx, API.PostByPermalink, args)
-    return result;
-  }
-
-  public async getCategoryByPermalink(ctx: GraphQLContext, args = {}) {
-    const result = await this._fetcher(ctx, API.CategoryByPermalink, args)
     return result;
   }
 

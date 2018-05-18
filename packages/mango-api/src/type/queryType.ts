@@ -39,8 +39,17 @@ export default {
       order: {
         type: GraphQLString
       },
+      orderby: {
+        type: GraphQLString
+      },
       status: {
         type: GraphQLString
+      },
+      categories: {
+        type: new GraphQLList(GraphQLString)
+      },
+      categories_exclude: {
+        type: new GraphQLList(GraphQLString)
       }
     },
     resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args)
@@ -62,49 +71,6 @@ export default {
     resolve: (_, args, ctx) => ctx.loader.getPost(ctx, args)
   },
 
-  postListById: {
-    type: new GraphQLList(PostType),
-    args: {
-      id: {
-        type: new GraphQLList(GraphQLInt)
-      }
-    },
-    resolve: (_, args, ctx) => ctx.loader.getPostListById(ctx, args.id, args)
-  },
-
-  postListByCategoryId: {
-    type: new GraphQLList(PostType),
-    args: {
-      id: {
-        type: GraphQLInt
-      }
-    },
-    resolve: (_, args, ctx) => ctx.loader.getPostListByCategoryId(ctx, args.id, args)
-  },
-
-  postByPermalink: {
-    type: PostByPermalinkResult,
-    args: {
-      permalink: {
-        type: GraphQLString
-      },
-      _embed: {
-        type: GraphQLBoolean
-      }
-    },
-    resolve: (_root, args, ctx) => ctx.loader.getPostByPermalink(ctx, args.permalink, args)
-  },
-
-  categoryByPermalink: {
-    type: CategoryByPermalinkResult,
-    args: {
-      permalink: {
-        type: GraphQLString
-      }
-    },
-    resolve: (_root, args, ctx) => ctx.loader.getCategoryByPermalink(ctx, args.permalink, args)
-  },
-
   settings: {
     type: SettingsType,
     resolve: (_root, _args, ctx) => ctx.loader.getSettings(ctx)
@@ -120,9 +86,45 @@ export default {
     args: {
       id: {
         type: GraphQLString
+      },
+      context: {
+        type: GraphQLString
+      },
+      page: {
+        type: GraphQLInt
+      },
+      per_page: {
+        type: GraphQLInt
+      },
+      search: {
+        type: GraphQLString
+      },
+      exclude: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      include: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      order: {
+        type: GraphQLString
+      },
+      orderby: {
+        type: GraphQLString
+      },
+      hide_empty: {
+        type: GraphQLBoolean
+      },
+      parent: {
+        type: GraphQLInt
+      },
+      post: {
+        type: GraphQLInt
+      },
+      slug: {
+        type: new GraphQLList(GraphQLString)
       }
     },
-    resolve: (_root, _args, ctx) => ctx.loader.getCategory(ctx, _args.id, _args)
+    resolve: (_root, args, ctx) => ctx.loader.getCategory(ctx, args.id, args)
   },
 
   media: {
