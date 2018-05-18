@@ -22,6 +22,8 @@ export interface IConfig {
   stream: boolean
   servePath: string
   plugins: IPlugin[]
+  renderer: boolean
+  universalRenderer: boolean
 }
 
 export class Config implements IConfig {
@@ -39,6 +41,9 @@ export class Config implements IConfig {
   public timeout = 10 * 1000
   public servePath = '/static'
   public plugins: IPlugin[] = []
+  public renderer = false
+  public webpackMiddleware = false
+  public universalRenderer = false
 
   constructor({ serve, bundle, plugins, stream, manifest, template, webpack, dev, cache, maxAge, port }) {
     // defaults
@@ -60,5 +65,8 @@ export class Config implements IConfig {
     this.manifest = resolve(this.manifest)
     this.template = resolve(this.template)
     this.webpack = resolve(this.webpack)
+
+    this.renderer = this.serve && this.bundle && this.manifest && this.template
+    this.universalRenderer = this.plugins.length > 0
   }
 }

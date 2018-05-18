@@ -32,6 +32,7 @@ export default {
         const vnode = h(newCmp)
         const newNode = vnode
         const Ctor = newNode.componentOptions.Ctor
+        Ctor.cid = ++Ctor.cid
         Ctor.options.pageBlocks = Ctor.options.pageBlocks || {}
         Ctor.options.pageBlocks[block.page_block] = Ctor.options.pageBlocks[block.page_block] || []
         Ctor.options.pageBlocks[block.page_block].push(block.result)

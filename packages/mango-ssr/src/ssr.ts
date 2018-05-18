@@ -80,16 +80,16 @@ export class ServerSideRenderer implements IServerSideRenderer {
     this.app.use(pino())
 
     // static files
-    this.app.use('/static', serve(this.config))
+    !this.config.serve || this.app.use('/static', serve(this.config))
 
     // config render plugins
-    this.configPlugins()
+    !this.config.universalRenderer || this.configPlugins()
 
     // create renderer
-    this.createRenderer()
+    !this.config.renderer || this.createRenderer()
 
     // config last to render bundle
-    this.app.all('*', this.render.bind(this)) //
+    !this.config.renderer || this.app.all('*', this.render.bind(this)) //
 
     // attach server
     this.server = this.app.listen(this.config.port, () => {
@@ -125,10 +125,11 @@ export class ServerSideRenderer implements IServerSideRenderer {
       return // noop
     }
 
-    if (!this.renderer) {
+    if (this.config.renderer && !this.renderer) {
       return res.end('waiting for compilation... refresh in a moment.')
     }
-    res.setHeader('Content-Type', 'text/html')
+
+    !this.config.renderer || res.setHeader('Content-Type', 'text/html')
 
     // construct context
     const context = new SSRContext(req)

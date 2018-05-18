@@ -36,7 +36,8 @@
     "@types/express": "^4.11.0",
     "@types/node": "^8.5.2",
     "@types/winston": "^2.3.7",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "vue": "^2.5.16"
   },
   "dependencies": {
     "@std/esm": "^0.19.6",
