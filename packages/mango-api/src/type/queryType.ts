@@ -15,11 +15,32 @@ export default {
       lang: {
         type: GraphQLString
       },
-      permalink: {
+      context: {
         type: GraphQLString
       },
-      _embed: {
-        type: GraphQLBoolean
+      page: {
+        type: GraphQLInt
+      },
+      per_page: {
+        type: GraphQLInt
+      },
+      search: {
+        type: GraphQLString
+      },
+      exclude: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      include: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      offset: {
+        type: GraphQLInt
+      },
+      order: {
+        type: GraphQLString
+      },
+      status: {
+        type: GraphQLString
       }
     },
     resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args)

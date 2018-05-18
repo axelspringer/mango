@@ -1,5 +1,6 @@
 import { GraphQLContext } from 'graphql'
 import { PostArguments } from './args'
+import { ListPosts } from './args'
 import Loader from './loader'
 import API from './api'
 
@@ -7,7 +8,7 @@ import API from './api'
 export default class WP extends Loader {
 
   // fetch posts
-  public async getPosts(ctx: GraphQLContext, args = {}) {
+  public async getPosts(ctx: GraphQLContext, args: ListPosts = {}) {
     return this._fetcher(ctx, API.Posts, args)
   }
 
