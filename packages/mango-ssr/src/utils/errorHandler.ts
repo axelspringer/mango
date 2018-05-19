@@ -1,4 +1,4 @@
-import { error } from '../helpers'
+import { error } from './log'
 
 export default function (err) {
   if (err && err.code === 404) {

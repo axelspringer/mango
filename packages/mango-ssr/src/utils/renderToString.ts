@@ -1,9 +1,9 @@
 import asyncRender from './asyncRender'
 import { Renderer } from 'vue-server-renderer/types'
-import * as _ from 'lodash'
+import { template } from 'lodash'
 
-export default function (renderer: Renderer, render: any, template: any, ctx: {}): Promise<any> {
-  const compiled = _.template(template)
+export default function (renderer: Renderer, render: any, renderTemplate: any, ctx: {}): Promise<any> {
+  const compiled = template(renderTemplate)
 
   return Promise.all([...Object.keys(render).map(key => asyncRender(renderer, render[key], ctx))])
     .then(rendered => compiled(Object.keys(render).reduce((context, key, index) => {

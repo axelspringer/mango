@@ -1,7 +1,7 @@
 import * as mfs from 'memory-fs'
 import * as webpack from 'webpack'
 import * as webpackHotMiddleware from 'webpack-hot-middleware'
-import { relative } from './helpers'
+import { relative } from './utils/path'
 
 export function setupDevServer(app, config, cb) {
   let bundle

@@ -1,12 +1,18 @@
 import * as argv from 'yargs'
+import { isDev } from './utils/env'
+import Env from './env'
 
 export function parseArgs() {
   return argv
     .usage('Usage: $0 [options]')
+    .options('dev', {
+      default: Env.Dev || isDev,
+      desc: 'Enable development mode'
+    })
     .options('config', {
       string: true,
       alias: 'c',
-      default: process.env.MANGO_CONFIG,
+      default: Env.Config,
       desc: 'Mango config'
     })
     .options('stream', {

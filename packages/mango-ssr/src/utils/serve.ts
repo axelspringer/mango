@@ -1,7 +1,7 @@
 import { Config } from '../config'
 import * as compress from 'express-static-gzip'
 import * as express from 'express'
-import { isProd } from '../helpers'
+import { isProd } from './env'
 
 export default (config: Config) => isProd
   ? compress(config.serve, {

@@ -1,8 +1,8 @@
 import { parseArgs } from './args'
-import { resolve } from './helpers'
-import { Config, IConfig } from './config'
+import { resolve } from './utils/path'
+import { Config } from './config'
 import { ServerSideRenderer } from './ssr'
-import { log, error, warning } from './helpers'
+import { log, error, warning } from './utils/log'
 
 // config ssr
 let ssrConfig: Config
@@ -13,7 +13,7 @@ const args = parseArgs()
 // check for config
 try {
   const configFile = args.config || './mango.config.js'
-  const config: IConfig = require(resolve(configFile))
+  const config: Config = require(resolve(configFile))
   ssrConfig = new Config(config)
 } catch (err) {
   // exit on

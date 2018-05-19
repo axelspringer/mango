@@ -1,5 +1,6 @@
 import { Config } from './config'
-import { log, resolve, relative } from './helpers'
+import { resolve, relative } from './utils/path'
+import { log } from './utils/log'
 import serve from './utils/serve'
 import { setupDevServer } from './webpack'
 import { createRenderer } from 'vue-server-renderer'

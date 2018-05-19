@@ -1,4 +1,4 @@
-import { resolve } from '../helpers'
+import { resolve } from './path'
 import { createBundleRenderer } from 'vue-server-renderer'
 
 export default (bundle, template, options) => {

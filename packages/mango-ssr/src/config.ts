@@ -1,46 +1,31 @@
-import { isProd, resolve } from './helpers'
-import * as process from 'process'
+import { resolve } from './utils/path'
+import { isProd } from './utils/env'
+import { Component } from 'vue/types'
+import { Production, Development } from './default'
+import Env from './env'
 
-export interface IPlugin {
+export type Plugin = {
   route: string
   header: any
-  render: any
+  render: { [render: string]: Component }
   template?: string
 }
 
-export interface IConfig {
-  bundle: string
-  cache: boolean
-  dev: boolean
-  manifest: string
-  maxAge: number
-  port: number
-  serve: string
-  template: string
-  webpack: string
-  timeout: number
-  stream: boolean
-  servePath: string
-  plugins: IPlugin[]
-  renderer: boolean
-  universalRenderer: boolean
-}
+export class Config {
 
-export class Config implements IConfig {
-
-  public serve
-  public bundle
-  public manifest
-  public template
-  public webpack
+  public serve: string
+  public bundle: string
+  public manifest: string
+  public template: string
+  public webpack: string
   public dev = !isProd
   public cache = true
   public maxAge = isProd ? 60 * 60 * 24 * 30 : 0
-  public port = process.env.PORT || isProd ? 8080 : 3000
+  public port = Env.Port || isProd ? Production.Port : Development.Port
   public stream = false
-  public timeout = 10 * 1000
-  public servePath = '/static'
-  public plugins: IPlugin[] = []
+  public timeout = Env.Timeout || isProd ? Production.Timeout : Development.Timeout
+  public servePath = Env.StaticPath || isProd ? Production.StaticPath : Development.StaticPath
+  public plugins: Plugin[] = []
   public renderer = false
   public webpackMiddleware = false
   public universalRenderer = false
@@ -66,7 +51,7 @@ export class Config implements IConfig {
     this.template = resolve(this.template)
     this.webpack = resolve(this.webpack)
 
-    this.renderer = this.serve && this.bundle && this.manifest && this.template
+    this.renderer = !!this.serve && !!this.bundle && !!this.manifest && !!this.template
     this.universalRenderer = this.plugins.length > 0
   }
 }
