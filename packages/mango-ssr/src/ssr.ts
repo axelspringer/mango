@@ -10,9 +10,8 @@ import * as fs from 'fs'
 import * as GracefulShutdown from 'http-graceful-shutdown'
 import * as pino from 'express-pino-logger'
 import createBundleRenderer from './utils/createRenderer'
-import errorHandler from './utils/errorHandler'
 import renderPlugin from './utils/renderPlugin'
-import SSRContext from './context'
+import appRender from './utils/appRender'
 
 export interface IServerSideRenderer {
   ready: Promise<any>
@@ -62,8 +61,8 @@ export class ServerSideRenderer implements IServerSideRenderer {
       return
     }
 
-    const bundle = require(relative(this.config.bundle))
-    const clientManifest = require(relative(this.config.manifest))
+    const bundle = require(relative(this.config.bundle, __dirname))
+    const clientManifest = require(relative(this.config.manifest, __dirname))
     const template = fs.readFileSync(resolve(this.config.template), 'utf-8')
     this.renderer = createBundleRenderer(bundle, template, {
       clientManifest
@@ -90,7 +89,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
     !this.config.renderer || this.createRenderer()
 
     // config last to render bundle
-    !this.config.renderer || this.app.all('*', this.render.bind(this)) //
+    !this.config.renderer || this.app.all('*', appRender.bind(this)) //
 
     // attach server
     this.server = this.app.listen(this.config.port, () => {
@@ -112,55 +111,9 @@ export class ServerSideRenderer implements IServerSideRenderer {
   /**
    *  Config plugins
    */
-  public async configPlugins() {
+  public configPlugins() {
     this.config.plugins.forEach(plugin => { // configure plugins
       this.app.all(plugin.route, renderPlugin.bind(Object.assign(this, { plugin })))
     })
-  }
-
-  /**
-   *  Render context
-   */
-  public async render(req, res) {
-    if (res.finished) {
-      return // noop
-    }
-
-    if (this.config.renderer && !this.renderer) {
-      return res.end('waiting for compilation... refresh in a moment.')
-    }
-
-    !this.config.renderer || res.setHeader('Content-Type', 'text/html')
-
-    // construct context
-    const context = new SSRContext(req)
-
-    // use streaming...
-    if (this.config.stream) {
-      // register on stream
-      this.renderer.renderToStream(context)
-        .on('error', errorHandler.bind({ req, res }))
-        .pipe(res)
-
-      return
-    }
-
-    // use rendered string
-    try {
-      // should do 404
-      const html = await this.renderString(context)
-      res.send(html).end()
-    } catch (err) {
-      // should do 404
-      errorHandler.call({ req, res }, err)
-    }
-  }
-
-  /**
-   * Render to string
-   *
-   */
-  public async renderString(ctx: any, cb?): Promise<string> {
-    return this.renderer.renderToString(ctx, cb)
   }
 }

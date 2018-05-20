@@ -20,7 +20,7 @@ export function setupDevServer(app, config, cb) {
     cb(...args)
   }
 
-  const { ssrConfig, devConfig } = require(relative(config.webpack)).default
+  const { ssrConfig, devConfig } = require(relative(config.webpack, __dirname)).default
 
   // modify client config to work with hot middleware
   devConfig.entry.app = ['webpack-hot-middleware/client?reload=true', ...devConfig.entry.app]
