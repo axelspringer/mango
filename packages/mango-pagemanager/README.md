@@ -15,12 +15,12 @@
 
 ```bash
 # Install the base package and the plugin (could also be global -g)
-npm i @axelspringer/mango-router
+npm i @axelspringer/mango-pagemanager
 ```
 
 ## Usage
 
-Create a `router.ts` file with the following content.
+Create a `pagemanager.ts` file with the following content.
 
 ```javascript
 import Vue from 'vue'
@@ -38,10 +38,58 @@ export default new PageManager({
     }
   ]
 })
-
 ```
 
-This configures the `vue-router` under the hood to match `/` to the `Home` component and `/:post` to the `Post` component. The partial paths of the route are constructed by chaining the routes.
+This configures the Page Manager to map a page block to a component.
+
+```javascript
+import { Vue, Component } from 'vue-property-decorator'
+import HOME_QUERY from '../../graphql/home.graphql'
+
+@Component
+export default class Home extends Vue {
+
+  /**
+   *
+   */
+  public blocks = []
+
+  /**
+   * Render function
+   *
+   * @param h
+   */
+  public render() {
+    return (
+      <main class='start'>
+        <pagemanager-renderer blocks={this.blocks || []} />
+      </main>
+    )
+  }
+}
+```
+
+The pagemanager exposes `$pageblock` on the component with the page block data to render. You have to add a `name` property. This is the property on which the Page Manager data and blocks are matched.
+
+```javascript
+import { Vue, Component } from 'vue-property-decorator'
+
+export function renderInnerHtml(h, atts) {
+  return atts.map(att => h('iframe', { attrs: att.value }))
+}
+
+@Component({
+  name: 'iFrame'
+})
+export default class iFrame extends Vue {
+  public render(h) {
+    if (!this.$pageblock) return null
+
+    return (<div>{renderInnerHtml(h, this.$pageblock)}</div>)
+  }
+}
+
+```
 
 ## License
 [MIT](/LICENSE)

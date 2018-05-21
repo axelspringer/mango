@@ -4,7 +4,9 @@ export default class SSRContext {
   public headers
   public methods
 
-  constructor({ url, headers, rawHeaders, methods }) {
+  constructor(req: Express.Request) {
+    const { url, headers, rawHeaders, methods }: any = req
+
     this.url = url || this.url
     this.rawHeaders = rawHeaders || this.rawHeaders
     this.methods = methods || this.methods
