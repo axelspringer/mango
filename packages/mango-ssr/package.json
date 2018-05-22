@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-ssr",
-  "version": "1.0.0-alpha.34",
+  "version": "1.0.0-alpha.35",
   "description": "Mango WordPress Server Side Renderer",
   "main": "dist/main.js",
   "bin": {
