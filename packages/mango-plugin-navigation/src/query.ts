@@ -18,7 +18,7 @@ export default {
       name: {
         type: GraphQLString
       },
-      language: {
+      lang: {
         type: GraphQLString
       }
     },
@@ -28,7 +28,7 @@ export default {
   menuLocations: {
     type: new GraphQLList(NavMenuLocation),
     args: {
-      language: {
+      lang: {
         type: GraphQLList(GraphQLString)
       },
     },
