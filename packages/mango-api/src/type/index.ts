@@ -11,7 +11,6 @@ export * from './catType'
 export * from './mediaType'
 export * from './languageType'
 export * from './postByPermalinkType'
-export * from './categoryByPermalinkType'
 export * from './catType'
 
 export default Query

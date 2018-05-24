@@ -5,7 +5,6 @@ import { CategoryType } from './catType'
 import { MediaType } from './mediaType'
 import { TermType } from './termType'
 import { PostByPermalinkResult } from './postByPermalinkType'
-import { CategoryByPermalinkResult } from './categoryByPermalinkType'
 import { QueryIdType } from './idType'
 
 export default {
@@ -81,8 +80,8 @@ export default {
     resolve: (_root, _args, ctx) => ctx.loader.getTerms(ctx)
   },
 
-  category: {
-    type: CategoryType,
+  categories: {
+    type: new GraphQLList(CategoryType),
     args: {
       id: {
         type: GraphQLString
@@ -122,6 +121,9 @@ export default {
       },
       slug: {
         type: new GraphQLList(GraphQLString)
+      },
+      lang: {
+        type: GraphQLString
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.getCategory(ctx, args.id, args)
@@ -135,5 +137,5 @@ export default {
       }
     },
     resolve: (_root, _args, ctx) => ctx.loader.getMedia(ctx, _args.id, _args)
-  }
+  },
 }
