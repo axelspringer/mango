@@ -29,7 +29,7 @@ export default {
     type: new GraphQLList(NavMenuLocation),
     args: {
       language: {
-        type: GraphQLList(GraphQLString)
+        type: GraphQLString
       },
     },
     resolve: (_root, args, ctx) => ctx.loader.getNavLocations(ctx, args)
