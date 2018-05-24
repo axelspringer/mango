@@ -11,7 +11,7 @@ export function parseArgs() {
       default: Env.WP,
       desc: 'WordPress API Endpoint'
     })
-    .options('environment', {
+    .options('env', {
       string: true,
       alias: 'e',
       default: Env.Env,

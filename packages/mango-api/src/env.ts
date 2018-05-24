@@ -5,6 +5,7 @@ export type Production = 'production'
 export type Runtime = Development | Production
 
 export const {
+  NODE_ENV,
   SSM_WP,
   SSM_ENV,
   SSM_PORT,
@@ -23,7 +24,7 @@ export const {
 
 export default class Environment {
   public static WP = SSM_WP || MANGO_WP || 'http://localhost:8181//wp-json'
-  public static Env = SSM_ENV || MANGO_ENV || 'production'
+  public static Env = SSM_ENV || MANGO_ENV || NODE_ENV || 'production'
   public static Port = SSM_PORT || MANGO_PORT || 8080
   public static Plugins = SSM_PLUGINS ? SSM_PLUGINS.split(',').map(plugin => plugin.trim()) : undefined || MANGO_PLUGINS ? MANGO_PLUGINS.split(',').map(plugin => plugin.trim()) : undefined || []
   public static Host = SSM_HOST || MANGO_HOST || 'localhost'

@@ -18,7 +18,6 @@ export class Config {
   public manifest: string
   public template: string
   public webpack: string
-  public dev = !isProd
   public cache = true
   public maxAge = isProd ? 60 * 60 * 24 * 30 : 0
   public port = Env.Port || isProd ? Production.Port : Development.Port
@@ -30,14 +29,13 @@ export class Config {
   public webpackMiddleware = false
   public universalRenderer = false
 
-  constructor({ serve, bundle, plugins, stream, manifest, template, webpack, dev, cache, maxAge, port }) {
+  constructor({ serve, bundle, plugins, stream, manifest, template, webpack, cache, maxAge, port }) {
     // defaults
     this.serve = serve || this.serve
     this.bundle = bundle || this.bundle
     this.manifest = manifest || this.manifest
     this.template = template || this.template
     this.webpack = webpack || this.webpack
-    this.dev = dev !== undefined ? dev : this.dev
     this.cache = cache !== undefined ? cache : this.cache
     this.maxAge = maxAge || this.maxAge
     this.port = port || this.port

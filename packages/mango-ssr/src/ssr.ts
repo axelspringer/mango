@@ -12,6 +12,7 @@ import * as pino from 'express-pino-logger'
 import createBundleRenderer from './utils/createRenderer'
 import renderPlugin from './utils/renderPlugin'
 import appRender from './utils/appRender'
+import Env from './env'
 
 export interface IServerSideRenderer {
   ready: Promise<any>
@@ -53,7 +54,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
    *
    */
   public createRenderer() {
-    if (this.config.dev) { // dev
+    if (Env.Development) { // dev
       this.ready = setupDevServer(this.app, this.config, (bundle, template, options) => {
         this.renderer = createBundleRenderer(bundle, template, options)
       })
@@ -98,7 +99,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
 
     // graceful shutdown
     GracefulShutdown(this.app, {
-      development: this.config.dev,
+      development: Env.Development,
       finally: function () {
         log('Server gracefully shut down ....')
       }

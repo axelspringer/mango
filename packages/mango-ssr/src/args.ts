@@ -1,13 +1,14 @@
 import * as argv from 'yargs'
-import { isDev } from './utils/env'
 import Env from './env'
 
 export function parseArgs() {
   return argv
     .usage('Usage: $0 [options]')
-    .options('dev', {
-      default: Env.Dev || isDev,
-      desc: 'Enable development mode'
+    .options('env', {
+      string: true,
+      alias: 'e',
+      default: Env.Runtime,
+      desc: 'Runtime environment'
     })
     .options('config', {
       string: true,
