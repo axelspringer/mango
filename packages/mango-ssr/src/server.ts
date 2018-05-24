@@ -16,6 +16,7 @@ try {
   const config: Config = require(resolve(configFile))
   ssrConfig = new Config(config)
 } catch (err) {
+  console.log(err)
   // exit on
   if (err.code !== 'MODULE_NOT_FOUND') {
     log(error(err))

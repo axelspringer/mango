@@ -1,0 +1,47 @@
+{
+  "name": "@axelspringer/mango-plugin-rss",
+  "version": "1.0.0-alpha.43",
+  "description": "Mango router",
+  "main": "dist/mango-router.common.js",
+  "web": "dist/mango-router.js",
+  "module": "dist/mango-router.esm.js",
+  "scripts": {
+    "build": "rollup -c scripts/config.js",
+    "build:types": "npm run tsc -- -p tsconfig.json --declaration --declarationDir ./types",
+    "clean:dist": "npm run rimraf -- dist",
+    "clean": "npm run rimraf -- dist node_modules",
+    "prebuild": "npm run clean:dist",
+    "rimraf": "rimraf",
+    "start": "npm run watch",
+    "tsc": "tsc",
+    "watch": "rollup -w -c scripts/config.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Axel Springer SE",
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
+  "peerDependencies": {
+    "graphql": "0.13.2",
+    "graphql-iso-date": "^3.3.0"
+  },
+  "engines": {
+    "node": ">=6.9.13",
+    "npm": ">=3.10.7"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "vue": "^2.5.16",
+    "apollo-link-http": "^1.5.4",
+    "apollo-client": "^2.3.1",
+    "apollo-cache-inmemory": "^1.2.1"
+  }
+}

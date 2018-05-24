@@ -20,7 +20,7 @@ export class Config {
   public webpack: string
   public cache = true
   public maxAge = isProd ? 60 * 60 * 24 * 30 : 0
-  public port = Env.Port || isProd ? Production.Port : Development.Port
+  public port = Env.Production ? Production.Port : Development.Port
   public stream = false
   public timeout = Env.Timeout || isProd ? Production.Timeout : Development.Timeout
   public servePath = Env.StaticPath || isProd ? Production.StaticPath : Development.StaticPath
