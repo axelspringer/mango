@@ -1,6 +1,6 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
 
-export const TagType = new GraphQLObjectType({
+export default new GraphQLObjectType({
   name: 'WPTag',
   description: 'Wordpress tag object https://developer.wordpress.org/rest-api/reference/tags/',
   fields: () => ({

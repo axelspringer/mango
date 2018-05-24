@@ -1,7 +1,7 @@
 // import { PageManager } from '../../../mango-plugin-pagemanager/src/types';
 import { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } from 'graphql'
 import { CategoryType } from './catType'
-import { TagType } from './tagType'
+import TagType from './tagType'
 import { Language } from './languageType'
 
 const { PageManager } = require('@axelspringer/mango-plugin-pagemanager')

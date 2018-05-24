@@ -23,13 +23,13 @@ export const {
 } = process.env
 
 export default class Environment {
-  public static WP = SSM_WP || MANGO_WP || 'http://localhost:8181//wp-json'
+  public static WP = SSM_WP || MANGO_WP || 'http://localhost:8181/wp-json'
   public static Env = SSM_ENV || MANGO_ENV || NODE_ENV || 'production'
   public static Port = SSM_PORT || MANGO_PORT || 8080
   public static Plugins = SSM_PLUGINS ? SSM_PLUGINS.split(',').map(plugin => plugin.trim()) : undefined || MANGO_PLUGINS ? MANGO_PLUGINS.split(',').map(plugin => plugin.trim()) : undefined || []
   public static Host = SSM_HOST || MANGO_HOST || 'localhost'
-  public static Token = SSM_TOKEN || MANGO_TOKEN
-  public static Secret = SSM_SECRET || MANGO_SECRET
+  public static Token = SSM_TOKEN || MANGO_TOKEN || 'top_secret'
+  public static Secret = SSM_SECRET || MANGO_SECRET || 'top_secret'
 
   public static Runtime() {
     return Environment.Env !== 'development' ? 'production' : 'development'

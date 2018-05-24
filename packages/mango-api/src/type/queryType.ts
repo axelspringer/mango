@@ -1,11 +1,13 @@
 const { GraphQLString, GraphQLList, GraphQLInt, GraphQLBoolean } = require('graphql')
-import { PostType } from './postType'
+import PostType from './postType'
+import PageType from './pageType'
 import { SettingsType } from './settingsType'
 import { CategoryType } from './catType'
 import { MediaType } from './mediaType'
-import { TermType } from './termType'
+import TaxonomyType from './taxonomyType'
 import { PostByPermalinkResult } from './postByPermalinkType'
-import { QueryIdType } from './idType'
+import TagType from './tagType'
+import TaxonomiesTypes from './taxonomiesTypes'
 
 export default {
   posts: {
@@ -13,6 +15,9 @@ export default {
     args: {
       lang: {
         type: GraphQLString
+      },
+      slug: {
+        type: new GraphQLList(GraphQLString)
       },
       context: {
         type: GraphQLString
@@ -51,23 +56,68 @@ export default {
         type: new GraphQLList(GraphQLString)
       }
     },
-    resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args)
+    resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args.id, args)
   },
 
-  post: {
-    type: PostType,
+  pages: {
+    type: new GraphQLList(PageType),
     args: {
       id: {
         type: GraphQLInt
       },
-      permalink: {
+      lang: {
         type: GraphQLString
       },
-      _embed: {
-        type: GraphQLBoolean
+      slug: {
+        type: new GraphQLList(GraphQLString)
+      },
+      context: {
+        type: GraphQLString
+      },
+      page: {
+        type: GraphQLInt
+      },
+      per_page: {
+        type: GraphQLInt
+      },
+      search: {
+        type: GraphQLString
+      },
+      exclude: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      include: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      offset: {
+        type: GraphQLInt
+      },
+      order: {
+        type: GraphQLString
+      },
+      orderby: {
+        type: GraphQLString
+      },
+      status: {
+        type: GraphQLString
+      },
+      menu_order: {
+        type: GraphQLInt
+      },
+      parent: {
+        type: GraphQLInt
+      },
+      parent_exclude: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      categories: {
+        type: new GraphQLList(GraphQLString)
+      },
+      categories_exclude: {
+        type: new GraphQLList(GraphQLString)
       }
     },
-    resolve: (_, args, ctx) => ctx.loader.getPost(ctx, args)
+    resolve: (_, args, ctx) => ctx.loader.getPages(ctx, args.id, args)
   },
 
   settings: {
@@ -75,9 +125,72 @@ export default {
     resolve: (_root, _args, ctx) => ctx.loader.getSettings(ctx)
   },
 
-  terms: {
-    type: TermType,
-    resolve: (_root, _args, ctx) => ctx.loader.getTerms(ctx)
+  taxonomies: {
+    type: TaxonomiesTypes,
+    args: {
+      lang: {
+        type: GraphQLString
+      },
+      slug: {
+        type: new GraphQLList(GraphQLString)
+      },
+      context: {
+        type: GraphQLString
+      },
+      type: {
+        type: GraphQLString
+      }
+    },
+    resolve: (_root, _args, ctx) => ctx.loader.getTaxonomies(ctx)
+  },
+
+  tags: {
+    type: new GraphQLList(TagType),
+    args: {
+      id: {
+        type: GraphQLString
+      },
+      context: {
+        type: GraphQLString
+      },
+      page: {
+        type: GraphQLInt
+      },
+      per_page: {
+        type: GraphQLInt
+      },
+      search: {
+        type: GraphQLString
+      },
+      exclude: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      include: {
+        type: new GraphQLList(GraphQLInt)
+      },
+      offset: {
+        type: GraphQLInt
+      },
+      order: {
+        type: GraphQLString
+      },
+      orderby: {
+        type: GraphQLString
+      },
+      hide_empty: {
+        type: GraphQLBoolean
+      },
+      post: {
+        type: GraphQLInt
+      },
+      slug: {
+        type: new GraphQLList(GraphQLString)
+      },
+      lang: {
+        type: GraphQLString
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getTags(ctx, args.id, args)
   },
 
   categories: {
@@ -126,7 +239,7 @@ export default {
         type: GraphQLString
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getCategory(ctx, args.id, args)
+    resolve: (_root, args, ctx) => ctx.loader.getCategories(ctx, args.id, args)
   },
 
   media: {

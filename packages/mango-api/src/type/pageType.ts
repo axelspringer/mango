@@ -8,105 +8,89 @@ import { ImgType } from './imgType'
 import ACFFieldsType from './acfType'
 
 export default new GraphQLObjectType({
-  name: 'Post',
-  description: 'Contains a Post from WordPress',
+  name: 'Page',
+  description: 'Contains a Page from Wordpress',
   fields: () => ({
     date: {
       //type: GraphQLDateTime,
       type: GraphQLString,
-      resolve: post => post.date
+      resolve: page => page.date
     },
     dateGmt: {
       type: GraphQLDateTime,
-      resolve: post => post.date_gmt.rendered
+      resolve: page => page.date_gmt.rendered
     },
     id: {
       type: GraphQLString,
-      resolve: post => post.id
-    },
-    link: {
-      type: GraphQLString,
-      resolve: post => post.link
-    },
-    modified: {
-      type: GraphQLDateTime,
-      resolve: post => post.modified
-    },
-    modifiedGmt: {
-      type: GraphQLDateTime,
-      resolve: post => post.modified_gmt
+      resolve: page => page.id
     },
     status: {
       type: GraphQLString,
-      resolve: post => post.status
+      resolve: page => page.status
     },
     type: {
       type: GraphQLString,
-      resolve: post => post.type
+      resolve: page => page.type
     },
     password: {
       type: GraphQLString,
-      resolve: post => post.password
+      resolve: page => page.password
     },
     excerpt: {
       type: GraphQLString,
-      resolve: post => post.excerpt.rendered
+      resolve: page => page.excerpt.rendered
     },
     featuredMedia: {
       type: GraphQLInt,
-      resolve: post => post.featured_media
+      resolve: page => page.featured_media
     },
     commentStatus: {
       type: GraphQLString,
-      resolve: post => post.comment_status
+      resolve: page => page.comment_status
     },
     pingStatus: {
       type: GraphQLString,
-      resolve: post => post.ping_status
+      resolve: page => page.ping_status
     },
     title: {
       type: GraphQLString,
-      resolve: post => post.title.rendered
+      resolve: page => page.title.rendered
     },
     sticky: {
       type: GraphQLBoolean,
-      resolve: post => post.sticky
+      resolve: page => page.sticky
     },
     meta: {
       type: new GraphQLList(GraphQLString),
-      resolve: post => post.meta
-    },
-    categories: {
-      type: new GraphQLList(CategoryType),
-      resolve: (root, args, ctx) => ctx.loader.getCategories(ctx, root.categories, args)
-    },
-    tags: {
-      type: new GraphQLList(TagType),
-      resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root.tags, args)
+      resolve: page => page.meta
     },
     template: {
       type: GraphQLString,
-      resolve: post => post.template
+      resolve: page => page.template
     },
     content: {
       type: GraphQLString,
-      resolve: post => post.content.rendered
+      resolve: page => page.content.rendered
     },
     slug: {
       type: GraphQLString,
-      resolve: post => post.slug
+      resolve: page => page.slug
     },
     author: {
       type: UserType,
       resolve: (root, args, ctx) => ctx.loader.getUser(ctx, root.author, args)
     },
+    authorExclude: {
+      type: GraphQLInt,
+      resolve: page => page.author_exclude
+    },
     format: {
       type: GraphQLString,
-      resolve: post => post.format
+      resolve: page => page.format
     },
     pagemanager: {
       type: new GraphQLList(GraphQLString),
-      resolve: post => post.pagemanager.settings.name
+      resolve: page => page.pagemanager.settings.name
     },
     img: {
       type: ImgType,

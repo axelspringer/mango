@@ -1,5 +1,5 @@
 import { GraphQLContext } from 'graphql'
-import { ListPosts, ListCategories, ListPost } from './args'
+import { ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
 import Loader from './loader'
 import API from './api'
 
@@ -18,13 +18,8 @@ export default class WP extends Loader {
       : await this._fetcher(ctx, [API.Posts, args.id].join('/'), args)
   }
 
-  // fetch categories
-  public async getCategories(ctx: GraphQLContext, ids: number[] = [], args = {}) {
-    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Categories, id].join('/')), args))
-  }
-
   // fetch category
-  public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories) {
+  public async getCategories(ctx: GraphQLContext, id: number, args: ListCategories = {}) {
     return this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
   }
 
@@ -39,7 +34,7 @@ export default class WP extends Loader {
   }
 
   // fetch page
-  public async getPage(ctx: GraphQLContext, id: number, args = {}) {
+  public async getPages(ctx: GraphQLContext, id: number, args: ListPages = {}) {
     return this._fetcher(ctx, [API.Pages, id].join('/'), args)
   }
 
@@ -49,13 +44,13 @@ export default class WP extends Loader {
   }
 
   // fetch terms
-  public async getTerms(ctx: GraphQLContext, ids: number[] = [], args = {}) {
-    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Terms, id].join('/')), args))
+  public async getTaxonomies(ctx: GraphQLContext, id: number, args: ListTaxonomies = {}) {
+    return this._fetcher(ctx, [API.Taxonomies, id].join('/'), args)
   }
 
   // fetch tags
-  public async getTags(ctx: GraphQLContext, ids: number[] = [], args = {}) {
-    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Tags, id].join('/')), args))
+  public async getTags(ctx: GraphQLContext, id: number, args = {}) {
+    return this._fetcher(ctx, [API.Tags, id].join('/'), args)
   }
 
   // fetch media
