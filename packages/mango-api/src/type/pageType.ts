@@ -6,6 +6,7 @@ import { UserType } from './userType'
 import TagType from './tagType'
 import { ImgType } from './imgType'
 import ACFFieldsType from './acfType'
+import PageManagerType from './pageManagerType'
 
 export default new GraphQLObjectType({
   name: 'Page',
@@ -89,8 +90,8 @@ export default new GraphQLObjectType({
       resolve: page => page.format
     },
     pagemanager: {
-      type: new GraphQLList(GraphQLString),
-      resolve: page => page.pagemanager.settings.name
+      type: PageManagerType,
+      resolve: page => page.pagemanager
     },
     img: {
       type: ImgType,

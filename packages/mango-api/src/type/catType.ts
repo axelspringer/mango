@@ -1,5 +1,6 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
 import ACFFieldsType from './acfType'
+import PageManagerType from './pageManagerType'
 
 export const CategoryType = new GraphQLObjectType({
   name: 'WPCategory',
@@ -42,8 +43,8 @@ export const CategoryType = new GraphQLObjectType({
       resolve: cat => cat.meta
     },
     pagemanager: {
-      type: new GraphQLList(GraphQLString),
-      resolve: cat => cat.pagemanager.settings.name
+      type: PageManagerType,
+      resolve: page => page.pagemanager
     },
     acf: {
       type: ACFFieldsType,
