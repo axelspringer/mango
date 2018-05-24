@@ -1,5 +1,5 @@
 const { GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
-import { PostType } from './postType'
+import { PostType } from './postType';
 import { SettingsType } from './settingsType'
 import { CategoryType } from './catType'
 import { MediaType } from './mediaType'

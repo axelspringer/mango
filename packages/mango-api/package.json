@@ -34,12 +34,10 @@
     "npm": ">=3.10.7"
   },
   "author": "Axel Springer SE",
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
   "peerDependencies": {
     "graphql": "^0.12.3",
     "graphql-iso-date": "^3.3.0"
@@ -48,7 +46,7 @@
   "devDependencies": {
     "@axelspringer/mango-plugin-navigation": "^0.11.7",
     "@axelspringer/mango-plugin-pagemanager": "^0.11.7",
-    "@axelspringer/mango-plugin-acf": "file:../mango-plugin-acf",
+    "@axelspringer/mango-plugin-mediaimpact": "file:../mango-plugin-mediaimpact",
     "@types/koa": "^2.0.43",
     "@types/node": "^8.5.2",
     "@types/winston": "^2.3.7",

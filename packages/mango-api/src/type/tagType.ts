@@ -27,6 +27,9 @@ export const TagType = new GraphQLObjectType({
     },
     meta: {
       type: GraphQLString
+    },
+    parent: {
+      type: GraphQLInt
     }
   })
 })

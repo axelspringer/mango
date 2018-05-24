@@ -4,7 +4,7 @@
     "packages/mango-api",
     "packages/mango-plugin-navigation",
     "packages/mango-plugin-pagemanager",
-    "packages/mango-plugin-acf",
+    "packages/mango-plugin-mediaimpact",
     "packages/mango-ssr",
     "packages/mango-router"
   ],

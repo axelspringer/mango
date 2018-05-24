@@ -8,7 +8,7 @@ export enum API {
   Users = '/wp/v2/users',
   Settings = '/wp/v2/settings',
   Terms = '/wp/v2/tags',
-  Tags = '/wp/v2/tags',
+  Tags = '/wp/v2',
   Media = '/wp/v2/media',
   Pages = '/wp/v2/pages',
   PostByPermalink = '/mango/v1/posts/post-by-permalink?permalink=',
@@ -23,6 +23,10 @@ type ArgsLimit = {
 }
 type ArgsPermalink = {
   permalink: string;
+  type?: string;
+}
+type ArgsTag = {
+  tags: number[];
   type?: string;
 }
 // posts loader
@@ -82,8 +86,11 @@ export class WP extends Loader {
   }
 
   // fetch tags
-  public async getTags(ctx: GraphQLContext, ids: number[] = [], args = {}) {
-    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Tags, id].join('/')), args))
+  public async getTags(ctx: GraphQLContext, args: ArgsTag) {
+    let url = this.getTagUrlByType(args)
+    let ids = (args.type === 'tags') ? args.tags : args[args.type + '_tags']
+    ids = ids || []
+    return Promise.all(ids.map(id => this._fetcher(ctx, [url, id].join('/')), args))
   }
 
   // fetch media
@@ -92,8 +99,8 @@ export class WP extends Loader {
   }
 
   public async getPostByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
-    const result = await this._fetcher(ctx, API.PostByPermalink + permalink, args)
-    return result;
+    console.log(API.PostByPermalink + permalink)
+    return await this._fetcher(ctx, API.PostByPermalink + permalink, args)
   }
 
   public async getCategoryByPermalink(ctx: GraphQLContext, args: ArgsPermalink) {
@@ -117,5 +124,10 @@ export class WP extends Loader {
   private getPostUrlByType(args: ArgsLimit) {
     const type = (args.type === undefined) ? 'posts' : args.type
     return [API.Posts, type].join('/')
+  }
+
+  private getTagUrlByType(args: ArgsTag) {
+    const type = (args.type === undefined) ? 'tags' : args.type + '_tags'
+    return [API.Tags, type].join('/')
   }
 }
