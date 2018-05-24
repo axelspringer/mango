@@ -8,6 +8,7 @@ import Loader from './loader'
 import DefaultQuery from './type'
 import { isDev, loadPlugins, createSchema, createQuery } from './utils'
 import { Discovery, RandomDiscoveryStrategy } from './interceptors'
+import Env from './env'
 
 // use default for import
 const { createLogger, format, transports } = require('winston')
@@ -34,7 +35,7 @@ const logger = createLogger({
 })
 
 // add console transport in dev
-if (isDev) {
+if (Env.Development) {
   logger.add(new transports.Console({
     format: format.simple()
   }))

@@ -1,13 +1,13 @@
 // imports
-import * as Koa from 'koa'
-import * as koaRouter from 'koa-router'
-import * as koaBody from 'koa-bodyparser'
-import * as cors from '@koa/cors'
-import logger from './logger'
 import { EventEmitter } from 'events'
 import { Winston } from 'winston'
-import { addDefaultMocks, addPluginMocks, MockAdapter } from './mock'
+import * as cors from '@koa/cors'
 import * as GracefulShutdown from 'http-graceful-shutdown'
+import * as Koa from 'koa'
+import * as koaBody from 'koa-bodyparser'
+import * as koaRouter from 'koa-router'
+import Env from './env'
+import logger from './logger'
 
 // apollo
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
@@ -15,7 +15,6 @@ import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 // custom
 import ping from './ping'
 import health from './health'
-import { isDev, isProd } from './utils'
 
 export class Middleware extends EventEmitter {
 
@@ -32,7 +31,7 @@ export class Middleware extends EventEmitter {
 
     // graceful shutdown
     GracefulShutdown(this.app, {
-      development: !isProd,
+      development: Env.Development,
       finally: function () {
         console.log('Server gracefully shut down ....')
       }
@@ -62,18 +61,18 @@ export class Middleware extends EventEmitter {
     // GraphQL
     this.router.post('/graphql', koaBody(), graphqlKoa({
       schema, context: this.ctx,
-      tracing: isDev,
-      cacheControl: !isDev
+      tracing: Env.Development,
+      cacheControl: !Env.Development
     }))
 
     this.router.get('/graphql', graphqlKoa({
       schema, context: this.ctx,
-      tracing: isDev,
-      cacheControl: !isDev
+      tracing: Env.Development,
+      cacheControl: !Env.Development
     }))
 
     // enable GraphiQL only in dev
-    if (isDev) {
+    if (Env.Development) {
       this.router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
     }
   }
@@ -81,6 +80,6 @@ export class Middleware extends EventEmitter {
   // run the middleware
   public start() {
     // listen
-    this.app.listen(this.config.port)
+    this.app.listen(Env.Port)
   }
 }

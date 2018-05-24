@@ -1,5 +1,6 @@
 import * as argv from 'yargs'
 import * as process from 'process'
+import Env from './env'
 
 export function parseArgs() {
   return argv
@@ -7,42 +8,42 @@ export function parseArgs() {
     .options('wp', {
       string: true,
       alias: 'w',
-      default: process.env.SSM_WP || process.env.MANGO_WP || '',
+      default: Env.WP,
       desc: 'WordPress API Endpoint'
     })
-    .options('mock', {
-      boolean: true,
-      alias: 'm',
-      default: process.env.SSM_MOCK || process.env.MANGO_MOCK || false,
-      desc: 'Mock WordPress API Endpoints'
+    .options('environment', {
+      string: true,
+      alias: 'e',
+      default: Env.Env,
+      desc: 'Set Runtime environment'
     })
     .options('port', {
       string: true,
       alias: 'p',
-      default: process.env.SSM_PORT || process.env.MANGO_PORT || '8080',
+      default: Env.Port,
       desc: 'Port'
     })
     .options('plugin', {
       string: true,
-      default: process.env.SSM_PLUGINS ? process.env.SSM_PLUGINS.split(',').map(plugin => plugin.trim()) : undefined || process.env.MANGO_PLUGINS ? process.env.MANGO_PLUGINS.split(',').map(plugin => plugin.trim()) : undefined || [],
+      default: Env.Plugins,
       desc: 'Plugin'
     })
     .options('host', {
       string: true,
       alias: 'h',
-      default: process.env.SSM_HOST || process.env.MANGO_HOST || 'localhost',
+      default: Env.Host,
       desc: 'Host'
     })
     .options('token', {
       string: true,
       alias: 't',
-      default: process.env.SSM_TOKEN || process.env.MANGO_TOKEN || '',
+      default: Env.Token,
       desc: 'Token'
     })
     .options('secret', {
       string: true,
       alias: 's',
-      default: process.env.SSM_SECRET || process.env.MANGO_SECRET || '',
+      default: Env.Secret,
       desc: 'Secret'
     })
     .options('plugin', {
