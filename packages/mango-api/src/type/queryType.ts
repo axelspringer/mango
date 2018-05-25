@@ -13,6 +13,9 @@ export default {
   posts: {
     type: new GraphQLList(PostType),
     args: {
+      id: {
+        type: GraphQLInt
+      },
       lang: {
         type: GraphQLString
       },
