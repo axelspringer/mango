@@ -8,7 +8,16 @@ export default class WP extends Loader {
 
   // fetch posts
   public async getPosts(ctx: GraphQLContext, id: number, args: ListPosts = {}) {
-    return this._fetcher(ctx, !id ? API.Posts : [API.Posts, id].join('/'), args)
+    const categories = await Promise
+      .all(args.categories.map(cat => {
+        const id = parseInt(cat)
+        return !isNaN(id)
+          ? Promise.resolve([id])
+          : this.getCategory(ctx, undefined, { slug: [cat] })
+      })).then(res => res.reduce((acc, curr) => {
+        return acc.concat(curr.map(cat => cat.id))
+      }, []))
+    return this._fetcher(ctx, !id ? API.Posts : [API.Posts, id].join('/'), { ...args, categories })
   }
 
   // fetch category
