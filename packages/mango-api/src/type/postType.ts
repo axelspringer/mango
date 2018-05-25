@@ -4,6 +4,7 @@ import { GraphQLDateTime } from 'graphql-iso-date'
 import { CategoryType } from './catType'
 import { UserType } from './userType'
 import TagType from './tagType'
+import MediaType from './mediaType'
 import { ImgType } from './imgType'
 import EmbeddedType from './embeddedType'
 
@@ -53,8 +54,8 @@ export default new GraphQLObjectType({
       resolve: post => post.excerpt.rendered
     },
     featuredMedia: {
-      type: GraphQLInt,
-      resolve: post => post.featured_media
+      type: MediaType,
+      resolve: (post, args, ctx) => ctx.loader.getMedia(ctx, post.featured_media, args)
     },
     commentStatus: {
       type: GraphQLString,
