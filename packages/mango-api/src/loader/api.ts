@@ -8,4 +8,5 @@ export default class API {
   public static Tags = '/wp/v2/tags'
   public static Taxonomies = '/wp/v2/taxonomies'
   public static Users = '/wp/v2/users'
+  public static Customizer = '/mango/v1/customizer'
 }

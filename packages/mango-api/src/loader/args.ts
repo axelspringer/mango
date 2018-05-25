@@ -82,6 +82,10 @@ export type GetPost = {
   _embed?: boolean
 }
 
+export type GetCustomizer = {
+  language?: string
+}
+
 export type ListCategories = {
   context?: Context
   page?: number

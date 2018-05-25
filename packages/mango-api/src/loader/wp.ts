@@ -1,5 +1,5 @@
 import { GraphQLContext } from 'graphql'
-import { GetPost, ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
+import { GetPost, GetCustomizer, ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
 import Loader from './loader'
 import API from './api'
 
@@ -56,7 +56,13 @@ export default class WP extends Loader {
     return this._fetcher(ctx, [API.Media, id].join('/'), args)
   }
 
+  // fetch a post by permalink
   public async getPost(ctx: GraphQLContext, args: GetPost = {}) {
     return this._fetcher(ctx, API.Post, args)
+  }
+
+  // fetch customizer settings
+  public async getCustomizer(ctx: GraphQLContext, args: GetCustomizer = {}) {
+    return this._fetcher(ctx, API.Customizer, args)
   }
 }

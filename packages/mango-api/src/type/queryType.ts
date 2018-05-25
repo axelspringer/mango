@@ -7,6 +7,7 @@ import MediaType from './mediaType'
 import TaxonomyType from './taxonomyType'
 import TagType from './tagType'
 import TaxonomiesTypes from './taxonomiesTypes'
+import EmbeddedType from './embeddedType'
 
 export default {
   posts: {
@@ -278,4 +279,14 @@ export default {
     },
     resolve: (_root, _args, ctx) => ctx.loader.getMedia(ctx, _args.id, _args)
   },
+
+  customizer: {
+    type: EmbeddedType,
+    args: {
+      language: {
+        type: GraphQLString
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getCustomizer(ctx, args)
+  }
 }

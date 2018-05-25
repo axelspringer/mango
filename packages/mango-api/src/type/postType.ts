@@ -51,7 +51,7 @@ export default new GraphQLObjectType({
     },
     excerpt: {
       type: GraphQLString,
-      resolve: post => post.excerpt.rendered
+      resolve: post => post.excerpt ? post.excerpt.rendered : null
     },
     featuredMedia: {
       type: MediaType,
@@ -91,7 +91,7 @@ export default new GraphQLObjectType({
     },
     content: {
       type: GraphQLString,
-      resolve: post => post.content.rendered
+      resolve: post => post.content ? post.content.rendered : null
     },
     slug: {
       type: GraphQLString,
