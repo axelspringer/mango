@@ -19,8 +19,13 @@ export default class WP extends Loader {
   }
 
   // fetch category
-  public async getCategories(ctx: GraphQLContext, id: number, args: ListCategories = {}) {
+  public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories = {}) {
     return this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
+  }
+
+  // fetch categories
+  public async getCategories(ctx: GraphQLContext, ids: [number], args: ListCategories = {}) {
+    return Promise.all([...ids.map(id => this.getCategory(ctx, id, args))])
   }
 
   // fetch image

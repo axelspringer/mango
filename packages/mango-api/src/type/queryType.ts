@@ -251,7 +251,7 @@ export default {
         type: GraphQLBoolean
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getCategories(ctx, args.id, args)
+    resolve: (_root, args, ctx) => ctx.loader.getCategory(ctx, args.id, args)
   },
 
   media: {
