@@ -54,6 +54,9 @@ export default {
       },
       categories_exclude: {
         type: new GraphQLList(GraphQLString)
+      },
+      _embed: {
+        type: GraphQLBoolean
       }
     },
     resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args.id, args)
@@ -115,6 +118,9 @@ export default {
       },
       categories_exclude: {
         type: new GraphQLList(GraphQLString)
+      },
+      _embed: {
+        type: GraphQLBoolean
       }
     },
     resolve: (_, args, ctx) => ctx.loader.getPages(ctx, args.id, args)
@@ -188,6 +194,9 @@ export default {
       },
       lang: {
         type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.getTags(ctx, args.id, args)
@@ -237,6 +246,9 @@ export default {
       },
       lang: {
         type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.getCategories(ctx, args.id, args)

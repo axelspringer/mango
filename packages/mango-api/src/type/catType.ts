@@ -1,6 +1,5 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
-import ACFFieldsType from './acfType'
-import PageManagerType from './pageManagerType'
+import EmbeddedType from './embeddedType'
 
 export const CategoryType = new GraphQLObjectType({
   name: 'WPCategory',
@@ -43,12 +42,16 @@ export const CategoryType = new GraphQLObjectType({
       resolve: cat => cat.meta
     },
     pagemanager: {
-      type: PageManagerType,
-      resolve: page => page.pagemanager
+      type: EmbeddedType,
+      resolve: cat => cat.pagemanager
     },
     acf: {
-      type: ACFFieldsType,
+      type: EmbeddedType,
       resolve: cat => cat.acf
+    },
+    embedded: {
+      type: EmbeddedType,
+      resolve: cat => cat._embedded
     }
   })
 })

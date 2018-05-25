@@ -1,5 +1,5 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
-import PageManagerType from './pageManagerType'
+import EmbeddedType from './embeddedType'
 
 export default new GraphQLObjectType({
   name: 'WPTag',
@@ -30,8 +30,12 @@ export default new GraphQLObjectType({
       type: GraphQLString
     },
     pagemanager: {
-      type: PageManagerType,
-      resolve: page => page.pagemanager
+      type: EmbeddedType,
+      resolve: tag => tag.pagemanager
     },
+    embedded: {
+      type: EmbeddedType,
+      resolve: tag => tag._embedded
+    }
   })
 })

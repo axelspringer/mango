@@ -5,8 +5,7 @@ import { CategoryType } from './catType'
 import { UserType } from './userType'
 import TagType from './tagType'
 import { ImgType } from './imgType'
-import ACFFieldsType from './acfType'
-import PageManagerType from './pageManagerType'
+import EmbeddedType from './embeddedType'
 
 export default new GraphQLObjectType({
   name: 'Post',
@@ -106,16 +105,20 @@ export default new GraphQLObjectType({
       resolve: post => post.format
     },
     pagemanager: {
-      type: PageManagerType,
-      resolve: page => page.pagemanager
+      type: EmbeddedType,
+      resolve: post => post.pagemanager
     },
     img: {
       type: ImgType,
       resolve: (root, args, ctx) => ctx.loader.getImage(ctx, root.featured_media, args)
     },
     acf: {
-      type: ACFFieldsType,
+      type: EmbeddedType,
       resolve: cat => cat.acf
+    },
+    embedded: {
+      type: EmbeddedType,
+      resolve: post => post._embedded
     }
   }),
 })

@@ -62,5 +62,4 @@ export default class WP extends Loader {
     const result = await this._fetcher(ctx, API.PostByPermalink, args)
     return result;
   }
-
 }
