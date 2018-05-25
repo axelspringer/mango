@@ -11,7 +11,6 @@ export * from './settingsType'
 export * from './userType'
 export * from './catType'
 export * from './languageType'
-export * from './postByPermalinkType'
 export * from './catType'
 
 export default Query

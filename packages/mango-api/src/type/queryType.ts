@@ -5,7 +5,6 @@ import { SettingsType } from './settingsType'
 import { CategoryType } from './catType'
 import MediaType from './mediaType'
 import TaxonomyType from './taxonomyType'
-import { PostByPermalinkResult } from './postByPermalinkType'
 import TagType from './tagType'
 import TaxonomiesTypes from './taxonomiesTypes'
 
@@ -255,6 +254,19 @@ export default {
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.getCategory(ctx, args.id, args)
+  },
+
+  post: {
+    type: PostType,
+    args: {
+      permalink: {
+        type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getPost(ctx, args)
   },
 
   media: {

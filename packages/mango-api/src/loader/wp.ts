@@ -1,5 +1,5 @@
 import { GraphQLContext } from 'graphql'
-import { ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
+import { GetPost, ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
 import Loader from './loader'
 import API from './api'
 
@@ -8,16 +8,7 @@ export default class WP extends Loader {
 
   // fetch posts
   public async getPosts(ctx: GraphQLContext, id: number, args: ListPosts = {}) {
-    const categories = await Promise
-      .all(args.categories.map(cat => {
-        const id = parseInt(cat)
-        return !isNaN(id)
-          ? Promise.resolve([id])
-          : this.getCategory(ctx, undefined, { slug: [cat] })
-      })).then(res => res.reduce((acc, curr) => {
-        return acc.concat(curr.map(cat => cat.id))
-      }, []))
-    return this._fetcher(ctx, !id ? API.Posts : [API.Posts, id].join('/'), { ...args, categories })
+    return this._fetcher(ctx, !id ? API.Posts : [API.Posts, id].join('/'), args)
   }
 
   // fetch category
@@ -63,5 +54,9 @@ export default class WP extends Loader {
   // fetch media
   public async getMedia(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [API.Media, id].join('/'), args)
+  }
+
+  public async getPost(ctx: GraphQLContext, args: GetPost = {}) {
+    return this._fetcher(ctx, API.Post, args)
   }
 }

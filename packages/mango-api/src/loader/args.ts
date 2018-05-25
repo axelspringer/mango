@@ -32,6 +32,7 @@ export type ListPosts = {
   tags?: string[]
   tags_exclude?: string[]
   order?: Order
+  _embed?: boolean
 }
 
 export type ListPages = {
@@ -52,6 +53,7 @@ export type ListPages = {
   tags?: string[]
   tags_exclude?: string[]
   order?: Order
+  _embed?: boolean
 }
 
 export type ListTags = {
@@ -66,12 +68,18 @@ export type ListTags = {
   hide_empty?: boolean
   parent?: number
   post?: number
-  slug?: string[]
+  slug?: string[],
+  _embed?: boolean
 }
 
 export type ListTaxonomies = {
   context?: Context
   type?: string
+}
+
+export type GetPost = {
+  permalink?: string
+  _embed?: boolean
 }
 
 export type ListCategories = {
@@ -87,4 +95,5 @@ export type ListCategories = {
   parent?: number
   post?: number
   slug?: string[]
+  _embed?: boolean
 }
