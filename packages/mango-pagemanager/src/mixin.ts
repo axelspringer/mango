@@ -11,8 +11,9 @@ export default function (Vue) {
         && options.parent.$pagemanager
         && options.parent.$pagemanager instanceof PageManager) { /* Ok, this is foo ;-) */
         const pagemanager = options.parent.$pagemanager
-        const cmp = this.$vnode.componentOptions.Ctor.name
-        const block = pagemanager.options.blocks.find(function (b) { return b.component.name === cmp })
+        // const cmp = this.$vnode.componentOptions.Ctor.name
+        const cmp = this.$vnode.componentOptions.Ctor.extendOptions.name
+        const block = pagemanager.options.blocks.find(function (b) { return b.component.extendOptions.name === cmp })
 
         if (block !== undefined) {
           const mapBlock = options.pageBlocks[block.pageBlock]
