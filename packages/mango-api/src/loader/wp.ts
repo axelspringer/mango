@@ -1,6 +1,7 @@
 import { GraphQLContext } from 'graphql'
 import { GetPost, GetCustomizer, ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
 import Loader from './loader'
+import { Type } from './response'
 import API from './api'
 
 // posts loader
@@ -12,8 +13,9 @@ export default class WP extends Loader {
   }
 
   // fetch category
-  public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories = {}) {
-    return this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
+  public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories = {}, type: Type = 'Array') {
+    const res = await this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
+    return type === 'Array' ? res : res && res.length === 1 ? res[0] : null
   }
 
   // fetch categories

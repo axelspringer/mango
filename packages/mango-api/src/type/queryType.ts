@@ -257,8 +257,43 @@ export default {
     resolve: (_root, args, ctx) => ctx.loader.getCategory(ctx, args.id, args)
   },
 
+  category: {
+    type: CategoryType,
+    args: {
+      id: {
+        type: GraphQLString
+      },
+      slug: {
+        type: new GraphQLList(GraphQLString)
+      },
+      lang: {
+        type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
+      },
+      parent: {
+        type: GraphQLInt
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getCategory(ctx, args.id, args, 'Object')
+  },
+
   post: {
     type: PostType,
+    args: {
+      permalink: {
+        type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getPost(ctx, args)
+  },
+
+  page: {
+    type: PageType,
     args: {
       permalink: {
         type: GraphQLString
