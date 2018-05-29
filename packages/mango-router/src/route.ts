@@ -86,10 +86,9 @@ export class Post extends Route {
 }
 
 export class Language extends Route {
-  public static path = '/:lang?'
+  public static path = '/:lang'
   public static default = {
-    name: 'de',
-    template: ''
+    name: 'lang'
   }
 
   constructor(cmp, path: string, config = {}) {
