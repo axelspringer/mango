@@ -17,7 +17,7 @@ export default function (Vue) {
 
         if (block !== undefined) {
           const mapBlock = options.pageBlocks[block.pageBlock]
-          Vue.util.defineReactive(this, '_pageblock', mapBlock !== undefined ? mapBlock.shift() : [])
+          Vue.util.defineReactive(this, '_pageblock', Array.isArray(mapBlock) && mapBlock.length > 0 ? mapBlock.shift() : null)
         }
       }
 
