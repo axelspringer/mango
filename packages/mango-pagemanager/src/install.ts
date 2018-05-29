@@ -28,25 +28,25 @@ export function install(Vue) {
 
   Object.defineProperty(Vue.prototype, '$pageblock', {
     get: function get() {
-      return this._pageblock.block.result
+      return this._pageblock && this._pageblock.result ? this._pageblock.result : undefined
     }
   });
 
   Object.defineProperty(Vue.prototype, '$blockName', {
     get: function get() {
-      return this._pageblock.block.page_block
+      return this._pageblock && this._pageblock.page_block ? this._pageblock.page_block : undefined
     }
   });
 
   Object.defineProperty(Vue.prototype, '$blockResult', {
     get: function get() {
-      return this._pageblock.block.result
+      return this._pageblock && this._pageblock.result ? this._pageblock.result : undefined
     }
   });
 
   Object.defineProperty(Vue.prototype, '$blockIndex', {
     get: function get() {
-      return this._pageblock.index
+      return this._pageblock && this._pageblock.index ? this._pageblock.index : undefined
     }
   });
 

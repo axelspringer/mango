@@ -9,6 +9,9 @@ export type PageManagerOptions = {
 
 export type PageManagerResult = any[]
 
+export type PageManagerBlockName = string
+export type PageManagerBlockIndex = number
+
 export type PageManagerBlock = {
   component: string;
   pageBlock: Component;

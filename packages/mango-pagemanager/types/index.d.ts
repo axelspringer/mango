@@ -6,5 +6,7 @@ export default PageManager
 export {
   PageManagerBlock,
   PageManagerOptions,
-  PageManagerResult
+  PageManagerResult,
+  PageManagerBlockName,
+  PageManagerBlockIndex
 } from './pagemanager';

@@ -4,12 +4,15 @@
 
 import Vue from "vue";
 import PageManager from "./index";
-import { PageManagerResult } from "./index";
+import { PageManagerResult, PageManagerBlockIndex, PageManagerBlockName } from "./index";
 
 declare module "vue/types/vue" {
   interface Vue {
     $pagemanager?: PageManager;
     $pageblock?: PageManagerResult;
+    $blockName?: PageManagerBlockName;
+    $blockIndex?: PageManagerBlockIndex;
+    $blockResult?: PageManagerResult;
   }
 }
 

@@ -35,7 +35,7 @@ export default {
         Ctor.cid = ++Ctor.cid
         Ctor.options.pageBlocks = Ctor.options.pageBlocks || {}
         Ctor.options.pageBlocks[block.page_block] = Ctor.options.pageBlocks[block.page_block] || []
-        Ctor.options.pageBlocks[block.page_block].push({ block, index })
+        Ctor.options.pageBlocks[block.page_block].push(Object.assign({}, { index }, block))
 
         return newNode
       })
