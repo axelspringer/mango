@@ -56,6 +56,10 @@ export default new GraphQLObjectType({
       type: GraphQLString,
       resolve: page => page.title.rendered
     },
+    link: {
+      type: GraphQLString,
+      resolve: page => page.link
+    },
     sticky: {
       type: GraphQLBoolean,
       resolve: page => page.sticky
