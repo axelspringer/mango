@@ -3,6 +3,7 @@ const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLIn
 import { GraphQLDateTime } from 'graphql-iso-date'
 import { CategoryType } from './catType'
 import { UserType } from './userType'
+import MediaType from './mediaType'
 import TagType from './tagType'
 import { ImgType } from './imgType'
 import EmbeddedType from './embeddedType'
@@ -19,6 +20,10 @@ export default new GraphQLObjectType({
     dateGmt: {
       type: GraphQLDateTime,
       resolve: page => page.date_gmt.rendered
+    },
+    featuredMedia: {
+      type: MediaType,
+      resolve: (page, args, ctx) => ctx.loader.getMedia(ctx, page.featured_media, args)
     },
     id: {
       type: GraphQLString,
@@ -39,10 +44,6 @@ export default new GraphQLObjectType({
     excerpt: {
       type: GraphQLString,
       resolve: page => page.excerpt.rendered
-    },
-    featuredMedia: {
-      type: GraphQLInt,
-      resolve: page => page.featured_media
     },
     commentStatus: {
       type: GraphQLString,
