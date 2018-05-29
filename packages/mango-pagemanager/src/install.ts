@@ -46,7 +46,7 @@ export function install(Vue) {
 
   Object.defineProperty(Vue.prototype, '$blockIndex', {
     get: function get() {
-      return this._pageblock && this._pageblock.index === undefined ? this._pageblock.index : undefined
+      return this._pageblock && this._pageblock.index !== undefined ? this._pageblock.index : undefined
     }
   });
 
