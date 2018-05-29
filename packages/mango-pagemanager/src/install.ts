@@ -28,7 +28,19 @@ export function install(Vue) {
 
   Object.defineProperty(Vue.prototype, '$pageblock', {
     get: function get() {
-      return this._pageblock
+      return this._pageblock.result
+    }
+  });
+
+  Object.defineProperty(Vue.prototype, '$blockName', {
+    get: function get() {
+      return this._pageblock.name
+    }
+  });
+
+  Object.defineProperty(Vue.prototype, '$blockResult', {
+    get: function get() {
+      return this._pageblock.result
     }
   });
 
