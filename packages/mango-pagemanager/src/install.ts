@@ -34,7 +34,7 @@ export function install(Vue) {
 
   Object.defineProperty(Vue.prototype, '$blockName', {
     get: function get() {
-      return this._pageblock.block.name
+      return this._pageblock.block.page_block
     }
   });
 
