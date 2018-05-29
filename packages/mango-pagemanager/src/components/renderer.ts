@@ -21,7 +21,7 @@ export default {
     let children = []
 
     if (this.blocks && Array.isArray(this.blocks)) {
-      children = this.blocks.map((block) => {
+      children = this.blocks.map((block, index) => {
         const cmp = options.blocks.find(b => b.pageBlock === block.page_block)
 
         if (cmp === undefined) {
@@ -35,7 +35,7 @@ export default {
         Ctor.cid = ++Ctor.cid
         Ctor.options.pageBlocks = Ctor.options.pageBlocks || {}
         Ctor.options.pageBlocks[block.page_block] = Ctor.options.pageBlocks[block.page_block] || []
-        Ctor.options.pageBlocks[block.page_block].push(block)
+        Ctor.options.pageBlocks[block.page_block].push({ block, index })
 
         return newNode
       })
