@@ -1,6 +1,14 @@
-const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt } = require('graphql')
+const { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLInt, GraphQLScalarType } = require('graphql')
 const { UserType } = require('@axelspringer/mango-api')
 const { GraphQLDateTime } = require('graphql-iso-date')
+
+export const ACFFields = new GraphQLScalarType({
+  name: 'ACFFields',
+  description: 'Contains embed fields',
+  parseValue: value => value, // not yet send anything from the client
+  serialize: pm => !Array.isArray(pm) ? pm : {},
+  parseLiteral: ast => ast.value
+})
 
 export const NavMenuLocation = new GraphQLObjectType({
   name: 'NavigationMenuLocation',
@@ -183,6 +191,10 @@ export const NavMenuType = new GraphQLObjectType({
     items: {
       type: new GraphQLList(NavMenuItemType),
       resolve: (menu, args, ctx) => ctx.loader.getNavItems(ctx, menu.term_id, args)
+    },
+    acf: {
+      type: ACFFields,
+      resolve: item => item.acf
     }
   })
 })
