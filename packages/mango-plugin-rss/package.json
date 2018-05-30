@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-plugin-rss",
-  "version": "1.0.0-alpha.62",
+  "version": "1.0.0-alpha.63",
   "description": "Mango router",
   "main": "dist/mango-router.common.js",
   "web": "dist/mango-router.js",

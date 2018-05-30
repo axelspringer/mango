@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-api",
-  "version": "1.0.0-alpha.62",
+  "version": "1.0.0-alpha.63",
   "description": "An API Gateway for WordPress",
   "main": "dist/main.js",
   "typings": "types/main.d.ts",
@@ -33,18 +33,20 @@
     "npm": ">=3.10.7"
   },
   "author": "Axel Springer SE",
-  "contributors": [{
-    "name": "Sebastian Döll",
-    "email": "sebastian.doell@axelspringer.com"
-  }],
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
   "peerDependencies": {
     "graphql": "^0.12.3",
     "graphql-iso-date": "^3.3.0"
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-plugin-navigation": "^1.0.0-alpha.62",
-    "@axelspringer/mango-plugin-pagemanager": "^1.0.0-alpha.62",
+    "@axelspringer/mango-plugin-navigation": "^1.0.0-alpha.63",
+    "@axelspringer/mango-plugin-pagemanager": "^1.0.0-alpha.63",
     "@types/koa": "^2.0.45",
     "@types/node": "^8.10.17",
     "@types/winston": "^2.3.9",
