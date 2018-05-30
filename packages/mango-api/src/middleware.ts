@@ -1,6 +1,5 @@
 // imports
 import { EventEmitter } from 'events'
-import { Winston } from 'winston'
 import * as cors from '@koa/cors'
 import * as GracefulShutdown from 'http-graceful-shutdown'
 import * as Koa from 'koa'
@@ -22,7 +21,7 @@ export class Middleware extends EventEmitter {
   private router: koaRouter
   private adapter: any
 
-  constructor(public ctx, public config, public schema, public log: Winston) {
+  constructor(public ctx, public config, public schema, public log) {
     super()
 
     // Koa
