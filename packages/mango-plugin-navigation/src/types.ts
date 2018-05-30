@@ -140,6 +140,10 @@ export const NavMenuItemType = new GraphQLObjectType({
     object: {
       type: GraphQLString,
       resolve: item => item.object
+    },
+    acf: {
+      type: ACFFields,
+      resolve: item => item.acf
     }
   })
 })
@@ -191,10 +195,6 @@ export const NavMenuType = new GraphQLObjectType({
     items: {
       type: new GraphQLList(NavMenuItemType),
       resolve: (menu, args, ctx) => ctx.loader.getNavItems(ctx, menu.term_id, args)
-    },
-    acf: {
-      type: ACFFields,
-      resolve: item => item.acf
     }
   })
 })
