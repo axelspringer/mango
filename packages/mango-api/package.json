@@ -3,7 +3,7 @@
   "version": "1.0.0-alpha.62",
   "description": "An API Gateway for WordPress",
   "main": "dist/main.js",
-  "typings": "types/index.d.ts",
+  "typings": "types/main.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json --outDir ./dist",
     "build:docker": "docker build --squash -t axelspringer/mango-api .",
@@ -33,12 +33,10 @@
     "npm": ">=3.10.7"
   },
   "author": "Axel Springer SE",
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
   "peerDependencies": {
     "graphql": "^0.12.3",
     "graphql-iso-date": "^3.3.0"

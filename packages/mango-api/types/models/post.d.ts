@@ -1,0 +1,31 @@
+import Media from './media';
+import Author from './author';
+import Image from './image';
+export default class Post {
+    date: Date;
+    dateGmt: Date;
+    id: number;
+    link: string;
+    modified: Date;
+    modifiedGmt: Date;
+    status: any;
+    type: any;
+    excerpt: any;
+    featuredMedia: Media;
+    commentStatus: any;
+    pingStatus: any;
+    title: any;
+    sticky: boolean;
+    meta: any[];
+    categories: any[];
+    tags: any[];
+    template: any;
+    content: any;
+    slug: any;
+    author: Author;
+    format: any;
+    pagemanager: any;
+    img: Image;
+    acf: any;
+    embedded: any;
+}

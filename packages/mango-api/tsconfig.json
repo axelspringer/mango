@@ -1,7 +1,9 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "declaration": true,
+    "declarationDir": "types"
   },
   "include": [
     "src/**/*"
