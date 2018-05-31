@@ -50,18 +50,16 @@
   "scripts": {
     "postinstall": "lerna bootstrap",
     "publish": "lerna publish --yes",
-    "build": "lerna run build --ignore @axelspringer/mango-demo",
+    "build": "lerna run build",
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "engines": {
     "node": ">=6.9.13",
     "npm": ">=3.10.7"
   },
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
   "dependencies": {}
 }
