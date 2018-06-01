@@ -83,7 +83,7 @@ export const PostType = new GraphQLObjectType({
     },
     tags: {
       type: new GraphQLList(TagType),
-      resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root)
+      resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root, args)
     },
     template: {
       type: GraphQLString,

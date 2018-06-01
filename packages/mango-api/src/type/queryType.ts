@@ -63,7 +63,7 @@ export const defaultQuery = {
     resolve: (_, args, ctx) => ctx.loader.getPostListByCategoryId(ctx, args)
   },
   postByPermalink: {
-    type: PostByPermalinkResult,
+    type: PostType,
     args: {
       permalink: {
         type: GraphQLString
