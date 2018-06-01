@@ -1,37 +1,24 @@
 import SSRContext from '../context'
-import errorHandler from './errorHandler'
+import setHeaders from './setHeaders'
 
-export default async function (req, res) {
-  if (res.finished) {
-    return // noop
-  }
+export default async (ctx, next) => {
+  const { renderer } = ctx.state
+  const context = new SSRContext(ctx.req)
 
-  if (this.config.renderer && !this.renderer) {
-    return res.end('waiting for compilation... refresh in a moment.')
-  }
+  if (!renderer) {
+    ctx.body = 'waiting for compilation... refresh in a moment.'
 
-  !this.config.renderer || res.setHeader('Content-Type', 'text/html')
-
-  // construct context
-  const context = new SSRContext(req)
-
-  // use streaming...
-  if (this.config.stream) {
-    // register on stream
-    this.renderer.renderToStream(context)
-      .on('error', errorHandler.bind({ req, res }))
-      .pipe(res)
-
-    return
+    return next()
   }
 
   // use rendered string
   try {
-    // should do 404
-    const html = await this.renderer.renderToString(context, )
-    res.send(html).end()
+    ctx.body = await renderer.renderToString(context)
   } catch (err) {
-    // should do 404
-    errorHandler.call({ req, res }, err)
+    // should do 500
+    ctx.throw(500, err)
   }
+
+  await next()
+  setHeaders(ctx, { 'Content-Type': 'text/html' })
 }

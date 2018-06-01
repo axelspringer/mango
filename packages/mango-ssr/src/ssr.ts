@@ -1,36 +1,33 @@
 import { Config } from './config'
 import { resolve, relative } from './utils/path'
 import { log } from './utils/log'
-import serve from './utils/serve'
 import { setupDevServer } from './webpack'
 import { createRenderer } from 'vue-server-renderer'
 import { Renderer } from 'vue-server-renderer/types'
-import * as express from 'express'
+import * as Koa from 'koa'
+import * as Logger from 'koa-pino-logger'
+import * as Router from 'koa-router'
+import serve from './middlewares/serve'
+// import * as Mount from 'koa-mount'
+import * as Compress from 'koa-compress'
 import * as fs from 'fs'
-import * as GracefulShutdown from 'http-graceful-shutdown'
-import * as pino from 'express-pino-logger'
 import createBundleRenderer from './utils/createRenderer'
 import renderPlugin from './utils/renderPlugin'
+import * as gracefulShutdown from 'http-graceful-shutdown'
+
 import appRender from './utils/appRender'
 import Env from './env'
 
-export interface IServerSideRenderer {
-  ready: Promise<any>
-  server
-  renderer
-  universalRenderer: Renderer // this is a general renderer
-
-  createRenderer(): void
-  start(): void
-}
-
-
 // server side renderer
-export class ServerSideRenderer implements IServerSideRenderer {
+export class ServerSideRenderer {
+
+  public plugins: Renderer[] // this is the general renderer
+  public router
+  public listener
 
   public ready: Promise<any>
   public renderer
-  public universalRenderer: Renderer // this is the general renderer
+
   public server
   public log
   public timeout
@@ -41,12 +38,72 @@ export class ServerSideRenderer implements IServerSideRenderer {
    * @param app - A Express server for delivery
    */
   constructor(public config: Config, public app = undefined) {
-    // create new express server, if not already one provided
-    this.app = app || express()
-    this.log = log
+    // set to koa
+    this.app = app || new Koa()
 
-    // init universal Vue.js renderer
-    this.universalRenderer = createRenderer()
+    // config router
+    this.router = new Router()
+
+    // add error-handler
+    this.app.use(async (ctx, next) => {
+      try {
+        await next()
+      } catch (err) {
+        ctx.status = err.status || 500
+        ctx.body = err.message
+        // ctx.app.emit('error', err, ctx)
+      }
+    })
+
+    // configure logging
+    this.app.silent = true
+    this.app.use(Logger())
+
+    // serve static files
+    this.app.use(serve({ rootDir: this.config.serve }))
+
+    if (!Env.Development) {
+      this.app.use(Compress({
+        filter: function (content_type) {
+          return /text/i.test(content_type)
+        },
+        threshold: 2048,
+        flush: require('zlib').Z_SYNC_FLUSH
+      }))
+    }
+
+    // init
+    this.init()
+  }
+
+  /**
+   * Initialize
+   *
+   */
+  public init() {
+    this.initPlugins()
+    this.createRenderer()
+  }
+
+  /**
+   * Initialize plugins
+   */
+  public initPlugins() {
+    this.plugins = this.config.plugins.map(plugin => {
+      const renderer = createRenderer() // this creates a renderer for every plugin
+      this.router // map all
+        .all(
+          plugin.route,
+          async (ctx, next) => {
+            ctx.state.renderer = renderer
+            ctx.state.plugin = plugin
+
+            await next()
+          },
+          renderPlugin
+        )
+      return renderer // create renderer per registered plugin
+    })
   }
 
   /**
@@ -59,7 +116,7 @@ export class ServerSideRenderer implements IServerSideRenderer {
         this.renderer = createBundleRenderer(bundle, template, options)
       })
 
-      return
+      return // do not configure real renderer
     }
 
     const bundle = require(relative(this.config.bundle, __dirname))
@@ -68,7 +125,17 @@ export class ServerSideRenderer implements IServerSideRenderer {
     this.renderer = createBundleRenderer(bundle, template, {
       clientManifest
     })
-    this.ready = Promise.resolve()
+
+    this.router
+      .all(
+        '*',
+        async (ctx, next) => {
+          ctx.state.renderer = this.renderer
+
+          await next()
+        },
+        appRender
+      )
   }
 
   /**
@@ -77,44 +144,25 @@ export class ServerSideRenderer implements IServerSideRenderer {
    * @return
    */
   public start() {
-    // logging
-    this.app.use(pino())
-
-    // static files
-    !this.config.serve || this.app.use('/static', serve(this.config))
-
-    // config render plugins
-    !this.config.universalRenderer || this.configPlugins()
-
-    // create renderer
-    !this.config.renderer || this.createRenderer()
-
-    // config last to render bundle
-    !this.config.renderer || this.app.all('*', appRender.bind(this)) //
+    this.app // config app
+      .use(this.router.routes())
+      .use(this.router.allowedMethods())
 
     // attach server
-    this.server = this.app.listen(this.config.port, () => {
-      log(`server started at http://localhost:${this.config.port}`)
-    })
+    this.listener = this.app.listen(this.config.port)
 
-    // graceful shutdown
-    GracefulShutdown(this.app, {
-      development: Env.Development,
+    // debug
+    log(`listening on port: ${this.config.port}`)
+
+    // register graceful shutdown
+    gracefulShutdown(this.listener, {
+      signals: 'SIGINT SIGTERM',
+      timeout: 30000,
+      development: false,
       finally: function () {
-        log('Server gracefully shut down ....')
+        log(`Server gracefulls shutted down.....`)
       }
     })
-
-    // return promise
-    return this.ready
   }
 
-  /**
-   *  Config plugins
-   */
-  public configPlugins() {
-    this.config.plugins.forEach(plugin => { // configure plugins
-      this.app.all(plugin.route, renderPlugin.bind(Object.assign(this, { plugin })))
-    })
-  }
 }

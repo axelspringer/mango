@@ -4,7 +4,8 @@ import { createBundleRenderer } from 'vue-server-renderer'
 export default (bundle, template, options) => {
   // tslint:disable max-line-length
   // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer
-  return createBundleRenderer(bundle, Object.assign(options, {
+  return createBundleRenderer(bundle, {
+    ...options,
     template,
     cache: require('lru-cache')({
       max: 1000,
@@ -14,5 +15,5 @@ export default (bundle, template, options) => {
     basedir: resolve('./public'),
     // recommended for performance
     runInNewContext: false
-  }))
+  })
 }

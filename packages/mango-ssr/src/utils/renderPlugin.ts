@@ -1,20 +1,16 @@
-import errorHandler from './errorHandler'
+// import errorHandler from './errorHandler'
 import renderToString from './renderToString'
+import setHeaders from './setHeaders'
 
-export default async function (req, res) {
-  const { plugin } = this
-
-  for (const header in plugin.header) { // set headers for res
-    if (plugin.header.hasOwnProperty(header)) {
-      res.setHeader(header, plugin.header[header])
-    }
-  }
+export default async (ctx, next) => {
+  const { plugin, renderer } = ctx.state
 
   try {
-    const html = await renderToString(this.universalRenderer, plugin.render, plugin.template, req) // pass full req to render context
-    res.send(html).end()
+    ctx.body = await renderToString(renderer, plugin.context, plugin.template, ctx) // pass full req to render context
   } catch (err) {
-    // renderer error
-    errorHandler.call({ req, res }, err) // could be mapped to template
+    ctx.throw(500, err)
   }
+
+  await next()
+  setHeaders(ctx, plugin.headers)
 }
