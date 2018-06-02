@@ -25,12 +25,10 @@
     "npm": ">=3.10.7"
   },
   "author": "Axel Springer SE",
-  "contributors": [
-    {
-      "name": "Sebastian Döll",
-      "email": "sebastian.doell@axelspringer.com"
-    }
-  ],
+  "contributors": [{
+    "name": "Sebastian Döll",
+    "email": "sebastian.doell@axelspringer.com"
+  }],
   "license": "MIT",
   "devDependencies": {
     "@axelspringer/mango-plugin-rss": "^1.0.0-beta.0",

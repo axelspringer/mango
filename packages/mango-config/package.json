@@ -1,0 +1,54 @@
+{
+  "name": "@axelspringer/mango-api",
+  "version": "1.0.0-beta.0",
+  "description": "An API Gateway for WordPress",
+  "main": "dist/main.js",
+  "typings": "types/main.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json --outDir ./dist",
+    "clean": "npm run rimraf -- dist node_modules",
+    "clean:dist": "npm run rimraf -- dist",
+    "prebuild": "npm run clean:dist",
+    "rimraf": "rimraf",
+    "start": "npm run watch",
+    "watch": "tsc --watch -p tsconfig.json --outDir ./dist"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "bin",
+    "data",
+    "dist",
+    "types",
+    "scripts"
+  ],
+  "engines": {
+    "node": ">=6.9.13",
+    "npm": ">=3.10.7"
+  },
+  "author": "Axel Springer SE",
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
+  "peerDependencies": {},
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^1.9.2",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.13.0",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "ts-node": "^4.1.0",
+    "tslib": "^1.9.1",
+    "typescript": "^2.7.2",
+    "winston": "^3.0.0-rc5",
+    "yargs": "^10.0.3"
+  }
+}
