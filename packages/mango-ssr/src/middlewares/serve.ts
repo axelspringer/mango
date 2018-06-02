@@ -27,7 +27,9 @@ export default function (opts) {
 
   return async (ctx, next) => {
     assert(ctx, 'koa context required')
-    const file = join(options.root, ctx.path)
+
+    const dir = ctx.path.replace(/^\/static/, '')
+    const file = join(options.root, dir)
 
     if (!fs.existsSync(file)) {
       return next() // if there is no file
@@ -41,10 +43,10 @@ export default function (opts) {
     let sent
 
     /* In case of error from koa-send try to serve the default static file
-     eg. 404 error page or image that illustrates error
-    */
+     * eg. 404 error page or image that illustrates error
+     */
     try {
-      sent = await send(ctx, ctx.path, options)
+      sent = await send(ctx, dir, options)
     } catch (e) {
       ctx.throw(500, e)
     }

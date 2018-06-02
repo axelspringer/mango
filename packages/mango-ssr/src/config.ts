@@ -28,8 +28,9 @@ export class Config {
   public renderer = false
   public webpackMiddleware = false
   public universalRenderer = false
+  public middleware = []
 
-  constructor({ serve, bundle, plugins, stream, manifest, template, webpack, cache, maxAge, port }) {
+  constructor({ serve, bundle, plugins, stream, middleware, manifest, template, webpack, cache, maxAge, port }) {
     // defaults
     this.serve = serve || this.serve
     this.bundle = bundle || this.bundle
@@ -41,6 +42,7 @@ export class Config {
     this.port = port || this.port
     this.stream = stream || this.stream
     this.plugins = plugins || this.plugins
+    this.middleware = middleware || this.middleware
 
     // resolve paths
     this.serve = resolve(this.serve)

@@ -1,18 +1,17 @@
 import { Config } from './config'
-import { resolve, relative } from './utils/path'
 import { log } from './utils/log'
 import { setupDevServer } from './webpack'
 import { createRenderer } from 'vue-server-renderer'
 import { Renderer } from 'vue-server-renderer/types'
+import { relative, resolve } from './utils/path'
 import * as Koa from 'koa'
 import * as Logger from 'koa-pino-logger'
 import * as Router from 'koa-router'
-import serve from './middlewares/serve'
-// import * as Mount from 'koa-mount'
-import * as Compress from 'koa-compress'
 import * as fs from 'fs'
+import serve from './middlewares/serve'
 import createBundleRenderer from './utils/createRenderer'
 import renderPlugin from './utils/renderPlugin'
+import errors from './middlewares/errors'
 import * as gracefulShutdown from 'http-graceful-shutdown'
 
 import appRender from './utils/appRender'
@@ -25,7 +24,7 @@ export class ServerSideRenderer {
   public router
   public listener
 
-  public ready: Promise<any>
+  public webpack
   public renderer
 
   public server
@@ -45,32 +44,14 @@ export class ServerSideRenderer {
     this.router = new Router()
 
     // add error-handler
-    this.app.use(async (ctx, next) => {
-      try {
-        await next()
-      } catch (err) {
-        ctx.status = err.status || 500
-        ctx.body = err.message
-        // ctx.app.emit('error', err, ctx)
-      }
-    })
+    this.app.use(errors)
 
     // configure logging
     this.app.silent = true
     this.app.use(Logger())
 
-    // serve static files
-    this.app.use(serve({ rootDir: this.config.serve }))
-
-    if (!Env.Development) {
-      this.app.use(Compress({
-        filter: function (content_type) {
-          return /text/i.test(content_type)
-        },
-        threshold: 2048,
-        flush: require('zlib').Z_SYNC_FLUSH
-      }))
-    }
+    // setup middleware
+    this.setup()
 
     // init
     this.init()
@@ -83,6 +64,18 @@ export class ServerSideRenderer {
   public init() {
     this.initPlugins()
     this.createRenderer()
+    this.setup()
+  }
+
+  /**
+   * Configure middleware
+   */
+  public setup() {
+    this.config.middleware.forEach(middleware => {
+      this.app.use(middleware)
+    })
+
+    Env.Development || this.app.use(serve({ rootDir: this.config.serve }))
   }
 
   /**
@@ -112,7 +105,7 @@ export class ServerSideRenderer {
    */
   public createRenderer() {
     if (Env.Development) { // dev
-      this.ready = setupDevServer(this.app, this.config, (bundle, template, options) => {
+      this.webpack = setupDevServer(this.app, this.config, (bundle, template, options) => {
         this.renderer = createBundleRenderer(bundle, template, options)
       })
 
@@ -125,7 +118,15 @@ export class ServerSideRenderer {
     this.renderer = createBundleRenderer(bundle, template, {
       clientManifest
     })
+  }
 
+  /**
+   * Starts a new renderer
+   *
+   * @return
+   */
+  public start() {
+    // config renderer route
     this.router
       .all(
         '*',
@@ -136,14 +137,7 @@ export class ServerSideRenderer {
         },
         appRender
       )
-  }
 
-  /**
-   * Starts a new renderer
-   *
-   * @return
-   */
-  public start() {
     this.app // config app
       .use(this.router.routes())
       .use(this.router.allowedMethods())
@@ -157,12 +151,26 @@ export class ServerSideRenderer {
     // register graceful shutdown
     gracefulShutdown(this.listener, {
       signals: 'SIGINT SIGTERM',
-      timeout: 30000,
-      development: false,
+      timeout: 30 * 1000,
+      development: Env.Development,
+      onShutdown: this.cleanup,
       finally: function () {
-        log(`Server gracefulls shutted down.....`)
+        log(`Server gracefully shut down ...`)
       }
     })
+  }
+
+  /**
+   * Cleanup
+   */
+  public cleanup() {
+    return new Promise((resolve) => {
+      if (this.webpack) {
+        log(`Cleaninup webpack`)
+        this.webpack.close()
+      }
+      resolve()
+    });
   }
 
 }
