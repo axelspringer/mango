@@ -1,13 +1,18 @@
 /// <reference types="node" />
+/// <reference types="koa" />
 import { EventEmitter } from 'events';
+import * as Koa from 'koa';
+import * as koaRouter from 'koa-router';
 export declare class Middleware extends EventEmitter {
     ctx: any;
     config: any;
     schema: any;
     log: any;
-    private app;
-    private router;
-    private adapter;
+    app: Koa;
+    router: koaRouter;
+    adapter: any;
+    listener: any;
     constructor(ctx: any, config: any, schema: any, log: any);
     start(): void;
+    stop(): void;
 }

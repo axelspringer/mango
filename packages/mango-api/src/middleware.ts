@@ -17,9 +17,10 @@ import health from './health'
 
 export class Middleware extends EventEmitter {
 
-  private app: Koa
-  private router: koaRouter
-  private adapter: any
+  public app: Koa
+  public router: koaRouter
+  public adapter: any
+  public listener
 
   constructor(public ctx, public config, public schema, public log) {
     super()
@@ -27,14 +28,6 @@ export class Middleware extends EventEmitter {
     // Koa
     this.app = new Koa()
     this.router = new koaRouter()
-
-    // graceful shutdown
-    GracefulShutdown(this.app, {
-      development: Env.Development,
-      finally: function () {
-        console.log('Server gracefully shut down ....')
-      }
-    })
 
     // Middlewares
     this.app.use(logger())
@@ -79,6 +72,18 @@ export class Middleware extends EventEmitter {
   // run the middleware
   public start() {
     // listen
-    this.app.listen(Env.Port)
+    this.listener = this.app.listen(Env.Port)
+
+    // graceful shutdown
+    GracefulShutdown(this.listener, {
+      development: Env.Development,
+      finally: function () {
+        console.log('Server gracefully shut down ....')
+      }
+    })
+  }
+
+  public stop() {
+    this.listener.stop()
   }
 }

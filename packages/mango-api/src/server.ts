@@ -1,14 +1,14 @@
 // imports
-import { parseArgs } from './args'
+import { Discovery, RandomDiscoveryStrategy } from './interceptors'
+import { isDev, loadPlugins, createSchema, createQuery } from './utils'
 import { Middleware } from './middleware'
+import { parseArgs } from './args'
 import * as http from 'http'
 import * as https from 'https'
-import axios from 'axios'
-import Loader from './loader'
 import DefaultQuery from './type'
-import { isDev, loadPlugins, createSchema, createQuery } from './utils'
-import { Discovery, RandomDiscoveryStrategy } from './interceptors'
 import Env from './env'
+import Loader from './loader'
+import setup from './loader/setup'
 
 // use default for import
 const { createLogger, format, transports } = require('winston')
@@ -51,12 +51,19 @@ const headers = {
 const agent = {
   keepAlive: true
 }
-
-// create axio instance
-const fetch = axios.create({
+const axios = {
+  cache: {
+    maxAge: 60 * 1000,
+    exclude: {
+      query: false
+    }
+  },
   baseURL: config.wp,
   headers
-})
+}
+
+// create axio instance
+const fetch = setup(axios)
 
 // inject discovery strategy
 fetch.interceptors.request.use(...new Discovery(config.wp, new RandomDiscoveryStrategy()).use())
