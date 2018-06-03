@@ -1,32 +1,16 @@
-import { parseArgs } from './args'
-import { resolve } from './utils/path'
-import { Config } from './config'
+import parseArgs from './args'
+import SSRConfig from './config'
 import { ServerSideRenderer } from './ssr'
-import { log, error, warning } from './utils/log'
+import { Config } from '@axelspringer/mango-config'
 
 // config ssr
-let ssrConfig: Config
+// let ssrConfig: Config
 
 // parse arguments
 const args = parseArgs()
+const config = new Config(args)
+const ssr = new SSRConfig(config.config)
 
-// check for config
-try {
-  const configFile = args.config || './mango.config.js'
-  const config: Config = require(resolve(configFile))
-  ssrConfig = new Config(config)
-} catch (err) {
-  console.log(err)
-  // exit on
-  if (err.code !== 'MODULE_NOT_FOUND') {
-    log(error(err))
-    process.exit(1)
-  }
-
-  log(warning(`No config file found, or provided by '--config.' Using command line arguments.`))
-  ssrConfig = new Config(args) // use command line args
-}
-
-// init new server-side renderer
-const app = new ServerSideRenderer(ssrConfig)
+// // init new server-side renderer
+const app = new ServerSideRenderer(ssr)
 app.start()

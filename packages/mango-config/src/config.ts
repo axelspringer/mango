@@ -2,14 +2,14 @@ import { Log } from './log'
 import { resolve } from './utils/path'
 import * as process from 'process'
 
-export default class Config {
+export class Config {
   public log = new Log()
   public config: any = {}
 
   constructor(public args: any = {}, public defaults: any = {}) {
     this.loadConfig() // try to load config
 
-    this.config = Object.assign(this.defaults, this.args, this.config) // merge everything
+    this.config = Object.assign({}, this.defaults, this.args, this.config) // merge everything
   }
 
   public loadConfig() {

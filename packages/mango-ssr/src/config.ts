@@ -11,7 +11,7 @@ export type Plugin = {
   template?: string
 }
 
-export class Config {
+export default class Config {
 
   public serve: string
   public bundle: string

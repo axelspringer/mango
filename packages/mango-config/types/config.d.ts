@@ -1,5 +1,5 @@
 import { Log } from './log';
-export default class Config {
+export declare class Config {
     args: any;
     defaults: any;
     log: Log;
