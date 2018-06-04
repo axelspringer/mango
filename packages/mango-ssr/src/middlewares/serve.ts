@@ -32,12 +32,12 @@ export default function (opts) {
     const file = join(options.root, dir)
 
     if (!fs.existsSync(file)) {
-      return // if there is no file
+      return next() // if there is no file
     }
 
     // skip if this is not a GET/HEAD request
     if (ctx.method !== 'HEAD' && ctx.method !== 'GET') {
-      return
+      return next()
     }
 
     let sent

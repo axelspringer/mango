@@ -8,7 +8,7 @@ export default class Head {
   public app: any
   public apps: Array<any>
 
-  constructor() {
+  constructor(public options = {}) {
     this.app = null
     this.apps = []
   }
