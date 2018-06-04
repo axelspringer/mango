@@ -7,6 +7,7 @@ import TagType from './tagType'
 import MediaType from './mediaType'
 import { ImgType } from './imgType'
 import EmbeddedType from './embeddedType'
+import PolylangTranslationType from './polylangTranslationType'
 
 export default new GraphQLObjectType({
   name: 'Post',
@@ -32,6 +33,14 @@ export default new GraphQLObjectType({
     modified: {
       type: GraphQLDateTime,
       resolve: post => post.modified
+    },
+    lang: {
+      type: GraphQLString,
+      resolve: post => post.lang
+    },
+    translations: {
+      type: PolylangTranslationType,
+      resolve: (post, args, ctx) => ctx.loader.getPolylangPosts(ctx, post.translations, args)
     },
     modifiedGmt: {
       type: GraphQLDateTime,

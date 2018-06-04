@@ -1,5 +1,6 @@
 const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('graphql')
 import EmbeddedType from './embeddedType'
+import PolylangTranslationType from './polylangTranslationType'
 
 export const CategoryType = new GraphQLObjectType({
   name: 'WPCategory',
@@ -32,6 +33,14 @@ export const CategoryType = new GraphQLObjectType({
     taxonomy: {
       type: GraphQLString,
       resolve: cat => cat.taxonomy
+    },
+    lang: {
+      type: GraphQLString,
+      resolve: post => post.lang
+    },
+    translations: {
+      type: PolylangTranslationType,
+      resolve: (post, args, ctx) => ctx.loader.getPolylangCategories(ctx, post.translations, args)
     },
     parent: {
       type: CategoryType,

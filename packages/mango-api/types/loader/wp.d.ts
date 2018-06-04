@@ -6,6 +6,9 @@ export default class WP extends Loader {
     getPosts(ctx: GraphQLContext, id: number, args?: ListPosts): Promise<any>;
     getCategory(ctx: GraphQLContext, id: number, args?: ListCategories, type?: Type): Promise<any>;
     getCategories(ctx: GraphQLContext, ids: [number], args?: ListCategories): Promise<any[]>;
+    getPolylangPosts(ctx: GraphQLContext, translations: Object, args?: ListPosts): Promise<any[]>;
+    getPolylangCategories(ctx: GraphQLContext, translations: Object, args?: ListPosts): Promise<any[]>;
+    getPolylangPages(ctx: GraphQLContext, translations: Object, args?: ListPosts): Promise<any[]>;
     getImage(ctx: GraphQLContext, id: number, args?: {}): Promise<any>;
     getUser(ctx: GraphQLContext, id: number, args?: {}): Promise<any>;
     getPages(ctx: GraphQLContext, id: number, args?: ListPages): Promise<any>;

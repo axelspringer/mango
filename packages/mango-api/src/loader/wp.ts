@@ -23,6 +23,21 @@ export default class WP extends Loader {
     return Promise.all([...ids.map(id => this.getCategory(ctx, id, args))])
   }
 
+  // fetch posts
+  public async getPolylangPosts(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(translations).map(trans => this.getPosts(ctx, translations[trans], args))])
+  }
+
+  // fetch posts
+  public async getPolylangCategories(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(translations).map(trans => this.getCategory(ctx, translations[trans], args))])
+  }
+
+  // fetch posts
+  public async getPolylangPages(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(translations).map(trans => this.getPages(ctx, translations[trans], args))])
+  }
+
   // fetch image
   public async getImage(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [API.Media, id].join('/'), args)

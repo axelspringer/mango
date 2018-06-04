@@ -7,6 +7,7 @@ import MediaType from './mediaType'
 import TagType from './tagType'
 import { ImgType } from './imgType'
 import EmbeddedType from './embeddedType'
+import PolylangTranslationType from './polylangTranslationType'
 
 export default new GraphQLObjectType({
   name: 'Page',
@@ -64,6 +65,14 @@ export default new GraphQLObjectType({
     sticky: {
       type: GraphQLBoolean,
       resolve: page => page.sticky
+    },
+    lang: {
+      type: GraphQLString,
+      resolve: post => post.lang
+    },
+    translations: {
+      type: PolylangTranslationType,
+      resolve: (post, args, ctx) => ctx.loader.getPolylangPages(ctx, post.translations, args)
     },
     meta: {
       type: new GraphQLList(GraphQLString),
