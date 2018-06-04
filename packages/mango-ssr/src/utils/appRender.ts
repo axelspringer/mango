@@ -11,6 +11,8 @@ export default async (ctx, next) => {
     return next()
   }
 
+  await next()
+
   // use rendered string
   try {
     ctx.body = await renderer.renderToString(context)
@@ -19,6 +21,5 @@ export default async (ctx, next) => {
     ctx.throw(500, err)
   }
 
-  await next()
   setHeaders(ctx, { 'Content-Type': 'text/html' })
 }
