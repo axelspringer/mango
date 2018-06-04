@@ -11,6 +11,6 @@ const args = parseArgs()
 const config = new Config(args)
 const ssr = new SSRConfig(config.config)
 
-// // init new server-side renderer
+// init new server-side renderer
 const app = new ServerSideRenderer(ssr)
 app.start()

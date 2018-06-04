@@ -1,4 +1,4 @@
-import { Config } from '../config'
+import Config from '../config'
 import * as compress from 'express-static-gzip'
 import * as express from 'express'
 import { isProd } from './env'

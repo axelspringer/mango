@@ -1,4 +1,4 @@
-import { Config } from './config'
+import Config from './config'
 import { log } from './utils/log'
 import { setupDevServer } from './webpack'
 import { createRenderer } from 'vue-server-renderer'
@@ -112,6 +112,10 @@ export class ServerSideRenderer {
       return // do not configure real renderer
     }
 
+    if (!this.config.renderer) {
+      return
+    }
+
     const bundle = require(relative(this.config.bundle, __dirname))
     const clientManifest = require(relative(this.config.manifest, __dirname))
     const template = fs.readFileSync(resolve(this.config.template), 'utf-8')
@@ -126,17 +130,19 @@ export class ServerSideRenderer {
    * @return
    */
   public start() {
-    // config renderer route
-    this.router
-      .all(
-        '*',
-        async (ctx, next) => {
-          ctx.state.renderer = this.renderer
+    if (this.config.renderer) {
+      // config renderer route
+      this.router
+        .all(
+          '*',
+          async (ctx, next) => {
+            ctx.state.renderer = this.renderer
 
-          await next()
-        },
-        appRender
-      )
+            await next()
+          },
+          appRender
+        )
+    }
 
     this.app // config app
       .use(this.router.routes())
