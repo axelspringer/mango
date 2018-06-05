@@ -35,7 +35,7 @@ export default class WP extends Loader {
 
   // fetch posts
   public async getPolylangPages(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
-    return Promise.all([...Object.keys(translations).map(trans => this.getPages(ctx, translations[trans], args))])
+    return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
   }
 
   // fetch image
