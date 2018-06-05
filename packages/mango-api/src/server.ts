@@ -8,7 +8,7 @@ import * as https from 'https'
 import DefaultQuery from './type'
 import Env from './env'
 import Loader from './loader'
-import setup from './loader/setup'
+import axios from 'axios'
 
 // use default for import
 const { createLogger, format, transports } = require('winston')
@@ -51,19 +51,12 @@ const headers = {
 const agent = {
   keepAlive: true
 }
-const axios = {
-  cache: {
-    maxAge: 60 * 1000,
-    exclude: {
-      query: false
-    }
-  },
+
+// create axios instance
+const fetch = axios.create({
   baseURL: config.wp,
   headers
-}
-
-// create axio instance
-const fetch = setup(axios)
+})
 
 // inject discovery strategy
 fetch.interceptors.request.use(...new Discovery(config.wp, new RandomDiscoveryStrategy()).use())
