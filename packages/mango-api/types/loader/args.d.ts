@@ -67,8 +67,11 @@ export declare type ListTaxonomies = {
     context?: Context;
     type?: string;
 };
-export declare type GetPost = {
+export declare type GetPostPermalink = {
     permalink?: string;
+    _embed?: boolean;
+};
+export declare type GetPost = {
     _embed?: boolean;
 };
 export declare type GetCustomizer = {

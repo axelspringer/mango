@@ -80,7 +80,7 @@ export default class WP extends Loader {
 
   // fetch a post by permalink
   public async getPostPermalink(ctx: GraphQLContext, args: GetPostPermalink = {}) {
-    return this._fetcher(ctx, API.Post, args)
+    return this._fetcher(ctx, API.PostPermalink, args)
   }
 
   // fetch customizer settings
