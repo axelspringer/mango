@@ -68,11 +68,11 @@ export default new GraphQLObjectType({
     },
     lang: {
       type: GraphQLString,
-      resolve: post => post.lang
+      resolve: page => page.lang
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (post, args, ctx) => ctx.loader.getPolylangPages(ctx, post.translations, args)
+      resolve: (page, args, ctx) => ctx.loader.getPolylangPages(ctx, page.translations, args)
     },
     meta: {
       type: new GraphQLList(GraphQLString),

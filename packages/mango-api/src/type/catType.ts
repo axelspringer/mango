@@ -36,11 +36,11 @@ export const CategoryType = new GraphQLObjectType({
     },
     lang: {
       type: GraphQLString,
-      resolve: post => post.lang
+      resolve: cat => cat.lang
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (post, args, ctx) => ctx.loader.getPolylangCategories(ctx, post.translations, args)
+      resolve: (cat, args, ctx) => ctx.loader.getPolylangCategories(ctx, cat.translations, args)
     },
     parent: {
       type: CategoryType,
