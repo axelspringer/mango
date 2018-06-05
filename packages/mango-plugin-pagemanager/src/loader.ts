@@ -33,7 +33,11 @@ export const Loader = {
     // this is a hack for later
     return result !== null ? result.data : []
   },
+  // fetch page manager posts
+  getPageManagerPostMeta: async function (ctx: GraphQLContext, id: number, args = {}) {
+    return await this._fetcher(ctx, [API.PageManagerPosts, id].join('/'), args)
 
+  },
   // fetch page manager pages
   getPageManagerPages: async function (ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [API.PageManagerPages, id].join('/'), args)
