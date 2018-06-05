@@ -1,5 +1,5 @@
 import { GraphQLContext } from 'graphql'
-import { GetPost, GetCustomizer, ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
+import { GetPost, GetPostPermalink, GetCustomizer, ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
 import Loader from './loader'
 import { Type } from './response'
 import API from './api'
@@ -25,7 +25,7 @@ export default class WP extends Loader {
 
   // fetch posts
   public async getPolylangPosts(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
-    return Promise.all([...Object.keys(translations).map(trans => this.getPosts(ctx, translations[trans], args))])
+    return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
   }
 
   // fetch posts
@@ -74,7 +74,12 @@ export default class WP extends Loader {
   }
 
   // fetch a post by permalink
-  public async getPost(ctx: GraphQLContext, args: GetPost = {}) {
+  public async getPost(ctx: GraphQLContext, id: number, args: GetPost = {}) {
+    return this._fetcher(ctx, !id ? API.Post : [API.Post, id].join('/'), args)
+  }
+
+  // fetch a post by permalink
+  public async getPostPermalink(ctx: GraphQLContext, args: GetPostPermalink = {}) {
     return this._fetcher(ctx, API.Post, args)
   }
 

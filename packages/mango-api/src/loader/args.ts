@@ -77,8 +77,12 @@ export type ListTaxonomies = {
   type?: string
 }
 
-export type GetPost = {
+export type GetPostPermalink = {
   permalink?: string
+  _embed?: boolean
+}
+
+export type GetPost = {
   _embed?: boolean
 }
 

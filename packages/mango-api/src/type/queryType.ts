@@ -289,7 +289,7 @@ export default {
         type: GraphQLBoolean
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getPost(ctx, args)
+    resolve: (_root, args, ctx) => ctx.loader.getPostPermalink(ctx, args)
   },
 
   page: {
@@ -302,7 +302,7 @@ export default {
         type: GraphQLBoolean
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getPost(ctx, args)
+    resolve: (_root, args, ctx) => ctx.loader.getPostPermalink(ctx, args)
   },
 
   media: {
