@@ -4,7 +4,7 @@ import { SettingsType } from './settingsType'
 import { CategoryType } from './catType'
 import { MediaType } from './mediaType'
 import { TermType } from './termType'
-import { PostByPermalinkResult } from './postByPermalinkType'
+import { PostByPermalinkResult } from './postByPermalinkType';
 import { CategoryByPermalinkResult } from './categoryByPermalinkType'
 
 export const defaultQuery = {
@@ -63,7 +63,7 @@ export const defaultQuery = {
     resolve: (_, args, ctx) => ctx.loader.getPostListByCategoryId(ctx, args)
   },
   postByPermalink: {
-    type: PostType,
+    type: PostByPermalinkResult,
     args: {
       permalink: {
         type: GraphQLString
