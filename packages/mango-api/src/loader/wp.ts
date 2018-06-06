@@ -63,9 +63,15 @@ export default class WP extends Loader {
     return this._fetcher(ctx, !id ? API.Taxonomies : [API.Taxonomies, id].join('/'), args)
   }
 
+  // fetch tag
+  public async getTag(ctx: GraphQLContext, id: number, args: ListTags = {}, type: Type = 'Array') {
+    const res = await this._fetcher(ctx, !id ? API.Tags : [API.Tags, id].join('/'), args)
+    return type === 'Array' ? res : res && res.length === 1 ? res[0] : null
+  }
+
   // fetch tags
-  public async getTags(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, !id ? API.Tags : [API.Tags, id].join('/'), args)
+  public async getTags(ctx: GraphQLContext, ids: [number], args: ListTags = {}) {
+    return Promise.all([...ids.map(id => this.getTag(ctx, id, args))])
   }
 
   // fetch media
