@@ -69,7 +69,6 @@ export default class WP extends Loader {
   // fetch tag
   public async getTag(ctx: GraphQLContext, id: number, args: ListTags = {}, type: Type = 'Array') {
     const res = await this._fetcher(ctx, !id ? API.Tags : [API.Tags, id].join('/'), args)
-    console.log(res)
     return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : Array.isArray(res) && res.length === 1 ? res[0] : res
   }
 
