@@ -157,7 +157,7 @@ export default {
     type: new GraphQLList(TagType),
     args: {
       id: {
-        type: GraphQLString
+        type: GraphQLInt
       },
       context: {
         type: GraphQLString
@@ -202,14 +202,33 @@ export default {
         type: GraphQLBoolean
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getTags(ctx, args.id, args)
+    resolve: (_root, args, ctx) => ctx.loader.getTag(ctx, args.id, args)
+  },
+
+  tag: {
+    type: TagType,
+    args: {
+      id: {
+        type: GraphQLInt
+      },
+      slug: {
+        type: new GraphQLList(GraphQLString)
+      },
+      lang: {
+        type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getTag(ctx, args.id, args, 'Object')
   },
 
   categories: {
     type: new GraphQLList(CategoryType),
     args: {
       id: {
-        type: GraphQLString
+        type: GraphQLInt
       },
       context: {
         type: GraphQLString
@@ -261,7 +280,7 @@ export default {
     type: CategoryType,
     args: {
       id: {
-        type: GraphQLString
+        type: GraphQLInt
       },
       slug: {
         type: new GraphQLList(GraphQLString)

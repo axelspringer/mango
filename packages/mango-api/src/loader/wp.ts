@@ -15,7 +15,7 @@ export default class WP extends Loader {
   // fetch category
   public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories = {}, type: Type = 'Array') {
     const res = await this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
-    return type === 'Array' ? res : res && res.length === 1 ? res[0] : null
+    return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : res !== null ? res : null
   }
 
   // fetch categories
@@ -66,7 +66,7 @@ export default class WP extends Loader {
   // fetch tag
   public async getTag(ctx: GraphQLContext, id: number, args: ListTags = {}, type: Type = 'Array') {
     const res = await this._fetcher(ctx, !id ? API.Tags : [API.Tags, id].join('/'), args)
-    return type === 'Array' ? res : res && res.length === 1 ? res[0] : null
+    return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : res !== null ? res : null
   }
 
   // fetch tags

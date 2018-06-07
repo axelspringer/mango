@@ -189,6 +189,24 @@ declare const _default: {
         };
         resolve: (_root: any, args: any, ctx: any) => any;
     };
+    tag: {
+        type: any;
+        args: {
+            id: {
+                type: any;
+            };
+            slug: {
+                type: any;
+            };
+            lang: {
+                type: any;
+            };
+            _embed: {
+                type: any;
+            };
+        };
+        resolve: (_root: any, args: any, ctx: any) => any;
+    };
     categories: {
         type: any;
         args: {
