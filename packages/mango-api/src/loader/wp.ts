@@ -20,7 +20,7 @@ export default class WP extends Loader {
 
   // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: [number], args: ListCategories = {}) {
-    return Promise.all([...ids.map(id => this.getCategory(ctx, id, args))])
+    return Promise.all([...ids.map(id => this.getCategory(ctx, id, args, 'Object'))])
   }
 
   // fetch posts
@@ -71,7 +71,7 @@ export default class WP extends Loader {
 
   // fetch tags
   public async getTags(ctx: GraphQLContext, ids: [number], args: ListTags = {}) {
-    return Promise.all([...ids.map(id => this.getTag(ctx, id, args))])
+    return Promise.all([...ids.map(id => this.getTag(ctx, id, args, 'Object'))])
   }
 
   // fetch media
