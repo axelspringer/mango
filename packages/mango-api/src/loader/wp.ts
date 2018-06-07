@@ -15,12 +15,12 @@ export default class WP extends Loader {
   // fetch category
   public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories = {}, type: Type = 'Array') {
     const res = await this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
-    return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : res !== null ? res : null
+    return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : Array.isArray(res) && res.length === 1 ? res[0] : null
   }
 
   // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: [number], args: ListCategories = {}) {
-    return Promise.all([...ids.map(id => this.getCategory(ctx, id, args, 'Object'))])
+    return Promise.all([...ids.map(id => this.getCategory(ctx, id, args))])
   }
 
   // fetch posts
@@ -66,12 +66,12 @@ export default class WP extends Loader {
   // fetch tag
   public async getTag(ctx: GraphQLContext, id: number, args: ListTags = {}, type: Type = 'Array') {
     const res = await this._fetcher(ctx, !id ? API.Tags : [API.Tags, id].join('/'), args)
-    return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : res !== null ? res : null
+    return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : Array.isArray(res) && res.length === 1 ? res[0] : null
   }
 
   // fetch tags
   public async getTags(ctx: GraphQLContext, ids: [number], args: ListTags = {}) {
-    return Promise.all([...ids.map(id => this.getTag(ctx, id, args, 'Object'))])
+    return Promise.all([...ids.map(id => this.getTag(ctx, id, args))])
   }
 
   // fetch media
