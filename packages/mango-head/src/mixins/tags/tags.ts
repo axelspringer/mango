@@ -1,4 +1,5 @@
 import inBrowser from '../../utils/dom'
+import { createMetaTags, removeMetaTags } from '../../utils/meta'
 
 function getTags(vm) {
   const { tags } = vm
@@ -12,8 +13,27 @@ function getTags(vm) {
 const serverTagsMixin = {
   created() {
     const tags = getTags(this)
+    if (this.$ssrContext) {
+      this.$ssrContext.tags = createTags(tags || []) // always provide tags
+    }
+  }
+}
+
+const clientTagsMixin = {
+  beforeRouteEnter(_to, _from, next) {
+    next(vm => {
+      removeMetaTags() // remove tags
+      const tags = getTags(vm)
+      if (tags) {
+        createMetaTags(tags.meta || [])
+      }
+    })
+  },
+  updated() {
+    removeMetaTags() // remove tags
+    const tags = getTags(this)
     if (tags) {
-      this.$ssrContext.tags = createTags(tags)
+      createMetaTags(tags.meta || [])
     }
   }
 }
@@ -52,6 +72,7 @@ function createTag(tagName, attrMap) {
   return `<${tagName} ${attributes.join(' ')}>${closingTag}`
 }
 
-export default !inBrowser || process.env.VUE_ENV === 'server'
-  ? serverTagsMixin
-  : {} // nothing to see on the client
+// export for server and
+export default inBrowser && process.env.VUE_ENV !== 'server'
+  ? clientTagsMixin
+  : serverTagsMixin

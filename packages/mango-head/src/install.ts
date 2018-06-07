@@ -8,9 +8,9 @@ export function install(Vue) {
     return
   }
 
-  install.prototype.installed = true;
+  install.prototype.installed = true
 
-  _Vue = Vue;
+  _Vue = Vue
 
   Vue.mixin(title)
   Vue.mixin(tags)

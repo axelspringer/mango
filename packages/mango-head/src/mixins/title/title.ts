@@ -14,8 +14,8 @@ function getTitle(vm) {
 const serverTitleMixin = {
   created() {
     const title = getTitle(this)
-    if (title) {
-      this.$ssrContext.title = title
+    if (this.$ssrContext) {
+      this.$ssrContext.title = title || '' // always set context
     }
   }
 }
@@ -29,7 +29,7 @@ const clientTitleMixin = {
   }
 }
 
-// `VUE_ENV` can be injected with `webpack.DefinePlugin`
-export default !inBrowser || process.env.VUE_ENV === 'server'
-  ? serverTitleMixin
-  : clientTitleMixin
+// export for server and client
+export default inBrowser && process.env.VUE_ENV !== 'server'
+  ? clientTitleMixin
+  : serverTitleMixin
