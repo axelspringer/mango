@@ -1,17 +1,18 @@
 import Config from './config'
 import { log } from './utils/log'
 import { setupDevServer } from './webpack'
-import { createRenderer } from 'vue-server-renderer'
+const { createRenderer, baseOptions } = require('@axelspringer/vue-server-renderer')
 import { Renderer } from 'vue-server-renderer/types'
 import { relative, resolve } from './utils/path'
 import * as Koa from 'koa'
 import * as Logger from 'koa-pino-logger'
 import * as Router from 'koa-router'
 import * as fs from 'fs'
-import serve from './middlewares/serve'
+// import serve from './middlewares/serve'
 import createBundleRenderer from './utils/createRenderer'
 import renderPlugin from './utils/renderPlugin'
 import errors from './middlewares/errors'
+import makeMap from './utils/makeMap'
 import * as gracefulShutdown from 'http-graceful-shutdown'
 
 import appRender from './utils/appRender'
@@ -75,15 +76,22 @@ export class ServerSideRenderer {
       this.app.use(middleware)
     })
 
-    Env.Development || this.app.use(serve({ rootDir: this.config.serve }))
+    // Env.Development || this.app.use(serve({ rootDir: this.config.serve }))
   }
 
   /**
    * Initialize plugins
    */
   public initPlugins() {
+
+    const isUnaryTag = makeMap(
+      'area,base,br,col,embed,frame,hr,img,input,isindex,keygen,' +
+      'meta,param,source,track,wbr' // be more relaxed
+    )
+
     this.plugins = this.config.plugins.map(plugin => {
-      const renderer = createRenderer() // this creates a renderer for every plugin
+      baseOptions.isUnaryTag = plugin.isUnaryTag || isUnaryTag || baseOptions.isUnaryTag
+      const renderer = createRenderer({ isUnaryTag }) // this creates a renderer for every plugin
       this.router // map all
         .all(
           plugin.route,

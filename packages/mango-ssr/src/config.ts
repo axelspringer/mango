@@ -9,6 +9,7 @@ export type Plugin = {
   header: any
   render: { [render: string]: Component }
   template?: string
+  isUnaryTag?: (tag: string) => Boolean
 }
 
 export default class Config {

@@ -1,11 +1,35 @@
-const Vue = require('vue')
+const Vue = require('@axelspringer/vue')
+
+const rssData = {
+  title: 'Test Feed',
+  link: 'www.test.com',
+  desc: 'A test rss feed',
+  items: [{
+      title: 'Test number 1',
+      link: 'www.test.com/1',
+      desc: 'The first test',
+      author: 'Test Bro',
+    },
+    {
+      title: 'Test number 2',
+      link: 'www.test.com/2',
+      desc: 'The second test',
+      author: 'Fred',
+    },
+    {
+      title: 'Test number 3',
+      link: 'www.test.com/3',
+      desc: 'The last test',
+      author: 'Anne',
+    },
+  ],
+}
 
 const rss = new Vue({
   template: `
     <channel>
       <title>Test</title>
     </channel>
-  </rss>
   `,
   render: function (createElement) {
     throw new Error("test")
@@ -18,17 +42,13 @@ const rss = new Vue({
 
 const rss2 = new Vue({
   template: `
-    <channel>
-      <title>Test</title>
-    </channel>
-  </rss>
+  <channel>
+    <title>{{title}}</title>
+    <link>{{title}}</link>
+    <description>{{desc}}</description>
+  </channel>
   `,
-  render: function (createElement) {
-    return createElement(
-      'h' + this.level, // tag name
-      this.$slots.default // array of children
-    )
-  },
+  data: rssData
 })
 
 module.exports = {
