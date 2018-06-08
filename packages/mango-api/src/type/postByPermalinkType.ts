@@ -9,6 +9,9 @@ export const PostByPermalinkResult = new GraphQLObjectType({
         ID: {
             type: GraphQLInt
         },
+        id: {
+            type: GraphQLInt
+        },
         post_author: {
             type: GraphQLString
         },

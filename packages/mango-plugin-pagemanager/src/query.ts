@@ -50,6 +50,15 @@ export const Query = {
     },
     resolve: (_root, args, ctx) => ctx.loader.getPageManagerPosts(ctx, args.id, args)
   },
+  pageManagerPostMeta: {
+    type: PageManager,
+    args: {
+      id: {
+        type: GraphQLInt
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getPageManagerPostMeta(ctx, args.id, args)
+  },
   pageManagerGlobal: {
     type: PageManager,
     args: {

@@ -1,0 +1,60 @@
+{
+  "name": "@axelspringer/mango-plugin-mediaimpact",
+  "version": "0.0.1",
+  "description": "plugin package to request/fetch ACF and mediaimpact specific data mediaimpact-plugin for WP",
+  "main": "dist/mediaimpact.common.js",
+  "web": "dist/mediaimpact.js",
+  "module": "dist/mediaimpact.esm.js",
+  "typings": "types/index.d.ts",
+  "files": [
+    "data/*.json",
+    "dist/*.js",
+    "types/*.d.ts"
+  ],
+  "scripts": {
+    "build": "rollup -c scripts/config.js",
+    "build:types": "npm run tsc -- -p tsconfig.json --declaration --declarationDir ./types",
+    "clean:dist": "npm run rimraf -- dist",
+    "clean": "npm run rimraf -- dist node_modules",
+    "prebuild": "npm run clean:dist",
+    "rimraf": "rimraf",
+    "start": "npm run watch",
+    "tsc": "tsc",
+    "watch": "rollup -w -c scripts/config.js"
+  },
+  "author": "Axel Springer SE",
+  "license": "MIT",
+  "peerDependencies": {
+    "@axelspringer/mango-api": "^0.8.2",
+    "graphql": "^0.13.2",
+    "graphql-iso-date": "^3.5.0"
+  },
+  "dependencies": {
+    "graphql-iso-date": "^3.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^9.6.5",
+    "babel-core": "^6.26.0",
+    "concurrently": "^3.5.1",
+    "cross-env": "^5.1.4",
+    "lodash": "^4.17.5",
+    "nodemon": "^1.17.3",
+    "prettier": "^1.12.0",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.57.1",
+    "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-commonjs": "^9.1.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-typescript": "^0.8.1",
+    "rollup-plugin-typescript2": "^0.13.0",
+    "rollup-plugin-vue": "^3.0.0",
+    "tslint": "^5.9.1",
+    "tslint-config-prettier": "^1.10.0",
+    "typescript": "^2.8.1",
+    "vue": "^2.5.16",
+    "vue-apollo": "^3.0.0-beta.5",
+    "vue-functional-data-merge": "^2.0.6",
+    "vue-property-decorator": "^6.0.0"
+  }
+}

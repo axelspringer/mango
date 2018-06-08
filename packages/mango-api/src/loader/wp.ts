@@ -99,7 +99,6 @@ export class WP extends Loader {
   }
 
   public async getPostByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
-    console.log(API.PostByPermalink + permalink)
     return await this._fetcher(ctx, API.PostByPermalink + permalink, args)
   }
 
