@@ -15,15 +15,12 @@ export default class WP extends Loader {
   // fetch category
   public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories = {}, type: Type = 'Array') {
     const res = await this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
-    console.log(res)
-    return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : Array.isArray(res) && res.length === 1 ? res[0] : res
+    return type !== 'Array' ? Array.isArray(res) ? res.length === 1 ? res[0] : null : res : Array.isArray(res) ? res : res !== null ? [res] : null
   }
 
   // fetch categories
   public async getCategories(ctx: GraphQLContext, ids: [number], args: ListCategories = {}) {
-    const result = await Promise.all([...ids.map(id => this.getCategory(ctx, id, args, 'Object'))])
-    console.log(result)
-    return result
+    return await Promise.all([...ids.map(id => this.getCategory(ctx, id, args, 'Object'))])
   }
 
   // fetch posts
@@ -53,7 +50,7 @@ export default class WP extends Loader {
 
   // fetch page
   public async getPages(ctx: GraphQLContext, id: number, args: ListPages = {}) {
-    return this._fetcher(ctx, !id ? API.Pages : [API.Pages, id].join('/'), args)
+    return await this._fetcher(ctx, !id ? API.Pages : [API.Pages, id].join('/'), args)
   }
 
   // fetch settings
