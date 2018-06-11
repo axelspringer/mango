@@ -110,6 +110,8 @@ export default class Router {
 
   public custom(cmp: Component, path: string, config = {}) {
     this.addRoute(new Custom(cmp, this._url.concat(path), config))
+
+    return this
   }
 
   public all() {

@@ -52,6 +52,7 @@ declare class Router {
   public post(cmp: Component): Router
   public tag(cmp: Component): Router
   public year(cmp: Component): Router
+  public custom(cmp: Component, path: string, config: any): Router
 
   public all(): RouteConfig[]
 }
