@@ -198,6 +198,9 @@ declare const _default: {
             lang: {
                 type: any;
             };
+            slug: {
+                type: any;
+            };
             _embed: {
                 type: any;
             };

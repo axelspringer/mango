@@ -213,6 +213,9 @@ export default {
       lang: {
         type: GraphQLString
       },
+      slug: {
+        type: GraphQLString
+      },
       _embed: {
         type: GraphQLBoolean
       }
