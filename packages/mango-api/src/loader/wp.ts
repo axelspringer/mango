@@ -38,6 +38,12 @@ export default class WP extends Loader {
     return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
   }
 
+
+  // fetch posts
+  public async getPolylangTags(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(translations).map(trans => this.getTag(ctx, translations[trans], args, 'Object'))])
+  }
+
   // fetch image
   public async getImage(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [API.Media, id].join('/'), args)
@@ -66,7 +72,7 @@ export default class WP extends Loader {
   // fetch tag
   public async getTag(ctx: GraphQLContext, id: number, args: ListTags = {}, type: Type = 'Array') {
     const res = await this._fetcher(ctx, !id ? API.Tags : [API.Tags, id].join('/'), args)
-    return type === 'Array' ? Array.isArray(res) ? res : res !== null ? [res] : res : Array.isArray(res) && res.length === 1 ? res[0] : res
+    return type !== 'Array' ? Array.isArray(res) ? res.length === 1 ? res[0] : null : res : Array.isArray(res) ? res : res !== null ? [res] : null
   }
 
   // fetch tags

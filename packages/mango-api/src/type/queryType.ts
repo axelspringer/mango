@@ -4,7 +4,6 @@ import PageType from './pageType'
 import { SettingsType } from './settingsType'
 import { CategoryType } from './catType'
 import MediaType from './mediaType'
-import TaxonomyType from './taxonomyType'
 import TagType from './tagType'
 import TaxonomiesTypes from './taxonomiesTypes'
 import EmbeddedType from './embeddedType'
@@ -210,9 +209,6 @@ export default {
     args: {
       id: {
         type: GraphQLInt
-      },
-      slug: {
-        type: new GraphQLList(GraphQLString)
       },
       lang: {
         type: GraphQLString

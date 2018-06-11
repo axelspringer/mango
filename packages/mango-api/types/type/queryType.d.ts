@@ -195,9 +195,6 @@ declare const _default: {
             id: {
                 type: any;
             };
-            slug: {
-                type: any;
-            };
             lang: {
                 type: any;
             };
