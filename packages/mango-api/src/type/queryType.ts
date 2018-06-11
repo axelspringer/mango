@@ -214,7 +214,7 @@ export default {
         type: GraphQLString
       },
       slug: {
-        type: GraphQLString
+        type: new GraphQLList(GraphQLString)
       },
       _embed: {
         type: GraphQLBoolean
