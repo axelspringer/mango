@@ -1,4 +1,7 @@
-const Vue = require('@axelspringer/vue')
+const Vue = require('vue')
+const {
+  makeMap
+} = require('../dist/server')
 
 const rssData = {
   title: 'Test Feed',
@@ -51,6 +54,11 @@ const rss2 = new Vue({
   data: rssData
 })
 
+const isUnaryTag = makeMap(
+  'area,base,br,col,embed,frame,hr,img,input,isindex,keygen,' +
+  'meta,param,source,track,wbr'
+)
+
 module.exports = {
   serve: 'public',
   plugins: [{
@@ -61,7 +69,8 @@ module.exports = {
       },
       context: {
         rss
-      }
+      },
+      isUnaryTag,
     },
     {
       route: '/test2',
@@ -71,7 +80,8 @@ module.exports = {
       },
       context: {
         rss: rss2
-      }
+      },
+      isUnaryTag,
     }
   ]
 }

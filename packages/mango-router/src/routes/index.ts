@@ -6,9 +6,11 @@ import Month from './month'
 import Post from './post'
 import Tag from './tag'
 import Year from './year'
+import Custom from './custom'
 
 export {
   Category,
+  Custom,
   Day,
   Home,
   Language,

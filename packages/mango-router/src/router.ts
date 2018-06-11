@@ -1,7 +1,7 @@
 import { assert } from './utils/warn'
 import { Component } from 'vue/types'
 import Route from './route'
-import { Home, Category, Tag, Year, Month, Day, Post, Language } from './routes'
+import { Home, Category, Tag, Year, Month, Day, Post, Language, Custom } from './routes'
 import { install } from './install'
 
 export default class Router {
@@ -54,69 +54,73 @@ export default class Router {
   }
 
   public home(cmp: Component) {
-    this._addRoute(new Home(cmp, this._url))
+    this.addRoute(new Home(cmp, this._url))
 
     return this // chain
   }
 
   public category(cmp: Component) {
-    this._addUrl(Category.path)
-    this._addRoute(new Category(cmp, this._url))
+    this.addUrl(Category.path)
+    this.addRoute(new Category(cmp, this._url))
 
     return this // chain
   }
 
   public year(cmp: Component) {
-    this._addUrl(Year.path)
-    this._addRoute(new Year(cmp, this._url))
+    this.addUrl(Year.path)
+    this.addRoute(new Year(cmp, this._url))
 
     return this // chain
   }
 
   public month(cmp: Component) {
-    this._addUrl(Year.path)
-    this._addRoute(new Month(cmp, this._url))
+    this.addUrl(Year.path)
+    this.addRoute(new Month(cmp, this._url))
 
     return this // chain
   }
 
   public day(cmp: Component) {
-    this._addUrl(Day.path)
-    this._addRoute(new Day(cmp, this._url))
+    this.addUrl(Day.path)
+    this.addRoute(new Day(cmp, this._url))
 
     return this // chain
   }
 
   public tag(cmp: Component) {
-    this._addUrl(Tag.path)
-    this._addRoute(new Tag(cmp, this._url))
+    this.addUrl(Tag.path)
+    this.addRoute(new Tag(cmp, this._url))
 
     return this // chain
   }
 
   public post(cmp: Component) {
-    this._addUrl(Post.path)
-    this._addRoute(new Post(cmp, this._url))
+    this.addUrl(Post.path)
+    this.addRoute(new Post(cmp, this._url))
 
     return this // chain
   }
 
   public language(cmp: Component) {
-    this._addUrl(Language.path)
-    this._addRoute(new Language(cmp, this._url))
+    this.addUrl(Language.path)
+    this.addRoute(new Language(cmp, this._url))
 
     return this // chain
+  }
+
+  public custom(cmp: Component, path: string, config = {}) {
+    this.addRoute(new Custom(cmp, this._url.concat(path), config))
   }
 
   public all() {
     return this._routes.map(route => route.config)
   }
 
-  private _addRoute(route: Route) {
+  public addRoute(route: Route) {
     this.routes.push(route)
   }
 
-  private _addUrl(url: string) {
+  public addUrl(url: string) {
     return this._url = this._url.concat(url)
   }
 }
