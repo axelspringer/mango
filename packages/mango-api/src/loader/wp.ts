@@ -30,7 +30,7 @@ export default class WP extends Loader {
 
   // fetch posts
   public async getPolylangCategories(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
-    return Promise.all([...Object.keys(translations).map(trans => this.getCategory(ctx, translations[trans], args))])
+    return Promise.all([...Object.keys(translations).map(trans => this.getCategory(ctx, translations[trans], args, 'Object'))])
   }
 
   // fetch posts
