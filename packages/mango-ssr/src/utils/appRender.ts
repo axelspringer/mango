@@ -23,17 +23,14 @@ export default async (ctx, next) => {
   const { renderer } = ctx.state
   const context = new SSRContext(ctx.req)
 
-  await next()
-
   if (!renderer) {
     ctx.body = 'waiting for compilation... refresh in a moment.'
 
     return next()
   }
 
+  await next() // wait for downstream
   await render(renderer, ctx, context) // wait for render
 
   setHeaders(ctx, { 'Content-Type': 'text/html' })
-
-  return next() // allow to pass along
 }
