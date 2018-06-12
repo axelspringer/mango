@@ -55,6 +55,9 @@ const agent = {
 // create axios instance
 const fetch = axios.create({
   baseURL: config.wp,
+  timeout: 5 * 1000, // only wait 1 second before timeout
+  httpAgent: new http.Agent(agent),
+  httpsAgent: new https.Agent(agent),
   headers
 })
 
@@ -64,9 +67,6 @@ fetch.interceptors.request.use(...new Discovery(config.wp, new RandomDiscoverySt
 // construct context
 const ctx = {
   config,
-  timeout: 1 * 1000, // only wait 1 second before timeout
-  httpAgent: new http.Agent(agent),
-  httpsAgent: new https.Agent(agent),
   axios: fetch,
   loader
 }
