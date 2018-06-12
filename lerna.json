@@ -8,6 +8,7 @@
     "packages/mango-plugin-rss",
     "packages/mango-pagemanager",
     "packages/mango-head",
+    "packages/mango-foot",
     "packages/mango-ssr",
     "packages/mango-router"
   ],
