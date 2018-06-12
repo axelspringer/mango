@@ -2,18 +2,18 @@ import SSRContext from '../context'
 import setHeaders from './setHeaders'
 
 function render(renderer, ctx, context) {
-  return new Promise(async (resolve, reject) => {
-
-    const timeout = setTimeout(() => { // set a timeout for render
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(function () { // set a timeout for render
       reject('Render Timeout')
     }, 60 * 1000) // this is artifical
 
-    await renderer.renderToString(context) // wait to render string
-      .then(html => resolve(html))
-      .catch(err => reject(err))
-      .finally(() => {
-        clearTimeout(timeout) // finally clear timeout
-      })
+    renderer.renderToString(context, (err, html) => {
+      clearTimeout(timeout) // clean-up
+      if (err) {
+        reject(err)
+      }
+      resolve(html)
+    }) // wait to render string
   })
     .then(html => ctx.body = html) //
     .catch(err => ctx.throw(500, err))
