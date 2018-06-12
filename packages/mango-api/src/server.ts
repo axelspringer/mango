@@ -1,6 +1,6 @@
 // imports
 import { Discovery, RandomDiscoveryStrategy } from './interceptors'
-import { isDev, loadPlugins, createSchema, createQuery } from './utils'
+import { loadPlugins, createSchema, createQuery } from './utils'
 import { Middleware } from './middleware'
 import { parseArgs } from './args'
 import * as http from 'http'
@@ -55,7 +55,7 @@ const agent = {
 // create axios instance
 const fetch = axios.create({
   baseURL: config.wp,
-  timeout: 5 * 1000, // only wait 1 second before timeout
+  timeout: 60 * 1000, // only wait 1 second before timeout
   httpAgent: new http.Agent(agent),
   httpsAgent: new https.Agent(agent),
   headers

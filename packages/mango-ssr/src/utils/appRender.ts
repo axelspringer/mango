@@ -6,7 +6,7 @@ function render(renderer, ctx, context) {
 
     const timeout = setTimeout(() => { // set a timeout for render
       reject('Render Timeout')
-    }, 30 * 1000) // this is artifical
+    }, 60 * 1000) // this is artifical
 
     await renderer.renderToString(context) // wait to render string
       .then(html => resolve(html))
