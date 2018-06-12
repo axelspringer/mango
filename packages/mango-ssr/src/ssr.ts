@@ -12,6 +12,7 @@ import createBundleRenderer from './utils/createRenderer'
 import renderPlugin from './utils/renderPlugin'
 import Errors from './middlewares/errors'
 import Serve from './middlewares/serve'
+import Ignore from './middlewares/ignore'
 import * as gracefulShutdown from 'http-graceful-shutdown'
 
 import appRender from './utils/appRender'
@@ -52,6 +53,7 @@ export class ServerSideRenderer {
     // configure logging
     this.app.silent = true
     this.app.use(Logger())
+    this.app.use(Ignore(this.config.ignore))
 
     // setup middleware
     this.setup()

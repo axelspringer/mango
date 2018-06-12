@@ -30,6 +30,10 @@ export default class Config {
   public webpackMiddleware = false
   public universalRenderer = false
   public middleware = []
+  public ignore = [
+    '/favicon.ico'
+  ]
+
 
   constructor({ serve, bundle, plugins, stream, middleware, manifest, template, webpack, cache, maxAge, port }) {
     // defaults
