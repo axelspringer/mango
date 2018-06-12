@@ -7,6 +7,7 @@ import * as Koa from 'koa'
 import * as Logger from 'koa-pino-logger'
 import * as Router from 'koa-router'
 import * as fs from 'fs'
+import * as Compress from 'koa-compress'
 import createBundleRenderer from './utils/createRenderer'
 import renderPlugin from './utils/renderPlugin'
 import Errors from './middlewares/errors'
@@ -77,6 +78,13 @@ export class ServerSideRenderer {
       this.app.use(middleware)
     })
 
+    Env.Development || this.app.use(Compress({
+      filter: function (content_type) {
+        return /text/i.test(content_type)
+      },
+      threshold: 2048,
+      flush: require('zlib').Z_SYNC_FLUSH
+    }))
     Env.Development || this.app.use(Serve({ rootDir: this.config.serve }))
   }
 
