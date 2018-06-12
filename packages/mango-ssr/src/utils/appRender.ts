@@ -6,7 +6,7 @@ function render(renderer, ctx, context) {
 
     const timeout = setTimeout(() => { // set a timeout for render
       reject('Render Timeout')
-    }, 5 * 2 * 1000) // this is a bit artifical
+    }, 30 * 1000) // this is artifical
 
     await renderer.renderToString(context) // wait to render string
       .then(html => resolve(html))
@@ -34,4 +34,6 @@ export default async (ctx, next) => {
   await render(renderer, ctx, context) // wait for render
 
   setHeaders(ctx, { 'Content-Type': 'text/html' })
+
+  return next() // allow to pass along
 }
