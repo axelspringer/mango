@@ -1,9 +1,29 @@
 import SSRContext from '../context'
 import setHeaders from './setHeaders'
 
+function render(renderer, ctx, context) {
+  return new Promise(async (resolve, reject) => {
+
+    const timeout = setTimeout(() => { // set a timeout for render
+      reject('Render Timeout')
+    }, 5 * 1000)
+
+    await renderer.renderToString(context) // wait to render string
+      .then(html => resolve(html))
+      .catch(err => reject(err))
+      .finally(() => {
+        clearTimeout(timeout) // finally clear timeout
+      })
+  })
+    .then(html => ctx.body = html) //
+    .catch(err => ctx.throw(500, err))
+}
+
 export default async (ctx, next) => {
   const { renderer } = ctx.state
   const context = new SSRContext(ctx.req)
+
+  await next()
 
   if (!renderer) {
     ctx.body = 'waiting for compilation... refresh in a moment.'
@@ -11,15 +31,7 @@ export default async (ctx, next) => {
     return next()
   }
 
-  await next()
-
-  // use rendered string
-  try {
-    ctx.body = await renderer.renderToString(context)
-  } catch (err) {
-    // should do 500
-    ctx.throw(500, err)
-  }
+  await render(renderer, ctx, context) // wait for render
 
   setHeaders(ctx, { 'Content-Type': 'text/html' })
 }

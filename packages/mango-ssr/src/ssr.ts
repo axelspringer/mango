@@ -9,8 +9,8 @@ import * as Router from 'koa-router'
 import * as fs from 'fs'
 import createBundleRenderer from './utils/createRenderer'
 import renderPlugin from './utils/renderPlugin'
-import errors from './middlewares/errors'
-import serve from './middlewares/serve'
+import Errors from './middlewares/errors'
+import Serve from './middlewares/serve'
 import * as gracefulShutdown from 'http-graceful-shutdown'
 
 import appRender from './utils/appRender'
@@ -46,7 +46,7 @@ export class ServerSideRenderer {
     this.router = new Router()
 
     // add error-handler
-    this.app.use(errors)
+    this.app.use(Errors())
 
     // configure logging
     this.app.silent = true
@@ -77,7 +77,7 @@ export class ServerSideRenderer {
       this.app.use(middleware)
     })
 
-    Env.Development || this.app.use(serve({ rootDir: this.config.serve }))
+    Env.Development || this.app.use(Serve({ rootDir: this.config.serve }))
   }
 
   /**

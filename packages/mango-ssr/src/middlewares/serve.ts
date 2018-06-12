@@ -18,7 +18,7 @@ import { join } from 'upath'
  * @return {Object} - {Function} serve
  * @api public
  */
-export default function (opts) {
+export default function serve(opts) {
   assert(typeof opts.rootDir === 'string', 'rootDir must be specified (as a string)')
 
   const options = opts || {}
@@ -28,10 +28,19 @@ export default function (opts) {
   return async (ctx, next) => {
     assert(ctx, 'koa context required')
 
-    const dir = ctx.path.replace(/^\/static/, '')
+    let stats
+
+    const dir = ctx.path.replace(/^\/static/, '') // parse static
     const file = join(options.root, dir)
 
-    if (!fs.existsSync(file)) {
+    try {
+      stats = fs.lstatSync(file);
+    }
+    catch (e) {
+      return next() // could not fetch any data
+    }
+
+    if (!stats.isFile()) {
       return next() // if there is no file
     }
 
