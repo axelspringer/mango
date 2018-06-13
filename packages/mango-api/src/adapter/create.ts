@@ -22,55 +22,46 @@ export default function (config: any = {}) {
     // make discovery
     req.url = await discovery.resolve(req.url)
 
-    // nothing in the cache, so use the default adapter
-    const res = await axios.defaults.adapter(req)
-
-    // return if not cache
-    if (!config.cache) {
-      return res as any
-    }
-
     // if not is an allows cache method
-    if (Defaults.AllowedCacheMethods.indexOf(req.method) === -1
-      || res.status !== 200) {
-      return res // just return res
+    if (Defaults.AllowedCacheMethods.indexOf(req.method) === -1 ||
+      !config.cache) {
+      return axios.defaults.adapter(req)
     }
 
     // try to get cashable
     const hashable = new Hashable(req)
     const hash = hashing(hashable)
 
-    // try to get from db, otherwise
-    db.get(hash, { asBuffer: false }, (err, value) => { // try to get from store
-      const cachable = new Cachable(res.data, Date.now()) // cache date with timestamp
-      let cache
+    // return promise to cache
+    const res = await db.get(hash, { asBuffer: false })
+      .then(cache => new Cachable(cache))
+      .then(cache => {
+        if ((Date.now() - cache.timestamp) >= Defaults.Time) {
+          throw new Error('should update')
+        }
 
-      if (err && err.notFound) {
-        db.put(hash, cachable, (err) => {
-          if (err) {
-            console.log(err)
-          }
-        })
-      }
+        cache.hit = true
+        cache.request = req
+        return cache
+      })
+      .catch(async () => { // err could also be update
+        const res: any = await axios.defaults.adapter(req)
 
-      if (err || !value) {
-        return res // just return
-      }
+        if (res.status !== 200) {
+          return res
+        }
 
-      cache = new Cachable(value.data, value.timestamp)
-      if ((Date.now() - cache.timestamp) >= Defaults.Time) {
-        db.put(hash, cachable, (err) => {
-          if (err) {
-            console.log(err)
-          }
-          console.log('updated')
-        })
-      }
+        try {
+          await db.put(hash, new Cachable(res))
+        } catch (e) {
+          console.log(e)
+        }
 
-      res.data = value // set cache value
-    })
+        res.hit = false
+        return res
+      })
 
-    return res as any
+    return res
   }
 
   return {
