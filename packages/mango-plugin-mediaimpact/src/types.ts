@@ -1,3 +1,4 @@
+import { GraphQLObjectType } from 'graphql';
 const {
     GraphQLObjectType,
     GraphQLList,
@@ -330,6 +331,7 @@ export const TagType = new GraphQLObjectType({
         }
     })
 })
+
 export const PostType = new GraphQLObjectType({
     name: 'MIPost',
     description: 'Contains a MIPost from WordPress',
@@ -434,7 +436,148 @@ export const PostType = new GraphQLObjectType({
         },
         img: {
             type: ImgType,
-            resolve: (root, args, ctx) => ctx.loader.getImage(ctx, root.featured_media, args)
+            resolve: function (root, args, ctx) {
+                console.log(root)
+                return ctx.loader.getImage(ctx, root.featured_media, args)
+            }
         }
     }),
+})
+
+
+const FeaturedImgSizeType = new GraphQLObjectType({
+    name: 'FeaturedImageSizes',
+    fields: () => ({
+        source: {
+            type: GraphQLString,
+            resolve: (item) => item.source
+        }
+    })
+})
+
+const FeaturedVideoType = new GraphQLObjectType({
+    name: 'FeaturedVideoType',
+    fields: () => ({
+        source: {
+            type: GraphQLString,
+            resolve: (item) => item.url
+        },
+        image: {
+            type: GraphQLString,
+            resolve: (item) => item.image
+        },
+        thumbnail: {
+            type: GraphQLString,
+            resolve: (item) => {
+                if (item.hasOwnProperty('rendered')) {
+                    return item.rendered.thumbnail.source
+                }
+                return 0
+            }
+        },
+        medium: {
+            type: GraphQLString,
+            resolve: (item) => {
+                if (item.hasOwnProperty('rendered')) {
+                    return item.rendered.medium.source
+                }
+                return 0
+            }
+        },
+        medium_large: {
+            type: GraphQLString,
+            resolve: (item) => {
+                if (item.hasOwnProperty('rendered')) {
+                    return item.rendered.medium_large.source
+                }
+                return 0
+            }
+        },
+        full: {
+            type: GraphQLString,
+            resolve: (item) => {
+                if (item.hasOwnProperty('rendered')) {
+                    return item.rendered.full.source
+                }
+                return 0
+            }
+        }
+    })
+})
+export const FeaturedImgType = new GraphQLObjectType({
+    name: 'FeaturedMedia',
+    fields: () => ({
+        id: {
+            type: GraphQLInt,
+            resolve: img => img.id
+        },
+        alt: {
+            type: GraphQLString,
+            resolve: img => img.alt
+        },
+        title: {
+            type: GraphQLString,
+            resolve: img => img.title
+        },
+        caption: {
+            type: GraphQLString,
+            resolve: img => img.caption
+        },
+        description: {
+            type: GraphQLString,
+            resolve: img => img.description
+        },
+        thumbnail: {
+            type: FeaturedImgSizeType,
+            resolve: (img) => {
+                if (img.hasOwnProperty('media_details')) {
+                    return img.media_details.sizes.thumbnail
+                }
+                return 0
+            }
+        },
+        medium: {
+            type: FeaturedImgSizeType,
+            resolve: (img) => {
+                if (img.hasOwnProperty('media_details')) {
+                    return img.media_details.sizes.medium
+                }
+                return 0
+            }
+        },
+        medium_large: {
+            type: FeaturedImgSizeType,
+            resolve: (img) => {
+                if (img.hasOwnProperty('media_details')) {
+                    return img.media_details.sizes.medium_large
+                }
+                return 0
+            }
+        },
+        full: {
+            type: FeaturedImgSizeType,
+            resolve: (img) => {
+                if (img.hasOwnProperty('media_details')) {
+                    return img.media_details.sizes.full
+                }
+                return 0
+            }
+        }
+    })
+})
+
+export const MediaType = new GraphQLObjectType({
+    name: 'MIMedia',
+    description: 'Contains a featured_media from WordPress',
+    fields: () => ({
+        img: {
+            type: new GraphQLList(FeaturedImgType),
+            resolve: (root) => root.featured_post_media.img
+        },
+        video: {
+            type: FeaturedVideoType,
+            resolve: (root) => root.featured_post_media.video
+
+        }
+    })
 })

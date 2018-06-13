@@ -1,5 +1,5 @@
 const { GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
-import { ACFPostFields, CustomTermType, PostType } from './types'
+import { ACFPostFields, CustomTermType, PostType, MediaType } from './types'
 import { GraphQLInt } from 'graphql';
 
 
@@ -42,6 +42,15 @@ export const Query = {
   },
   customPostListById: {
     type: new GraphQLList(PostType),
+    args: {
+      id: {
+        type: new GraphQLList(GraphQLInt)
+      }
+    },
+    resolve: (_, args, ctx) => ctx.loader.getCustomPostListById(ctx, args.id, args)
+  },
+  postMedia: {
+    type: new GraphQLList(MediaType),
     args: {
       id: {
         type: new GraphQLList(GraphQLInt)
