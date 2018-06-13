@@ -6,28 +6,28 @@ export default {
   getPageManagerCategories: async function (ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [API.PageManagerCategories, id].join('/'), args)
     // this is a hack for later
-    return result.data
+    return result && result.data ? result.data : null
   },
 
   // fetch page manager tags
   getPageManagerTags: async function (ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [API.PageManagerTags, id].join('/'), args)
     // this is a hack for later
-    return result.data
+    return result && result.data ? result.data : null
   },
 
   // fetch page manager posts
   getPageManagerPosts: async function (ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [API.PageManagerPosts, id].join('/'), args)
     // this is a hack for later
-    return result.data
+    return result && result.data ? result.data : null
   },
 
   // fetch page manager pages
   getPageManagerPages: async function (ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [API.PageManagerPages, id].join('/'), args)
     // this is a hack for later
-    return result.data
+    return result && result.data ? result.data : null
   },
 
   // fetch page manager home
