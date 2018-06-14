@@ -1,4 +1,4 @@
-import { PageManagerBlock, PageManager, PageManagerLanguage } from './types'
+import { PageManager, PageManagerLanguage } from './types'
 const { GraphQLString, GraphQLInt, GraphQLList } = require('graphql')
 
 export default {
@@ -30,7 +30,7 @@ export default {
     resolve: (_root, args, ctx) => ctx.loader.getPageManagerHome(ctx, args.language, args)
   },
   pageManagerCategory: {
-    type: new GraphQLList(PageManagerBlock),
+    type: PageManager,
     args: {
       id: {
         type: GraphQLInt
@@ -59,7 +59,7 @@ export default {
     resolve: (_root, args, ctx) => ctx.loader.getPageManagerCategories(ctx, args.id, args)
   },
   pageManagerTag: {
-    type: new GraphQLList(PageManagerBlock),
+    type: PageManager,
     args: {
       id: {
         type: GraphQLInt
@@ -87,7 +87,7 @@ export default {
     resolve: (_root, args, ctx) => ctx.loader.getPageManagerTags(ctx, args.id, args)
   },
   pageManagerPage: {
-    type: new GraphQLList(PageManagerBlock),
+    type: PageManager,
     args: {
       id: {
         type: GraphQLInt
@@ -115,7 +115,7 @@ export default {
     resolve: (_root, args, ctx) => ctx.loader.getPageManagerPages(ctx, args.id, args)
   },
   pageManagerPost: {
-    type: new GraphQLList(PageManagerBlock),
+    type: PageManager,
     args: {
       id: {
         type: GraphQLInt
