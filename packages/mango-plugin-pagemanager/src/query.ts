@@ -38,5 +38,9 @@ export default {
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.pageManagerBlockByPageTypeResolver(ctx, args)
-  }
+  },
+  pageManagerLanguages: {
+    type: new GraphQLList(PageManagerLanguage),
+    resolve: (_root, args, ctx) => ctx.loader.getPageManagerLanguages(ctx, args)
+  },
 }

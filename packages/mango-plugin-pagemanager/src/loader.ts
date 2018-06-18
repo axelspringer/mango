@@ -37,4 +37,8 @@ export default {
 
     return null
   },
+
+  async getPageManagerLanguages(ctx: GraphQLContext, args = {}) {
+    return await this._fetcher(ctx, API.PageManagerLanguages, args)
+  }
 }
