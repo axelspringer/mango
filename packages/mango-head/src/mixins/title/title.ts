@@ -1,18 +1,5 @@
 import inBrowser from '../../utils/dom'
 
-function removeTitleTag() {
-  const el = document.getElementsByTagName('title')
-  const i = el.length
-
-  if (0 === i) {
-    return null
-  }
-
-  for (let x = 0; x < i; x++) {
-    el[x].remove()
-  }
-}
-
 function renderTitleTag(vm) {
   const title = getTitle(vm)
   if (title) {
@@ -43,12 +30,10 @@ const serverTitleMixin = {
 const clientTitleMixin = {
   beforeRouteEnter(_to, _from, next) {
     next(vm => {
-      removeTitleTag()
       renderTitleTag(vm)
     })
   },
   updated() {
-    removeTitleTag()
     renderTitleTag(this)
   },
   mounted() {
