@@ -82,6 +82,12 @@ export type GetPostPermalink = {
   _embed?: boolean
 }
 
+export type GetPostPreview = {
+  id?: number,
+  preview?: boolean,
+  _embed?: boolean
+}
+
 export type GetPost = {
   _embed?: boolean
 }

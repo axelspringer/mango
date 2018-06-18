@@ -1,5 +1,15 @@
 import { GraphQLContext } from 'graphql'
-import { GetPost, GetPostPermalink, GetCustomizer, ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
+import {
+  GetPost,
+  GetPostPreview,
+  GetPostPermalink,
+  GetCustomizer,
+  ListPosts,
+  ListCategories,
+  ListTags,
+  ListTaxonomies,
+  ListPages
+} from './args'
 import Loader from './loader'
 import { Type } from './response'
 import API from './api'
@@ -98,5 +108,10 @@ export default class WP extends Loader {
   // fetch customizer settings
   public async getCustomizer(ctx: GraphQLContext, args: GetCustomizer = {}) {
     return this._fetcher(ctx, API.Customizer, args)
+  }
+
+  // fetch preview of a possible type
+  public async getPreview(ctx: GraphQLContext, id: number, args: GetPostPreview = {}) {
+    return this._fetcher(ctx, [API.Post, id].join('/'), { ...args, preview: true })
   }
 }

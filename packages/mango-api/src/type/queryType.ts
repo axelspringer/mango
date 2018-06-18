@@ -310,6 +310,19 @@ export default {
     resolve: (_root, args, ctx) => ctx.loader.getPostPermalink(ctx, args)
   },
 
+  preview: {
+    type: PostType,
+    args: {
+      id: {
+        type: GraphQLInt
+      },
+      _embed: {
+        type: GraphQLBoolean
+      }
+    },
+    resolve: (_root, args, ctx) => ctx.loader.getPreview(ctx, args.id, args)
+  },
+
   page: {
     type: PageType,
     args: {
@@ -330,7 +343,7 @@ export default {
         type: GraphQLString
       }
     },
-    resolve: (_root, _args, ctx) => ctx.loader.getMedia(ctx, _args.id, _args)
+    resolve: (_root, args, ctx) => ctx.loader.getMedia(ctx, args.id, args)
   },
 
   customizer: {

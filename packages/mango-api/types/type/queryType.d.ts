@@ -291,6 +291,18 @@ declare const _default: {
         };
         resolve: (_root: any, args: any, ctx: any) => any;
     };
+    preview: {
+        type: any;
+        args: {
+            id: {
+                type: any;
+            };
+            _embed: {
+                type: any;
+            };
+        };
+        resolve: (_root: any, args: any, ctx: any) => any;
+    };
     page: {
         type: any;
         args: {
