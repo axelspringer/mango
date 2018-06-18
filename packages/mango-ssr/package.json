@@ -64,6 +64,7 @@
     "tslib": "^1.8.0",
     "typescript": "^2.6.2",
     "upath": "^1.1.0",
+    "url-parse": "^1.4.1",
     "vue": "^2.5.16",
     "vue-server-renderer": "^2.5.16",
     "webpack": "^4.12.0",

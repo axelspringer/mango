@@ -30,12 +30,13 @@ export default class Config {
   public webpackMiddleware = false
   public universalRenderer = false
   public middleware = []
+  public forceSSL = true
   public ignore = [
     '/favicon.ico'
   ]
 
 
-  constructor({ serve, bundle, plugins, stream, middleware, manifest, template, webpack, cache, maxAge, port }) {
+  constructor({ serve, bundle, forceSSL, plugins, stream, middleware, manifest, template, webpack, cache, maxAge, port }) {
     // defaults
     this.serve = serve || this.serve
     this.bundle = bundle || this.bundle
@@ -48,6 +49,7 @@ export default class Config {
     this.stream = stream || this.stream
     this.plugins = plugins || this.plugins
     this.middleware = middleware || this.middleware
+    this.forceSSL = Env.Development ? false : forceSSL !== undefined ? forceSSL : this.forceSSL
 
     // resolve paths
     this.serve = resolve(this.serve)
