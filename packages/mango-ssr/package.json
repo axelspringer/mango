@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-ssr",
-  "version": "1.0.0-beta.36",
+  "version": "1.0.0-beta.37",
   "description": "Mango WordPress Server Side Renderer",
   "main": "dist/main.js",
   "bin": {
@@ -33,14 +33,14 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-plugin-rss": "^1.0.0-beta.36",
+    "@axelspringer/mango-plugin-rss": "^1.0.0-beta.37",
     "@types/express": "^4.16.0",
     "@types/node": "^10.3.2",
     "@types/winston": "^2.3.7",
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "@axelspringer/mango-config": "^1.0.0-beta.36",
+    "@axelspringer/mango-config": "^1.0.0-beta.37",
     "@axelspringer/vue": "^2.5.0-alpha.0",
     "@axelspringer/vue-server-renderer": "^2.5.17-next.0",
     "assert": "^1.4.1",
