@@ -1,13 +1,12 @@
 
 const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLInt } = require('graphql')
 import { GraphQLDateTime } from 'graphql-iso-date'
-import { CategoryType } from './catType'
 import { UserType } from './userType'
 import MediaType from './mediaType'
-import TagType from './tagType'
 import { ImgType } from './imgType'
 import EmbeddedType from './embeddedType'
 import PolylangTranslationType from './polylangTranslationType'
+import Status from '../models/status'
 
 export default new GraphQLObjectType({
   name: 'Page',
@@ -72,7 +71,7 @@ export default new GraphQLObjectType({
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (page, args, ctx) => ctx.loader.getPolylangPages(ctx, page.translations, args)
+      resolve: (page, args, ctx) => ctx.loader.getPolylangPages(ctx, page.translations, { ...args, preview: page.status !== Status.Publish })
     },
     meta: {
       type: new GraphQLList(GraphQLString),
