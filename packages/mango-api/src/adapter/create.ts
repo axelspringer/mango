@@ -24,7 +24,7 @@ export default function (config: any = {}) {
 
     // if not is an allows cache method
     if (Defaults.AllowedCacheMethods.indexOf(req.method) === -1
-      || !config.cache
+      || !config.cache // do not cache
       || (req.params.preview && req.params.preview == true) // do not filter on preview
       || (req.params.cache && req.params.cache == false)) { // do not filter on cache ignore
       return axios.defaults.adapter(req)
