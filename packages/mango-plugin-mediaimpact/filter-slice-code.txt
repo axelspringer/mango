@@ -1,0 +1,25 @@
+,
+      offset: {
+        type: GraphQLInt
+      },
+      limit: {
+        type: GraphQLInt
+      }
+
+{
+      const result = ctx.loader.getPosts(ctx, args)
+      console.log(args)
+      if (args.offset !== undefined) {
+        const sliceIndex = args.offset
+        let lastIndex = null
+        if (args.limit !== undefined) {
+          lastIndex = (sliceIndex + args.limit)
+        }
+        console.log(sliceIndex, lastIndex)
+        return result.then(a => {
+          lastIndex = lastIndex === null ? a.length : lastIndex
+          return a.slice(sliceIndex, lastIndex)
+        })
+      }
+      return result
+    }
