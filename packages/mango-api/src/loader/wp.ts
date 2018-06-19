@@ -96,7 +96,6 @@ export default class WP extends Loader {
 
   // fetch a post by permalink
   public async getPost(ctx: GraphQLContext, id: number, args: GetPost = {}) {
-    console.log([API.Post, id].join('/'))
     return this._fetcher(ctx, !id ? API.Post : [API.Post, id].join('/'), args)
   }
 
