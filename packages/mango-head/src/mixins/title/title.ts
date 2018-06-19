@@ -1,5 +1,12 @@
 import inBrowser from '../../utils/dom'
 
+function renderTitleTag(vm) {
+  const title = getTitle(vm)
+  if (title) {
+    document.title = title
+  }
+}
+
 function getTitle(vm) {
   // components can simply provide a `title` option
   // which can be either a string or a function
@@ -21,11 +28,16 @@ const serverTitleMixin = {
 }
 
 const clientTitleMixin = {
+  beforeRouteEnter(_to, _from, next) {
+    next(vm => {
+      renderTitleTag(vm)
+    })
+  },
+  updated() {
+    renderTitleTag(this)
+  },
   mounted() {
-    const title = getTitle(this)
-    if (title) {
-      document.title = title
-    }
+    renderTitleTag(this)
   }
 }
 
