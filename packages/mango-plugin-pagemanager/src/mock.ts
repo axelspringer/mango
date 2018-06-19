@@ -1,6 +1,6 @@
-import { API } from './loader'
+import API from './api'
 
-export class Mock {
+export default class Mock {
   constructor(adapter) {
     adapter.get(API.PageManagerCategories, require('../data/pageManagerCategories.json')).reply(200);
     adapter.get(API.PageManagerPages, require('../data/pageManagerPages.json')).reply(200);

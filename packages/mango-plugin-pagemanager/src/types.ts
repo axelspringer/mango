@@ -6,8 +6,6 @@ const {
   GraphQLNonNull
 } = require('graphql')
 
-//const { PostType } = require('@axelspringer/mango-api')
-
 export const PageManagerMeta = new GraphQLObjectType({
   name: 'PageManagerMeta',
   fields: {

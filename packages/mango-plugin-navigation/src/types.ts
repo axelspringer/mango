@@ -102,7 +102,7 @@ export const NavMenuItemType = new GraphQLObjectType({
       resolve: item => item.filter
     },
     menuItemParent: {
-      type: GraphQLString,
+      type: GraphQLInt,
       resolve: item => item.menu_item_parent
     },
     type: {
@@ -140,6 +140,10 @@ export const NavMenuItemType = new GraphQLObjectType({
     object: {
       type: GraphQLString,
       resolve: item => item.object
+    },
+    acf: {
+      type: ACFFields,
+      resolve: item => item.acf
     }
   })
 })
@@ -177,8 +181,8 @@ export const NavMenuType = new GraphQLObjectType({
       resolve: menu => menu.description
     },
     parent: {
-      type: GraphQLInt,
-      resolve: menu => menu.parent // todo(katallaxie): make nested
+      type: NavMenuType,
+      resolve: (menu, args, ctx) => ctx.loader.getNavMenu(ctx, menu.parent, args)
     },
     count: {
       type: GraphQLInt,

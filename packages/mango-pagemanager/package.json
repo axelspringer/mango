@@ -1,0 +1,43 @@
+{
+  "name": "@axelspringer/mango-pagemanager",
+  "version": "1.0.0-beta.43",
+  "description": "Mango Page Manager",
+  "typings": "types/index.d.ts",
+  "main": "dist/mango-pagemanager.common.js",
+  "web": "dist/mango-pagemanager.js",
+  "module": "dist/mango-pagemanager.esm.js",
+  "scripts": {
+    "build": "rollup -c scripts/config.js",
+    "build:types": "npm run tsc -- -p tsconfig.json --declaration --declarationDir ./types",
+    "clean:dist": "npm run rimraf -- dist",
+    "clean": "npm run rimraf -- dist node_modules",
+    "prebuild": "npm run clean:dist",
+    "rimraf": "rimraf",
+    "start": "npm run watch",
+    "tsc": "tsc",
+    "watch": "rollup -w -c scripts/config.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Axel Springer SE",
+  "contributors": [
+    {
+      "name": "Sebastian Döll",
+      "email": "sebastian.doell@axelspringer.com"
+    }
+  ],
+  "engines": {
+    "node": ">=6.9.13",
+    "npm": ">=3.10.7"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-vue-app": "^2.0.0",
+    "rimraf": "^2.6.2"
+  },
+  "dependencies": {
+    "vue": "^2.5.16"
+  }
+}

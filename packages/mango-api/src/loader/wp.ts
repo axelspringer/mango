@@ -1,63 +1,55 @@
 import { GraphQLContext } from 'graphql'
-import { Loader } from './loader'
-import { regeneratorRuntime } from 'regenerator-runtime'
+import {
+  GetPost,
+  GetPostPermalink,
+  GetCustomizer,
+  ListPosts,
+  ListCategories,
+  ListTags,
+  ListTaxonomies,
+  ListPages
+} from './args'
+import Loader from './loader'
+import { Type } from './response'
+import API from './api'
 
-export enum API {
-  Posts = '/wp/v2',
-  Categories = '/wp/v2/categories',
-  Users = '/wp/v2/users',
-  Settings = '/wp/v2/settings',
-  Terms = '/wp/v2/tags',
-  Tags = '/wp/v2',
-  Media = '/wp/v2/media',
-  Pages = '/wp/v2/pages',
-  PostByPermalink = '/mango/v1/posts/post-by-permalink?permalink=',
-  CategoryByPermalink = '/mango/v1/categories/category-by-permalink?permalink='
-}
-type ArgsLimit = {
-  id: number;
-  offset?: number;
-  limit?: number;
-  exclude?: number[],
-  type?: string;
-}
-type ArgsPermalink = {
-  permalink: string;
-  type?: string;
-}
-type ArgsTag = {
-  tags: number[];
-  type?: string;
-}
 // posts loader
-export class WP extends Loader {
+export default class WP extends Loader {
 
   // fetch posts
-  public async getPosts(ctx: GraphQLContext, args: ArgsLimit) {
-    let url = this.getPostUrlByType(args)
-    return this._fetcher(ctx, this.getUrlLimited(url, args), args)
-  }
-  // fetch postlist by ids
-  public async getPostListById(ctx: GraphQLContext, ids: number[], args: ArgsLimit) {
-    let url = this.getPostUrlByType(args)
-    return Promise.all(ids.map(id => this._fetcher(ctx, [url, id].join('/')), args))
-  }
-
-  public async getPostListByCategoryId(ctx: GraphQLContext, args: ArgsLimit) {
-    let url = this.getPostUrlByType(args)
-    url = [url, 'categories=' + args.id].join('?')
-    url = this.getUrlLimited(url, args)
-    return this._fetcher(ctx, url)
-  }
-
-  // fetch categories
-  public async getCategories(ctx: GraphQLContext, ids: number[] = [], args = {}) {
-    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Categories, id].join('/')), args))
+  public async getPosts(ctx: GraphQLContext, id: number, args: ListPosts = {}) {
+    return this._fetcher(ctx, !id ? API.Posts : [API.Posts, id].join('/'), args)
   }
 
   // fetch category
-  public async getCategory(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, [API.Categories, id].join('/'), args)
+  public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories = {}, type: Type = 'Array') {
+    const res = await this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
+    return type !== 'Array' ? Array.isArray(res) ? res.length === 1 ? res[0] : null : res : Array.isArray(res) ? res : res !== null ? [res] : null
+  }
+
+  // fetch categories
+  public async getCategories(ctx: GraphQLContext, ids: [number], args: ListCategories = {}) {
+    return await Promise.all([...ids.map(id => this.getCategory(ctx, id, args, 'Object'))])
+  }
+
+  // fetch posts
+  public async getPolylangPosts(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
+  }
+
+  // fetch posts
+  public async getPolylangCategories(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(translations).map(trans => this.getCategory(ctx, translations[trans], args, 'Object'))])
+  }
+
+  // fetch posts
+  public async getPolylangPages(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
+  }
+
+  // fetch posts
+  public async getPolylangTags(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(translations).map(trans => this.getTag(ctx, translations[trans], args, 'Object'))])
   }
 
   // fetch image
@@ -71,8 +63,8 @@ export class WP extends Loader {
   }
 
   // fetch page
-  public async getPage(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, [API.Pages, id].join('/'), args)
+  public async getPages(ctx: GraphQLContext, id: number, args: ListPages = {}) {
+    return await this._fetcher(ctx, !id ? API.Pages : [API.Pages, id].join('/'), args)
   }
 
   // fetch settings
@@ -81,16 +73,19 @@ export class WP extends Loader {
   }
 
   // fetch terms
-  public async getTerms(ctx: GraphQLContext, ids: number[] = [], args = {}) {
-    return Promise.all(ids.map(id => this._fetcher(ctx, [API.Terms, id].join('/')), args))
+  public async getTaxonomies(ctx: GraphQLContext, id: number, args: ListTaxonomies = {}) {
+    return this._fetcher(ctx, !id ? API.Taxonomies : [API.Taxonomies, id].join('/'), args)
+  }
+
+  // fetch tag
+  public async getTag(ctx: GraphQLContext, id: number, args: ListTags = {}, type: Type = 'Array') {
+    const res = await this._fetcher(ctx, !id ? API.Tags : [API.Tags, id].join('/'), args)
+    return type !== 'Array' ? Array.isArray(res) ? res.length === 1 ? res[0] : null : res : Array.isArray(res) ? res : res !== null ? [res] : null
   }
 
   // fetch tags
-  public async getTags(ctx: GraphQLContext, args: ArgsTag) {
-    let url = this.getTagUrlByType(args)
-    let ids = (args.type === 'tags') ? args.tags : args[args.type + '_tags']
-    ids = ids || []
-    return Promise.all(ids.map(id => this._fetcher(ctx, [url, id].join('/')), args))
+  public async getTags(ctx: GraphQLContext, ids: [number], args: ListTags = {}) {
+    return Promise.all([...ids.map(id => this.getTag(ctx, id, args, 'Object'))])
   }
 
   // fetch media
@@ -98,36 +93,18 @@ export class WP extends Loader {
     return this._fetcher(ctx, [API.Media, id].join('/'), args)
   }
 
-  public async getPostByPermalink(ctx: GraphQLContext, permalink: string, args = {}) {
-    console.log(API.PostByPermalink + permalink)
-    return await this._fetcher(ctx, API.PostByPermalink + permalink, args)
+  // fetch a post by permalink
+  public async getPost(ctx: GraphQLContext, id: number, args: GetPost = {}) {
+    return this._fetcher(ctx, !id ? API.Post : [API.Post, id].join('/'), args)
   }
 
-  public async getCategoryByPermalink(ctx: GraphQLContext, args: ArgsPermalink) {
-    let url = API.CategoryByPermalink + args.permalink
-    const result = await this._fetcher(ctx, url, args)
-    return result;
+  // fetch a post by permalink
+  public async getPostPermalink(ctx: GraphQLContext, args: GetPostPermalink = {}) {
+    return this._fetcher(ctx, API.PostPermalink, args)
   }
 
-  private getUrlLimited(url: string, args: ArgsLimit): string {
-    url += (url.indexOf('?') > 0) ? '&' : '?'
-    url = url + 'offset=' + ((args.offset === null || args.offset === undefined) ? 0 : args.offset)
-    if (args.limit !== null && args.limit !== undefined) {
-      url = url + '&per_page=' + args.limit
-    }
-    if (args.exclude !== null && args.exclude !== undefined) {
-      url = url + '&exclude=' + args.exclude.toString()
-    }
-    return url
-  }
-
-  private getPostUrlByType(args: ArgsLimit) {
-    const type = (args.type === undefined) ? 'posts' : args.type
-    return [API.Posts, type].join('/')
-  }
-
-  private getTagUrlByType(args: ArgsTag) {
-    const type = (args.type === undefined) ? 'tags' : args.type + '_tags'
-    return [API.Tags, type].join('/')
+  // fetch customizer settings
+  public async getCustomizer(ctx: GraphQLContext, args: GetCustomizer = {}) {
+    return this._fetcher(ctx, API.Customizer, args)
   }
 }

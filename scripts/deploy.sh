@@ -1,44 +1,43 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-set -u -e -o pipefail
+setup_git() {
+  # Set the user name and email to match the API token holder
+  # This will make sure the git commits will have the correct photo
+  # and the user gets the credit for a checkin
+  git config --global user.email "travis@noreply.spring-media.de"
+  git config --global user.name "Travis"
+  git config --global push.default matching
 
-# Setup environment
-readonly thisDir=$(cd $(dirname $0); pwd)
-source ${thisDir}/_travis-fold.sh
+  # Get the credentials from a file
+  git config credential.helper "store --file=.git/credentials"
 
+  # This associates the API Key with the account
+  echo "https://${GITHUB_TOKEN}:@github.com" > .git/credentials
+}
 
-# If the previous commands in the `script` section of .travis.yaml failed, then abort.
-# The variable is not set in early stages of the build, so we default to 0 there.
-# https://docs.travis-ci.com/user/environment-variables/
-if [[ ${TRAVIS_TEST_RESULT=0} == 1 ]]; then
-  exit 1;
-fi
+make_version() {
+  # Make sure that the workspace is clean
+  # It could be "dirty" if
+  # 1. package-lock.json is not aligned with package.json
+  # 2. npm install is run
+  git checkout -- .
 
+  # Echo the status to the log so that we can see it is OK
+  git status
 
-# Don't deploy if not running against axelspringer/mango
-# TODO(i): because we don't let deploy to run outside of axelspringer/mango folks can't use their
-#   private travis build to deploy anywhere. This is likely ok, but this means that @alexeagle's
-#   fancy setup to publish ES2015 packages to github -build repos no longer works. This is ok
-#   since with flat modules we'll have this feature built-in. We should still go and remove
-#   stuff that Alex put in for this from publish-build-artifacts.sh
-if [[ ${TRAVIS_REPO_SLUG} != "axelspringer/mango" ]]; then
-  echo "Skipping deploy because this is not axelspringer/mango."
-  exit 0
-fi
+  # Run the deploy build and increment the package versions
+  # %s is the placeholder for the created tag
+  lerna publish --canary --yes --cd-version patch -m "chore: release version %s"
+}
 
+upload_files() {
+  # This make sure the current work area is pushed to the tip of the current branch
+  git push origin HEAD:$TRAVIS_BRANCH
 
-case ${CI_MODE} in
+  # This pushes the new tag
+  git push --tags
+}
 
-  js)
-    # Don't deploy if this is a PR build
-    if [[ ${TRAVIS_PULL_REQUEST} != "false" ]]; then
-      echo "Skipping deploy because this is a PR build."
-      exit 0
-    fi
-
-    travisFoldStart "deploy.packages"
-      # ${thisDir}/publish.sh
-      # do not right now
-    travisFoldEnd "deploy.packages"
-    ;;
-esac
+setup_git
+make_version
+upload_files

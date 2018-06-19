@@ -1,16 +1,22 @@
-import { parseArgs } from './args'
-import { resolve } from './helpers'
-import { SSRConfig } from './config'
-import { SSR } from './main'
+import { Config } from '@axelspringer/mango-config'
+import { ServerSideRenderer } from './ssr'
+import makeMap from './utils/makeMap'
+import parseArgs from './args'
+import SSRConfig from './config'
 
+
+// config ssr
+// let ssrConfig: Config
+
+// parse arguments
 const args = parseArgs()
+const config = new Config(args)
+const ssr = new SSRConfig(config.config)
 
-const serve = resolve(args.serve)
-const bundle = resolve(args.bundle)
-const manifest = resolve(args.manifest)
-const template = resolve(args.template)
-const webpack = resolve(args.webpack)
-
-const config = new SSRConfig(serve, bundle, manifest, template, webpack)
-const app = new SSR(config)
+// init new server-side renderer
+const app = new ServerSideRenderer(ssr)
 app.start()
+
+export {
+  makeMap
+}

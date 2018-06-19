@@ -26,14 +26,16 @@ declare class Route {
   public cmp: Component
   public config: RouteConfig
 
-  constructor(public cmp: Component, public config: RouteConfig) { }
+  constructor(cmp: Component, config: RouteConfig)
 
   public static path: String
   public static default: any
 }
 
 declare class Router {
-  constructor(public options: MangoRouter.Options = {})
+  public options: MangoRouter.Options
+
+  constructor(options?: MangoRouter.Options)
 
   static install: (Vue) => void
   static version: string
@@ -50,6 +52,7 @@ declare class Router {
   public post(cmp: Component): Router
   public tag(cmp: Component): Router
   public year(cmp: Component): Router
+  public custom(cmp: Component, path: string, config?: any): Router
 
   public all(): RouteConfig[]
 }

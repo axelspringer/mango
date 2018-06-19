@@ -16,6 +16,8 @@ Packages:
 * [SSR](https://github.com/axelspringer/mango/tree/master/packages/mango-ssr#README)
 * [Page Manager Plugin](https://github.com/axelspringer/mango/tree/master/packages/mango-plugin-pagemanager#README)
 * [Navigation Plugin](https://github.com/axelspringer/mango/tree/master/packages/mango-plugin-navigation#README)
+* [PageManager](https://github.com/axelspringer/mango/tree/master/packages/mango-pagemanager#README)
+* [Head](https://github.com/axelspringer/mango/tree/master/packages/mango-head#README)
 
 ## Development
 

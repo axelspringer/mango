@@ -3,10 +3,14 @@ const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLIn
 import { GraphQLDateTime } from 'graphql-iso-date'
 import { CategoryType } from './catType'
 import { UserType } from './userType'
-import { TagType } from './tagType'
+import TagType from './tagType'
+import MediaType from './mediaType'
 import { ImgType } from './imgType'
+import EmbeddedType from './embeddedType'
+import PolylangTranslationType from './polylangTranslationType'
+import Status from '../models/status'
 
-export const PostType = new GraphQLObjectType({
+export default new GraphQLObjectType({
   name: 'Post',
   description: 'Contains a Post from WordPress',
   fields: () => ({
@@ -31,6 +35,14 @@ export const PostType = new GraphQLObjectType({
       type: GraphQLDateTime,
       resolve: post => post.modified
     },
+    lang: {
+      type: GraphQLString,
+      resolve: post => post.lang
+    },
+    translations: {
+      type: PolylangTranslationType,
+      resolve: (post, args, ctx) => ctx.loader.getPolylangPosts(ctx, post.translations, { ...args, preview: post.status !== Status.Publish })
+    },
     modifiedGmt: {
       type: GraphQLDateTime,
       resolve: post => post.modified_gmt
@@ -49,13 +61,11 @@ export const PostType = new GraphQLObjectType({
     },
     excerpt: {
       type: GraphQLString,
-      resolve: post => {
-        return (post.excerpt !== undefined) ? post.excerpt.rendered : null
-      }
+      resolve: post => post.excerpt ? post.excerpt.rendered : null
     },
     featuredMedia: {
-      type: GraphQLInt,
-      resolve: post => post.featured_media
+      type: MediaType,
+      resolve: (post, args, ctx) => ctx.loader.getMedia(ctx, post.featured_media, args)
     },
     commentStatus: {
       type: GraphQLString,
@@ -83,7 +93,7 @@ export const PostType = new GraphQLObjectType({
     },
     tags: {
       type: new GraphQLList(TagType),
-      resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root, args)
+      resolve: (root, args, ctx) => ctx.loader.getTags(ctx, root.tags, args)
     },
     template: {
       type: GraphQLString,
@@ -91,7 +101,7 @@ export const PostType = new GraphQLObjectType({
     },
     content: {
       type: GraphQLString,
-      resolve: post => post.content.rendered
+      resolve: post => post.content ? post.content.rendered : null
     },
     slug: {
       type: GraphQLString,
@@ -106,12 +116,20 @@ export const PostType = new GraphQLObjectType({
       resolve: post => post.format
     },
     pagemanager: {
-      type: new GraphQLList(GraphQLString),
-      resolve: post => post.pagemanager.settings.name
+      type: EmbeddedType,
+      resolve: post => post.pagemanager
     },
     img: {
       type: ImgType,
       resolve: (root, args, ctx) => ctx.loader.getImage(ctx, root.featured_media, args)
+    },
+    acf: {
+      type: EmbeddedType,
+      resolve: cat => cat.acf
+    },
+    embedded: {
+      type: EmbeddedType,
+      resolve: post => post._embedded
     }
   }),
 })

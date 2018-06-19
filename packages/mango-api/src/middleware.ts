@@ -1,15 +1,12 @@
 // imports
-import * as Koa from 'koa'
-import * as koaRouter from 'koa-router'
-import * as koaBody from 'koa-bodyparser'
-import * as cors from '@koa/cors'
-// import * as logger from 'koa-logger'
-import logger from './logger'
 import { EventEmitter } from 'events'
-import { Winston } from 'winston'
-import { addDefaultMocks, addPluginMocks, MockAdapter } from './mock'
-// import { Discovery, RandomStrategy } from './discovery'
+import * as cors from '@koa/cors'
 import * as GracefulShutdown from 'http-graceful-shutdown'
+import * as Koa from 'koa'
+import * as koaBody from 'koa-bodyparser'
+import * as koaRouter from 'koa-router'
+import Env from './env'
+import logger from './logger'
 
 // apollo
 import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
@@ -17,41 +14,20 @@ import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
 // custom
 import ping from './ping'
 import health from './health'
-import { isProd } from './utils'
-
-// schema
-import createSchema from './schema'
 
 export class Middleware extends EventEmitter {
 
-  private app: Koa
-  private router: koaRouter
-  private adapter: any
+  public app: Koa
+  public router: koaRouter
+  public adapter: any
+  public listener
 
-  constructor(public ctx, public config, public log: Winston) {
+  constructor(public ctx, public config, public schema, public log) {
     super()
-
-    // use mock adapter
-    if (this.config.mock) {
-      this.adapter = new MockAdapter(this.ctx.axios, this.config)
-      addDefaultMocks(this.adapter)
-      addPluginMocks(this.adapter, this.config)
-    }
 
     // Koa
     this.app = new Koa()
     this.router = new koaRouter()
-
-    // graceful shutdown
-    GracefulShutdown(this.app, {
-      development: !isProd,
-      finally: function () {
-        console.log('Server gracefully shut down ....')
-      }
-    })
-
-    // Microservice resolver
-    // new Discovery(new RandomStrategy(), this.ctx)
 
     // Middlewares
     this.app.use(logger())
@@ -75,19 +51,39 @@ export class Middleware extends EventEmitter {
     this.router.get('/ping', ping)
 
     // GraphQL
-    this.router.post('/graphql', koaBody(), graphqlKoa({ schema: createSchema(this.config.plugin), context: this.ctx }))
-    this.router.get('/graphql', graphqlKoa({ schema: createSchema(this.config.plugin), context: this.ctx }))
+    this.router.post('/graphql', koaBody(), graphqlKoa({
+      schema, context: this.ctx,
+      tracing: Env.Development,
+      cacheControl: !Env.Development
+    }))
 
+    this.router.get('/graphql', graphqlKoa({
+      schema, context: this.ctx,
+      tracing: Env.Development,
+      cacheControl: !Env.Development
+    }))
 
-    // GraphiQL (if not in production)
-    if (!isProd) {
+    // enable GraphiQL only in dev
+    if (Env.Development) {
       this.router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
     }
   }
 
   // run the middleware
-  public run() {
+  public start() {
     // listen
-    this.app.listen(this.config.port)
+    this.listener = this.app.listen(Env.Port)
+
+    // graceful shutdown
+    GracefulShutdown(this.listener, {
+      development: Env.Development,
+      finally: function () {
+        console.log('Server gracefully shut down ....')
+      }
+    })
+  }
+
+  public stop() {
+    this.listener.stop()
   }
 }

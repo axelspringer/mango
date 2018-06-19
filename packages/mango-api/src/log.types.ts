@@ -1,4 +1,4 @@
-interface WinstonMessage {
+export interface WinstonMessage {
   level?: string
   message?: string
 }

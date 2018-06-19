@@ -1,14 +1,7 @@
 import { GraphQLContext } from 'graphql'
-import regeneratorRuntime from 'regenerator-runtime'
-regeneratorRuntime.args
+import API from './api'
 
-export enum API {
-  NavMenu = '/mango/v1/nav/menus',
-  NavItems = '/mango/v1/nav/items',
-  NavLocations = '/mango/v1/nav/locations'
-}
-
-export const Loader = {
+export default {
 
   // fetch nav menus
   getNavMenu: async function (ctx: GraphQLContext, id: number, args = {}) {

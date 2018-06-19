@@ -1,27 +1,22 @@
-import { defaultQuery } from './queryType'
-import { createContext } from 'vm';
-const { GraphQLObjectType } = require('graphql')
+import Query from './queryType'
+import TagType from './tagType'
+import TaxonomyType from './taxonomyType'
+import PostType from './postType'
+import MediaType from './mediaType'
 
-export * from './postType'
 export * from './tagType'
 export * from './imgType'
 export * from './queryType'
 export * from './settingsType'
 export * from './userType'
-export * from './termType'
 export * from './catType'
-export * from './mediaType'
 export * from './languageType'
-export * from './postByPermalinkType'
-export * from './categoryByPermalinkType'
 export * from './catType'
 
-export const createQuery = plugins => {
-  const pluginQuery = plugins.reduce((query, plugin) => Object.assign(query, plugin.query), {})
-
-  return new GraphQLObjectType({
-    name: 'WP',
-    description: 'The root of all WordPress queries',
-    fields: () => ({ ...defaultQuery, ...pluginQuery })
-  })
+export default Query
+export {
+  TagType,
+  TaxonomyType,
+  PostType,
+  MediaType
 }

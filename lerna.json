@@ -2,11 +2,14 @@
   "lerna": "2.5.1",
   "packages": [
     "packages/mango-api",
+    "packages/mango-config",
     "packages/mango-plugin-navigation",
     "packages/mango-plugin-pagemanager",
-    "packages/mango-plugin-mediaimpact",
+    "packages/mango-plugin-rss",
+    "packages/mango-pagemanager",
+    "packages/mango-head",
     "packages/mango-ssr",
     "packages/mango-router"
   ],
-  "version": "0.11.7"
+  "version": "1.0.0-beta.43"
 }

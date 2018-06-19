@@ -1,1 +1,1 @@
-export declare const loadPlugin: (plugin: any) => any;
+export declare const loadPlugins: (plugins: any[], loader: any, query?: {}) => void;

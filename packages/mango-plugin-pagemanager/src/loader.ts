@@ -1,18 +1,7 @@
 import { GraphQLContext } from 'graphql'
-import regeneratorRuntime from 'regenerator-runtime'
-regeneratorRuntime.args
+import API from './api'
 
-export enum API {
-  PageManagerCategories = '/page-manager/categories',
-  PageManagerPosts = '/page-manager/posts',
-  PageManagerPages = '/page-manager/pages',
-  PageManagerTags = '/page-manager/tags',
-  PageManagerSettings = '/page-manager/settings',
-  PageManagerGlobal = '/page-manager/global',
-  PageManagerLanguages = '/page-manager/languages'
-}
-
-export const Loader = {
+export default {
   // fetch page manager categories
   getPageManagerCategories: async function (ctx: GraphQLContext, id: number, args = {}) {
     const result = await this._fetcher(ctx, [API.PageManagerCategories, id].join('/'), args)
@@ -39,6 +28,11 @@ export const Loader = {
     const result = await this._fetcher(ctx, [API.PageManagerPages, id].join('/'), args)
     // this is a hack for later
     return result.data
+  },
+
+  // fetch page manager home
+  getPageManagerHome: async function (ctx: GraphQLContext, language: string, args = {}) {
+    return await this._fetcher(ctx, [API.PageManagerGlobal, 'home', language].join('/'), args)
   },
 
   // fetch page manager data for global settings (e.g. for home)
