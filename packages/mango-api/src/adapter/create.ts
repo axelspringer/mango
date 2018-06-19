@@ -23,8 +23,10 @@ export default function (config: any = {}) {
     req.url = await discovery.resolve(req.url)
 
     // if not is an allows cache method
-    if (Defaults.AllowedCacheMethods.indexOf(req.method) === -1 ||
-      !config.cache) {
+    if (Defaults.AllowedCacheMethods.indexOf(req.method) === -1
+      || !config.cache
+      || (req.params.preview && req.params.preview == true) // do not filter on preview
+      || (req.params.cache && req.params.cache == false)) { // do not filter on cache ignore
       return axios.defaults.adapter(req)
     }
 
