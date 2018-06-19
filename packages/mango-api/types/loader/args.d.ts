@@ -71,6 +71,11 @@ export declare type GetPostPermalink = {
     permalink?: string;
     _embed?: boolean;
 };
+export declare type GetPostPreview = {
+    id?: number;
+    preview?: boolean;
+    _embed?: boolean;
+};
 export declare type GetPost = {
     _embed?: boolean;
 };

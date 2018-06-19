@@ -48,7 +48,6 @@ export default class WP extends Loader {
     return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
   }
 
-
   // fetch posts
   public async getPolylangTags(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
     return Promise.all([...Object.keys(translations).map(trans => this.getTag(ctx, translations[trans], args, 'Object'))])
@@ -97,6 +96,7 @@ export default class WP extends Loader {
 
   // fetch a post by permalink
   public async getPost(ctx: GraphQLContext, id: number, args: GetPost = {}) {
+    console.log([API.Post, id].join('/'))
     return this._fetcher(ctx, !id ? API.Post : [API.Post, id].join('/'), args)
   }
 
@@ -108,10 +108,5 @@ export default class WP extends Loader {
   // fetch customizer settings
   public async getCustomizer(ctx: GraphQLContext, args: GetCustomizer = {}) {
     return this._fetcher(ctx, API.Customizer, args)
-  }
-
-  // fetch preview of a possible type
-  public async getPreview(ctx: GraphQLContext, id: number, args: GetPostPreview = {}) {
-    return this._fetcher(ctx, [API.Post, id].join('/'), { ...args, preview: true })
   }
 }

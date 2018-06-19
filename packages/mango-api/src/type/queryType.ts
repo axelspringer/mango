@@ -300,27 +300,23 @@ export default {
   post: {
     type: PostType,
     args: {
+      id: {
+        type: GraphQLInt // the id takes presence
+      },
       permalink: {
         type: GraphQLString
       },
-      _embed: {
+      preview: { // this needs to be authenticated later
         type: GraphQLBoolean
-      }
-    },
-    resolve: (_root, args, ctx) => ctx.loader.getPostPermalink(ctx, args)
-  },
-
-  preview: {
-    type: PostType,
-    args: {
-      id: {
-        type: GraphQLInt
       },
       _embed: {
         type: GraphQLBoolean
       }
-    },
-    resolve: (_root, args, ctx) => ctx.loader.getPreview(ctx, args.id, args)
+    }, // decide upon id, or permalink
+    resolve: (_root, args, ctx) => {
+      console.log(args)
+      return args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
+    }
   },
 
   page: {
