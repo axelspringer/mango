@@ -2,6 +2,7 @@ const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('g
 
 import { MediaDetailType } from './mediaDetailType'
 import { GraphQLDateTime } from 'graphql-iso-date'
+import EmbeddedType from './embeddedType'
 
 export default new GraphQLObjectType({
   name: 'WPMedia',
@@ -51,6 +52,10 @@ export default new GraphQLObjectType({
     },
     meta: {
       type: new GraphQLList(GraphQLString)
+    },
+    acf: {
+      type: EmbeddedType,
+      resolve: media => media.acf
     }
   })
 })
