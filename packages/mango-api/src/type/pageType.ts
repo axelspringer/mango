@@ -23,7 +23,7 @@ export default new GraphQLObjectType({
     },
     featuredMedia: {
       type: MediaType,
-      resolve: (page, args, ctx) => ctx.loader.getMedia(ctx, page.featured_media, args)
+      resolve: (page, args, ctx) => page.status !== Status.Publish ? ctx.loader.getMediaItem(ctx, page.featured_media, args) : ctx.loader.getMedia(ctx, page.featured_media, args)
     },
     id: {
       type: GraphQLString,

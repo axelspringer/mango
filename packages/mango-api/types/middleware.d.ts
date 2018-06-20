@@ -1,5 +1,4 @@
 /// <reference types="node" />
-/// <reference types="koa" />
 import { EventEmitter } from 'events';
 import * as Koa from 'koa';
 import * as koaRouter from 'koa-router';
