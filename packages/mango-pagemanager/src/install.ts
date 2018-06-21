@@ -50,6 +50,12 @@ export function install(Vue) {
     }
   });
 
+  Object.defineProperty(Vue.prototype, '$blockPageType', {
+    get: function get() {
+      return this._pageblock && this._pageblock.page_type ? this._pageblock.page_type : undefined
+    }
+  });
+
   // use object-based merge strategy
   const strats = Vue.config.optionMergeStrategies
   strats.pagemanager = strats.methods

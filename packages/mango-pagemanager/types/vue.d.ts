@@ -4,7 +4,7 @@
 
 import Vue from "vue";
 import PageManager from "./index";
-import { PageManagerResult, PageManagerBlockIndex, PageManagerBlockName } from "./index";
+import { PageManagerResult, PageManagerBlockIndex, PageManagerBlockName, PageManagerBlockPageType } from "./index";
 
 declare module "vue/types/vue" {
   interface Vue {
@@ -13,6 +13,7 @@ declare module "vue/types/vue" {
     $blockName?: PageManagerBlockName;
     $blockIndex?: PageManagerBlockIndex;
     $blockResult?: PageManagerResult;
+    $blockPageType?: PageManagerBlockPageType;
   }
 }
 
