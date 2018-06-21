@@ -7,6 +7,7 @@ import MediaType from './mediaType'
 import TagType from './tagType'
 import TaxonomiesTypes from './taxonomiesTypes'
 import EmbeddedType from './embeddedType'
+import SlugType from './slugType'
 
 export default {
   posts: {
@@ -127,6 +128,23 @@ export default {
     },
     resolve: (_, args, ctx) => ctx.loader.getPages(ctx, args.id, args)
   },
+
+  slugs: {
+    type: new GraphQLList(SlugType),
+    args: {
+      slug: {
+        type: new GraphQLList(GraphQLString)
+      },
+      preview: {
+        type: GraphQLBoolean
+      },
+      _embed: {
+        type: GraphQLBoolean
+      }
+    },
+    resolve: (_, args, ctx) => ctx.loader.getSlugs(ctx, args)
+  },
+
 
   settings: {
     type: SettingsType,

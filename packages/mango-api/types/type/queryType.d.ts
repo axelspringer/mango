@@ -116,6 +116,21 @@ declare const _default: {
         };
         resolve: (_: any, args: any, ctx: any) => any;
     };
+    slugs: {
+        type: any;
+        args: {
+            slug: {
+                type: any;
+            };
+            preview: {
+                type: any;
+            };
+            _embed: {
+                type: any;
+            };
+        };
+        resolve: (_: any, args: any, ctx: any) => any;
+    };
     settings: {
         type: any;
         resolve: (_root: any, _args: any, ctx: any) => any;

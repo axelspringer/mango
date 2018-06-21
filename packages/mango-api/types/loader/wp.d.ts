@@ -1,5 +1,5 @@
 import { GraphQLContext } from 'graphql';
-import { GetPost, GetPostPermalink, GetCustomizer, ListPosts, ListCategories, ListTags, ListTaxonomies, ListPages } from './args';
+import { GetPost, GetPostPermalink, GetCustomizer, ListSlugs, ListPosts, ListCategories, ListTags, ListTaxonomies, ListPages } from './args';
 import Loader from './loader';
 import { Type } from './response';
 export default class WPLoader extends Loader {
@@ -22,4 +22,5 @@ export default class WPLoader extends Loader {
     getPostPermalink(ctx: GraphQLContext, args?: GetPostPermalink): Promise<any>;
     getCustomizer(ctx: GraphQLContext, args?: GetCustomizer): Promise<any>;
     getMediaItem(ctx: GraphQLContext, id: number, args?: {}): Promise<any>;
+    getSlugs(ctx: GraphQLContext, args?: ListSlugs): Promise<any>;
 }

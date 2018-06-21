@@ -97,3 +97,8 @@ export declare type ListCategories = {
     slug?: string[];
     _embed?: boolean;
 };
+export declare type ListSlugs = {
+    slug?: string[];
+    preview?: boolean;
+    _embed?: boolean;
+};

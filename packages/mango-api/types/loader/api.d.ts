@@ -13,4 +13,5 @@ export declare class Mango {
     static Post: string;
     static Customizer: string;
     static Media: string;
+    static Slugs: string;
 }

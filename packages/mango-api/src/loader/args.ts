@@ -111,3 +111,9 @@ export type ListCategories = {
   slug?: string[]
   _embed?: boolean
 }
+
+export type ListSlugs = {
+  slug?: string[]
+  preview?: boolean
+  _embed?: boolean
+}

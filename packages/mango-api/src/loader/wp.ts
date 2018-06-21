@@ -3,6 +3,7 @@ import {
   GetPost,
   GetPostPermalink,
   GetCustomizer,
+  ListSlugs,
   ListPosts,
   ListCategories,
   ListTags,
@@ -111,5 +112,10 @@ export default class WPLoader extends Loader {
   // fetch media item
   public async getMediaItem(ctx: GraphQLContext, id: number, args = {}) {
     return this._fetcher(ctx, [Mango.Media, id].join('/'), args)
+  }
+
+  // fetch slugs
+  public async getSlugs(ctx: GraphQLContext, args: ListSlugs = {}) {
+    return this._fetcher(ctx, Mango.Slugs, args)
   }
 }
