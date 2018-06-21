@@ -1,6 +1,7 @@
 const { GraphQLString, GraphQLList, GraphQLInt, GraphQLBoolean } = require('graphql')
 import PostType from './postType'
 import PageType from './pageType'
+import ItemType from './itemType'
 import { SettingsType } from './settingsType'
 import { CategoryType } from './catType'
 import MediaType from './mediaType'
@@ -316,7 +317,7 @@ export default {
   },
 
   post: {
-    type: PostType,
+    type: ItemType,
     args: {
       id: {
         type: GraphQLInt // the id takes presence
