@@ -12,10 +12,16 @@ export default class RandomDiscoveryStrategy extends DiscoveryStrategy {
     const url = new URL(from)
     const to = await new Promise((resolve, _) => {
       this.dnsCache.resolveSrv(url.hostname, (err, records) => {
-        if (err || !records) {
+        if (err || !records || records.length === 0) {
           return resolve(url)
         }
+
         const record = records[RandomDiscoveryStrategy.getRandomInt(0, records.length)]
+
+        if (!record) {
+          return resolve(url)
+        }
+
         url.set('hostname', record.name || url.hostname)
         url.set('port', record.port || url.port)
 
