@@ -11,11 +11,13 @@ export type PageManagerResult = any[]
 
 export type PageManagerBlockName = string
 export type PageManagerBlockIndex = number
+export type PageManagerBlockPageType = string
 
 export type PageManagerBlock = {
   component: string;
   pageBlock: Component;
   result?: any[];
+  page_type: string;
 }
 
 export type PageManagerOption = {

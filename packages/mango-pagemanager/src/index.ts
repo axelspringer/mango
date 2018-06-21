@@ -15,7 +15,8 @@ export type Widget = {
 export type PageManagerBlock = {
   component: string,
   pageBlock: Component,
-  result: Widget[]
+  result: Widget[],
+  page_type: string
 }
 
 export enum PageManagerMode {

@@ -8,5 +8,6 @@ export {
   PageManagerOptions,
   PageManagerResult,
   PageManagerBlockName,
-  PageManagerBlockIndex
+  PageManagerBlockIndex,
+  PageManagerBlockPageType
 } from './pagemanager';
