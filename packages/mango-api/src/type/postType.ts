@@ -8,6 +8,7 @@ import MediaType from './mediaType'
 import { ImgType } from './imgType'
 import EmbeddedType from './embeddedType'
 import PolylangTranslationType from './polylangTranslationType'
+import Status from '../models/status'
 
 export default new GraphQLObjectType({
   name: 'Post',
@@ -40,7 +41,7 @@ export default new GraphQLObjectType({
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (post, args, ctx) => ctx.loader.getPolylangPosts(ctx, post.translations, args)
+      resolve: (post, args, ctx) => ctx.loader.getPolylangPosts(ctx, post.translations, { ...args, preview: post.status !== Status.Publish })
     },
     modifiedGmt: {
       type: GraphQLDateTime,
@@ -64,7 +65,7 @@ export default new GraphQLObjectType({
     },
     featuredMedia: {
       type: MediaType,
-      resolve: (post, args, ctx) => ctx.loader.getMedia(ctx, post.featured_media, args)
+      resolve: (post, args, ctx) => post.status !== Status.Publish ? ctx.loader.getMediaItem(ctx, post.featured_media, args) : ctx.loader.getMedia(ctx, post.featured_media, args)
     },
     commentStatus: {
       type: GraphQLString,

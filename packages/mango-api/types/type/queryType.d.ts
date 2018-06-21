@@ -282,7 +282,13 @@ declare const _default: {
     post: {
         type: any;
         args: {
+            id: {
+                type: any;
+            };
             permalink: {
+                type: any;
+            };
+            preview: {
                 type: any;
             };
             _embed: {
@@ -294,7 +300,13 @@ declare const _default: {
     page: {
         type: any;
         args: {
+            id: {
+                type: any;
+            };
             permalink: {
+                type: any;
+            };
+            preview: {
                 type: any;
             };
             _embed: {
@@ -310,7 +322,7 @@ declare const _default: {
                 type: any;
             };
         };
-        resolve: (_root: any, _args: any, ctx: any) => any;
+        resolve: (_root: any, args: any, ctx: any) => any;
     };
     customizer: {
         type: any;

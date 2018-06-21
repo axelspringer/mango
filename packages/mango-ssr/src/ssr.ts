@@ -13,6 +13,7 @@ import renderPlugin from './utils/renderPlugin'
 import Errors from './middlewares/errors'
 import Serve from './middlewares/serve'
 import Ignore from './middlewares/ignore'
+import ForceSSL from './middlewares/ssl'
 import * as gracefulShutdown from 'http-graceful-shutdown'
 
 import appRender from './utils/appRender'
@@ -53,7 +54,6 @@ export class ServerSideRenderer {
     // configure logging
     this.app.silent = true
     this.app.use(Logger())
-    this.app.use(Ignore(this.config.ignore))
 
     // setup middleware
     this.setup()
@@ -76,6 +76,15 @@ export class ServerSideRenderer {
    * Configure middleware
    */
   public setup() {
+    // add ignore plugin
+    this.app.use(Ignore(this.config.ignore))
+
+    // force ssl
+    if (this.config.forceSSL) {
+      this.app.use(ForceSSL())
+    }
+
+    // add middlewares
     this.config.middleware.forEach(middleware => {
       this.app.use(middleware)
     })

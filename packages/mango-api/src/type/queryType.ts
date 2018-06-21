@@ -300,27 +300,39 @@ export default {
   post: {
     type: PostType,
     args: {
+      id: {
+        type: GraphQLInt // the id takes presence
+      },
       permalink: {
         type: GraphQLString
+      },
+      preview: { // this needs to be authenticated later
+        type: GraphQLBoolean
       },
       _embed: {
         type: GraphQLBoolean
       }
-    },
-    resolve: (_root, args, ctx) => ctx.loader.getPostPermalink(ctx, args)
+    }, // decide upon id, or permalink
+    resolve: (_root, args, ctx) => args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
   },
 
   page: {
     type: PageType,
     args: {
+      id: {
+        type: GraphQLInt // the id takes presence
+      },
       permalink: {
         type: GraphQLString
+      },
+      preview: { // this needs to be authenticated later
+        type: GraphQLBoolean
       },
       _embed: {
         type: GraphQLBoolean
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getPostPermalink(ctx, args)
+    resolve: (_root, args, ctx) => args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
   },
 
   media: {
@@ -330,7 +342,7 @@ export default {
         type: GraphQLString
       }
     },
-    resolve: (_root, _args, ctx) => ctx.loader.getMedia(ctx, _args.id, _args)
+    resolve: (_root, args, ctx) => ctx.loader.getMedia(ctx, args.id, args)
   },
 
   customizer: {

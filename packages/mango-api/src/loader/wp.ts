@@ -1,20 +1,29 @@
 import { GraphQLContext } from 'graphql'
-import { GetPost, GetPostPermalink, GetCustomizer, ListPosts, ListCategories, ListPost, ListTags, ListTaxonomies, ListPages } from './args'
+import {
+  GetPost,
+  GetPostPermalink,
+  GetCustomizer,
+  ListPosts,
+  ListCategories,
+  ListTags,
+  ListTaxonomies,
+  ListPages
+} from './args'
 import Loader from './loader'
 import { Type } from './response'
-import API from './api'
+import { WP, Mango } from './api'
 
 // posts loader
-export default class WP extends Loader {
+export default class WPLoader extends Loader {
 
   // fetch posts
   public async getPosts(ctx: GraphQLContext, id: number, args: ListPosts = {}) {
-    return this._fetcher(ctx, !id ? API.Posts : [API.Posts, id].join('/'), args)
+    return this._fetcher(ctx, !id ? WP.Posts : [WP.Posts, id].join('/'), args)
   }
 
   // fetch category
   public async getCategory(ctx: GraphQLContext, id: number, args: ListCategories = {}, type: Type = 'Array') {
-    const res = await this._fetcher(ctx, !id ? API.Categories : [API.Categories, id].join('/'), args)
+    const res = await this._fetcher(ctx, !id ? WP.Categories : [WP.Categories, id].join('/'), args)
     return type !== 'Array' ? Array.isArray(res) ? res.length === 1 ? res[0] : null : res : Array.isArray(res) ? res : res !== null ? [res] : null
   }
 
@@ -38,7 +47,6 @@ export default class WP extends Loader {
     return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
   }
 
-
   // fetch posts
   public async getPolylangTags(ctx: GraphQLContext, translations: Object, args: ListPosts = {}) {
     return Promise.all([...Object.keys(translations).map(trans => this.getTag(ctx, translations[trans], args, 'Object'))])
@@ -46,32 +54,32 @@ export default class WP extends Loader {
 
   // fetch image
   public async getImage(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, [API.Media, id].join('/'), args)
+    return this._fetcher(ctx, [WP.Media, id].join('/'), args)
   }
 
   // fetch users
   public async getUser(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, [API.Users, id].join('/'), args)
+    return this._fetcher(ctx, [WP.Users, id].join('/'), args)
   }
 
   // fetch page
   public async getPages(ctx: GraphQLContext, id: number, args: ListPages = {}) {
-    return await this._fetcher(ctx, !id ? API.Pages : [API.Pages, id].join('/'), args)
+    return await this._fetcher(ctx, !id ? WP.Pages : [WP.Pages, id].join('/'), args)
   }
 
   // fetch settings
   public async getSettings(ctx: GraphQLContext, args = {}) {
-    return this._fetcher(ctx, API.Settings, args)
+    return this._fetcher(ctx, WP.Settings, args)
   }
 
   // fetch terms
   public async getTaxonomies(ctx: GraphQLContext, id: number, args: ListTaxonomies = {}) {
-    return this._fetcher(ctx, !id ? API.Taxonomies : [API.Taxonomies, id].join('/'), args)
+    return this._fetcher(ctx, !id ? WP.Taxonomies : [WP.Taxonomies, id].join('/'), args)
   }
 
   // fetch tag
   public async getTag(ctx: GraphQLContext, id: number, args: ListTags = {}, type: Type = 'Array') {
-    const res = await this._fetcher(ctx, !id ? API.Tags : [API.Tags, id].join('/'), args)
+    const res = await this._fetcher(ctx, !id ? WP.Tags : [WP.Tags, id].join('/'), args)
     return type !== 'Array' ? Array.isArray(res) ? res.length === 1 ? res[0] : null : res : Array.isArray(res) ? res : res !== null ? [res] : null
   }
 
@@ -82,21 +90,26 @@ export default class WP extends Loader {
 
   // fetch media
   public async getMedia(ctx: GraphQLContext, id: number, args = {}) {
-    return this._fetcher(ctx, [API.Media, id].join('/'), args)
+    return this._fetcher(ctx, [WP.Media, id].join('/'), args)
   }
 
   // fetch a post by permalink
   public async getPost(ctx: GraphQLContext, id: number, args: GetPost = {}) {
-    return this._fetcher(ctx, !id ? API.Post : [API.Post, id].join('/'), args)
+    return this._fetcher(ctx, !id ? Mango.Post : [Mango.Post, id].join('/'), args)
   }
 
   // fetch a post by permalink
   public async getPostPermalink(ctx: GraphQLContext, args: GetPostPermalink = {}) {
-    return this._fetcher(ctx, API.PostPermalink, args)
+    return this._fetcher(ctx, Mango.Permalink, args)
   }
 
   // fetch customizer settings
   public async getCustomizer(ctx: GraphQLContext, args: GetCustomizer = {}) {
-    return this._fetcher(ctx, API.Customizer, args)
+    return this._fetcher(ctx, Mango.Customizer, args)
+  }
+
+  // fetch media item
+  public async getMediaItem(ctx: GraphQLContext, id: number, args = {}) {
+    return this._fetcher(ctx, [Mango.Media, id].join('/'), args)
   }
 }
