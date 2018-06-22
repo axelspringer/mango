@@ -1,5 +1,5 @@
 
-const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLInt } = require('graphql')
+const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLTypeReference, GraphQLString, GraphQLInt } = require('graphql')
 import { GraphQLDateTime } from 'graphql-iso-date'
 import { UserType } from './userType'
 import MediaType from './mediaType'
@@ -8,7 +8,7 @@ import EmbeddedType from './embeddedType'
 import PolylangTranslationType from './polylangTranslationType'
 import Status from '../models/status'
 
-export default new GraphQLObjectType({
+const pageType = new GraphQLObjectType({
   name: 'Page',
   description: 'Contains a Page from Wordpress',
   fields: () => ({
@@ -107,7 +107,11 @@ export default new GraphQLObjectType({
     },
     img: {
       type: ImgType,
-      resolve: (root, args, ctx) => ctx.loader.getImage(ctx, root.featured_media, args)
+      resolve: (page, args, ctx) => ctx.loader.getImage(ctx, page.featured_media, args)
+    },
+    parent: {
+      type: pageType,
+      resolve: (page, args, ctx) => ctx.loader.getPost(ctx, page.parent, args)
     },
     acf: {
       type: EmbeddedType,
@@ -119,3 +123,5 @@ export default new GraphQLObjectType({
     }
   }),
 })
+
+export default pageType
