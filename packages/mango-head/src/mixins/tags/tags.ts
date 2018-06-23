@@ -20,16 +20,7 @@ const serverTagsMixin = {
 }
 
 const clientTagsMixin = {
-  beforeRouteEnter(_to, _from, next) {
-    next(vm => {
-      removeMetaTags() // remove tags
-      const tags = getTags(vm)
-      if (tags) {
-        createMetaTags(tags.meta || [])
-      }
-    })
-  },
-  updated() {
+  mounted() {
     removeMetaTags() // remove tags
     const tags = getTags(this)
     if (tags) {
