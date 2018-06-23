@@ -2,7 +2,7 @@ import inBrowser from '../../utils/dom'
 
 function renderTitleTag(vm) {
   const title = getTitle(vm)
-  if (title) {
+  if (title && window.document !== undefined) {
     document.title = title
   }
 }
@@ -28,14 +28,6 @@ const serverTitleMixin = {
 }
 
 const clientTitleMixin = {
-  beforeRouteEnter(_to, _from, next) {
-    next(vm => {
-      renderTitleTag(vm)
-    })
-  },
-  updated() {
-    renderTitleTag(this)
-  },
   mounted() {
     renderTitleTag(this)
   }
