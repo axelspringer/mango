@@ -7,6 +7,9 @@ export default async (ctx, next) => {
 
   try {
     ctx.body = await renderToString(renderer, plugin.context, plugin.template, ctx) // pass full req to render context
+    if (plugin.stripSSRAttr && ctx.body) { // strip server tag
+      ctx.body = ctx.body.replace(/data-server-rendered=\"true\"/, "")
+    }
   } catch (err) {
     ctx.throw(500, err)
   }
