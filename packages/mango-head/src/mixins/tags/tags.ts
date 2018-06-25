@@ -13,8 +13,12 @@ function getTags(vm) {
 const serverTagsMixin = {
   created() {
     const tags = getTags(this)
+    console.log('render Tags 123')
+    console.log(this.$ssrContext)
     if (this.$ssrContext) {
       this.$ssrContext.tags = createTags(tags || []) // always provide tags
+      console.log('render tags 123')
+      console.log(this.$ssrContext.tags)
     }
   }
 }

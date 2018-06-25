@@ -154,10 +154,6 @@ export class ServerSideRenderer {
    * @return
    */
   public start() {
-    this.app // config app
-      .use(this.router.routes())
-      .use(this.router.allowedMethods())
-
     if (this.config.renderer) {
       // config renderer route
       this.router
@@ -171,6 +167,10 @@ export class ServerSideRenderer {
           appRender
         )
     }
+
+    this.app // config app
+      .use(this.router.routes())
+      .use(this.router.allowedMethods())
 
     // attach server
     this.listener = this.app.listen(this.config.port)
