@@ -9,20 +9,10 @@ export default function (renderer, ctx, context) {
       if (err) {
         reject(err)
       }
-      // wrap status codes to put html
-      if (context.code && (context.code >= 400 && context.code <= 499)) {
-        reject({ code: context.code, html })
-      }
 
       resolve(html)
     }) // wait to render string
   })
     .then(html => html) //
-    .catch(err => {
-      if (err && err.code) {
-        ctx.throw(err.code, err.html)
-        return
-      }
-      ctx.throw(500, err)
-    })
+    .catch(err => ctx.throw(500, err))
 }
