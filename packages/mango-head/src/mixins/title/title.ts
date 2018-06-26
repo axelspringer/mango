@@ -30,6 +30,9 @@ const serverTitleMixin = {
 const clientTitleMixin = {
   mounted() {
     renderTitleTag(this)
+  },
+  updated() {
+    renderTitleTag(this)
   }
 }
 

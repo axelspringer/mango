@@ -10,26 +10,29 @@ function getTags(vm) {
   }
 }
 
+function renderTags(vm) {
+  removeMetaTags() // remove tags
+  const tags = getTags(vm)
+  if (tags) {
+    createMetaTags(tags.meta || [])
+  }
+}
+
 const serverTagsMixin = {
   created() {
     const tags = getTags(this)
-    console.log('render Tags 123')
-    console.log(this.$ssrContext)
     if (this.$ssrContext) {
       this.$ssrContext.tags = createTags(tags || []) // always provide tags
-      console.log('render tags 123')
-      console.log(this.$ssrContext.tags)
     }
   }
 }
 
 const clientTagsMixin = {
   mounted() {
-    removeMetaTags() // remove tags
-    const tags = getTags(this)
-    if (tags) {
-      createMetaTags(tags.meta || [])
-    }
+    renderTags(this)
+  },
+  updated() {
+    renderTags(this)
   }
 }
 
