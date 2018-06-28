@@ -1,11 +1,11 @@
 // imports
 import RandomDiscoveryStrategy from './discovery/random'
-import { loadPlugins, createSchema, createQuery } from './utils'
+import { loadPlugins, createSchema, createQuery, createMutation } from './utils'
 import { Middleware } from './middleware'
 import { parseArgs } from './args'
 import * as http from 'http'
 import * as https from 'https'
-import DefaultQuery from './type'
+import { DefaultQuery, DefaultMutation } from './type'
 import Env from './env'
 import Loader from './loader'
 import setup from './adapter/setup'
@@ -19,9 +19,10 @@ const config = parseArgs()
 // initialize loader
 const loader = new Loader() // contains the loaders
 const query = {} // should contain all queries
+const mutation = {} // should contain all mutation
 
 // load plugins
-loadPlugins(config.plugin, loader, query)
+loadPlugins(config.plugin, loader, query, mutation)
 
 // logger
 const logger = createLogger({
@@ -70,6 +71,10 @@ const ctx = {
   loader
 }
 
+// construct schema variables
+const querySchema = createQuery(Object.assign(DefaultQuery, query))
+const mutationSchema = createMutation(Object.assign(DefaultMutation, mutation))
+
 // start middleware
-const middleware = new Middleware(ctx, config, createSchema(createQuery(Object.assign(DefaultQuery, query))), logger)
+const middleware = new Middleware(ctx, config, createSchema(querySchema, mutationSchema), logger)
 middleware.start()

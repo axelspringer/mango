@@ -1,1 +1,1 @@
-export declare const createSchema: (query: any) => any;
+export declare const createSchema: (query: any, mutation: any) => any;
