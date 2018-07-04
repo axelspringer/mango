@@ -26,9 +26,10 @@ script:
 - npm run build
 - npm run test
 deploy:
- provider: script
- skip_cleanup: true
- script: scripts/deploy.sh
- on:
-   branch: master
-   tags: false
+  provider: npm
+  email: sebastian@katallaxie.me
+  on:
+    tags: true
+  skip_cleanup: true
+  api_key:
+    secure: agxQfH7s6o4Zt55Q7f26fJQfwau9769Te5dcp5AKpGNoODNv+SGODzozk9nDuZELk+C23k0nTqAvBZ/5oTzylsiabuCKMN3cDvQJKmP7nqFh6dnzUM5dlSQOlfdDUfkuqFbKD4GqMGzkjEZtbSCQmDd3d5vo3RB97mrepyy5DGAS0u2ZZIPIvMJ3wttkq2gTQhdRWps86YydyEj+pDu0ci3a94+P8xe+DfmZxRMRYHE3WEUjnvKEcj+eJ/1AUSoKR8ppJzvWshNdafk88GnXBnaAy6QY2NQisOqo1mVGC/C8SVlRTd8Dz2YJPSZl2064CxUFnj/Fw1je0lgODYkgxl+UOAu/iqt0N5lN1QQD3DPGL3Zpn/q4YCttXefxukDqQGBF1OePL5kETODBXHHRurG1prz27EhsvvJxG1xy0RNKXEzHscBMIInvbj+5VqjAB2+GhxlvPR4QMUzaw/F1T3n8W3AJ1zYEt8SH0THcIupM0+FX9oItMunUAhAWpaZcePS69y6G7xo3QonQ0Pr0RpZm0WoEJqNflcD2vjwDy1wSOe9H0NPpnyGHqjNQFnxnI6AXzdcH3yNrFkgnADEtrLnNAODm63sRlY7kd8VKrq46/HhphlNJrVbtdFpzOsSBoFzTtO3nrzmyk2+3VCb3lm/wPw46Yy3pCRvUXWnrzu0=
