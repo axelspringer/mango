@@ -1,4 +1,5 @@
 import { GraphQLContext } from 'graphql'
+import { log, error } from '../utils/log'
 
 export default class Loader {
 
@@ -11,6 +12,7 @@ export default class Loader {
     try {
       data = await ctx.axios.get(url, { params }).then(res => res.data)
     } catch (err) {
+      log(error(err))
       return null
     }
     return data
