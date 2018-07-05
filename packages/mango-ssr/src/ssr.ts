@@ -88,11 +88,18 @@ export class ServerSideRenderer {
       this.app.use(middleware)
     })
 
-    Env.Development || this.app.use(Compress({
-      threshold: 2048,
-      flush: require('zlib').Z_SYNC_FLUSH
-    }))
-    Env.Development || this.app.use(Serve({ rootDir: this.config.serve }))
+    // compression of content
+    if (this.config.compress) {
+      this.app.use(Compress({
+        threshold: 2048,
+        flush: require('zlib').Z_SYNC_FLUSH
+      }))
+    }
+
+    // serve content
+    if (this.config.serveStatic) {
+      this.app.use(Serve(this.config.serveOptions))
+    }
   }
 
   /**

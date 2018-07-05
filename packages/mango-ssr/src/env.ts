@@ -34,11 +34,11 @@ export default class Environment {
     return Environment.Env !== Env.Development ? Env.Production : Env.Development
   }
 
-  public static get Development(): Boolean {
+  public static get Development(): boolean {
     return Environment.Env === Env.Development
   }
 
-  public static get Production(): Boolean {
+  public static get Production(): boolean {
     return !Environment.Development
   }
 }

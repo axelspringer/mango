@@ -51,7 +51,8 @@ export default function serve(opts) {
 
     let sent
 
-    /* In case of error from koa-send try to serve the default static file
+    /**
+     * In case of error from koa-send try to serve the default static file
      * eg. 404 error page or image that illustrates error
      */
     try {
