@@ -13,13 +13,12 @@ const pageType = new GraphQLObjectType({
   description: 'Contains a Page from Wordpress',
   fields: () => ({
     date: {
-      //type: GraphQLDateTime,
-      type: GraphQLString,
-      resolve: page => page.date
+      type: GraphQLDateTime,
+      resolve: page => page.date ? new Date(page.date) : null
     },
     dateGmt: {
       type: GraphQLDateTime,
-      resolve: page => page.date_gmt.rendered
+      resolve: page => page.date_gmt && page.date_gmt.rendered ? new Date(page.date_gmt.rendered) : null
     },
     featuredMedia: {
       type: MediaType,
@@ -28,6 +27,14 @@ const pageType = new GraphQLObjectType({
     id: {
       type: GraphQLString,
       resolve: page => page.id
+    },
+    modified: {
+      type: GraphQLDateTime,
+      resolve: page => page.modified ? new Date(page.modified) : null
+    },
+    modifiedGmt: {
+      type: GraphQLDateTime,
+      resolve: page => page.modified_gmt ? new Date(page.modified_gmt) : null
     },
     status: {
       type: GraphQLString,
