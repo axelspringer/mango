@@ -20,7 +20,7 @@ export default class Config {
   public template: string
   public webpack: string
   public cache = true
-  public maxAge = isProd ? 60 * 60 * 24 * 30 : 0
+  public maxAge = Env.Production ? 1000 * 60 : 0
   public port = Env.Production ? Production.Port : Development.Port
   public stream = false
   public timeout = Env.Timeout || isProd ? Production.Timeout : Development.Timeout

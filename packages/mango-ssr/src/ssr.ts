@@ -168,6 +168,7 @@ export class ServerSideRenderer {
           '*',
           async (ctx, next) => {
             ctx.state.renderer = this.renderer
+            ctx.state.config = this.config
 
             await next()
           },
