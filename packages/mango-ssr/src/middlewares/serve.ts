@@ -19,10 +19,10 @@ import { join } from 'upath'
  * @api public
  */
 export default function serve(opts) {
-  assert(typeof opts.rootDir === 'string', 'rootDir must be specified (as a string)')
+  assert(typeof opts.root === 'string', 'rootDir must be specified (as a string)')
 
   const options = opts || {}
-  options.root = path.resolve(options.rootDir || process.cwd())
+  options.root = path.resolve(options.root || process.cwd())
   // const log = options.log || false
 
   return async (ctx, next) => {
