@@ -15,13 +15,12 @@ export default new GraphQLObjectType({
   description: 'Contains a Post from WordPress',
   fields: () => ({
     date: {
-      //type: GraphQLDateTime,
-      type: GraphQLString,
-      resolve: post => post.date
+      type: GraphQLDateTime,
+      resolve: post => post.date ? new Date(post.date) : null
     },
     dateGmt: {
       type: GraphQLDateTime,
-      resolve: post => post.date_gmt.rendered
+      resolve: post => post.date_gmt && post.date_gmt.rendered ? new Date(post.date_gmt.rendered) : null
     },
     id: {
       type: GraphQLString,
@@ -31,21 +30,21 @@ export default new GraphQLObjectType({
       type: GraphQLString,
       resolve: post => post.link
     },
-    modified: {
-      type: GraphQLDateTime,
-      resolve: post => post.modified
-    },
     lang: {
       type: GraphQLString,
       resolve: post => post.lang
     },
-    translations: {
-      type: PolylangTranslationType,
-      resolve: (post, args, ctx) => ctx.loader.getPolylangPosts(ctx, post.translations, { ...args, preview: post.status !== Status.Publish })
+    modified: {
+      type: GraphQLDateTime,
+      resolve: post => post.modified ? new Date(post.modified) : null
     },
     modifiedGmt: {
       type: GraphQLDateTime,
-      resolve: post => post.modified_gmt
+      resolve: post => post.modified_gmt ? new Date(post.modified_gmt) : null
+    },
+    translations: {
+      type: PolylangTranslationType,
+      resolve: (post, args, ctx) => ctx.loader.getPolylangPosts(ctx, post.translations, { ...args, preview: post.status !== Status.Publish })
     },
     status: {
       type: GraphQLString,
