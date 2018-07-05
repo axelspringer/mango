@@ -59,6 +59,12 @@ export default {
       categories_exclude: {
         type: new GraphQLList(GraphQLString)
       },
+      tags: {
+        type: new GraphQLList(GraphQLString)
+      },
+      tags_exclude: {
+        type: new GraphQLList(GraphQLString)
+      },
       _embed: {
         type: GraphQLBoolean
       }
