@@ -13,11 +13,11 @@ export default new GraphQLObjectType({
     },
     date: {
       type: GraphQLDateTime,
-      resolve: post => post.date
+      resolve: media => media.date
     },
     dateGmt: {
       type: GraphQLDateTime,
-      resolve: post => post.date_gmt.rendered
+      resolve: media => media.date_gmt.rendered
     },
     title: {
       type: GraphQLString,

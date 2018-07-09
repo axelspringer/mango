@@ -47,6 +47,12 @@ declare const _default: {
             categories_exclude: {
                 type: any;
             };
+            tags: {
+                type: any;
+            };
+            tags_exclude: {
+                type: any;
+            };
             _embed: {
                 type: any;
             };

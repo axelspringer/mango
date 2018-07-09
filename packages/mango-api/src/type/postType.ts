@@ -64,7 +64,7 @@ export default new GraphQLObjectType({
     },
     featuredMedia: {
       type: MediaType,
-      resolve: (post, args, ctx) => post.status !== Status.Publish ? ctx.loader.getMediaItem(ctx, post.featured_media, args) : ctx.loader.getMedia(ctx, post.featured_media, args)
+      resolve: (post, args, ctx) => !post.featured_media ? null : post.status !== Status.Publish ? ctx.loader.getMediaItem(ctx, post.featured_media, args) : ctx.loader.getMedia(ctx, post.featured_media, args)
     },
     commentStatus: {
       type: GraphQLString,
