@@ -3,6 +3,12 @@ import { ServerSideRenderer } from './ssr'
 import makeMap from './utils/makeMap'
 import parseArgs from './args'
 import SSRConfig from './config'
+import * as memwatch from 'memwatch-next'
+
+// send word of memory leak
+memwatch.on('leak', (info) => {
+  console.error('Memory leak detected:\n', info);
+})
 
 
 // config ssr
