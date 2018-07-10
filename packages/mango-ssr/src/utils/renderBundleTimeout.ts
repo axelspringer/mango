@@ -9,7 +9,21 @@ export default function (renderer, ctx, context) {
 
     renderer.renderToString(context, (err, html) => {
       clearTimeout(timeout) // clean-up
-      if (err) {
+
+      if (err) { // parse error
+        const { code, url } = err
+
+        if (code === 404) {
+          ctx.throw(code, 'Not Found')
+        }
+
+        if ((code === 301 || code === 302) && url) {
+          ctx.status = code
+          ctx.redirect(url)
+          ctx.body = `Redirecting to ${url}`
+          ctx.res.end()
+        }
+
         reject(err)
       }
 
