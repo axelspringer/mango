@@ -31,7 +31,9 @@ export default async (ctx, next) => {
 
     if (!hit) {
       ctx.body = await renderBundleTimeout(renderer, ctx, context) // wait for render
-      microCache.set(ctx.req.url, ctx.body)
+      if (ctx.status === 200) { // checking implicit for explicit status
+        microCache.set(ctx.req.url, ctx.body)
+      }
     }
   }
 
