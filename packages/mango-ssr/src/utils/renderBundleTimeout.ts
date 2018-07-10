@@ -7,8 +7,6 @@ export default function (renderer, ctx, context) {
       reject('Render Timeout')
     }, 60 * 1000) // this is artifical
 
-    context.ctx = ctx // map context on context
-
     renderer.renderToString(context, (err, html) => {
       clearTimeout(timeout) // clean-up
 

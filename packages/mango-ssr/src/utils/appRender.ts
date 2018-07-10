@@ -12,7 +12,7 @@ const isCacheable = req => req.method === 'GET'
 
 export default async (ctx, next) => {
   const { renderer } = ctx.state
-  const context = new SSRContext(ctx.req)
+  const context = new SSRContext(ctx)
 
   if (!renderer) {
     ctx.body = 'waiting for compilation... refresh in a moment.'
@@ -30,7 +30,9 @@ export default async (ctx, next) => {
     }
 
     if (!hit) {
+      const status = ctx.status
       ctx.body = await renderBundleTimeout(renderer, ctx, context) // wait for render
+      ctx.status = ctx.status !== 200 ? status : ctx.status
       if (ctx.status === 200) { // checking implicit for explicit status
         microCache.set(ctx.req.url, ctx.body)
       }
