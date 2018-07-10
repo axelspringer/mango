@@ -12,7 +12,7 @@ const isCacheable = req => req.method === 'GET'
 
 export default async (ctx, next) => {
   const { renderer } = ctx.state
-  const context = new SSRContext(ctx)
+  const context = new SSRContext(ctx.req)
 
   if (!renderer) {
     ctx.body = 'waiting for compilation... refresh in a moment.'
