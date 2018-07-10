@@ -30,9 +30,8 @@ export default async (ctx, next) => {
     }
 
     if (!hit) {
-      const status = ctx.status
       ctx.body = await renderBundleTimeout(renderer, ctx, context) // wait for render
-      ctx.status = status !== 200 && ctx.status === 200 ? status : ctx.status
+      ctx.status = context.statusCode || ctx.status
       if (ctx.status === 200) { // checking implicit for explicit status
         microCache.set(ctx.req.url, ctx.body)
       }

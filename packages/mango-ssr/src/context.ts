@@ -3,6 +3,7 @@ export default class SSRContext {
   public rawHeaders
   public headers
   public methods
+  public statusCode
 
   constructor(public ctx) {
     // backwards compatibility
