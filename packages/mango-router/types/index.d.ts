@@ -1,4 +1,4 @@
-import { Component } from 'vue'
+import { Component, AsyncComponent } from 'vue'
 import { RouteConfig } from 'vue-router/types'
 
 declare namespace MangoRouter {
@@ -23,7 +23,7 @@ declare namespace MangoRouter {
 }
 
 declare class Route {
-  public cmp: Component
+  public cmp: Component | AsyncComponent
   public config: RouteConfig
 
   constructor(cmp: Component, config: RouteConfig)
