@@ -11,7 +11,7 @@ export default {
       return await this._fetcher(ctx, [API.PageManagerCategories, args.id].join('/'), args)
     }
 
-    if ('tag' === args.currentPageType && args.id) {
+    if ('post_tag' === args.currentPageType && args.id) {
       return await this._fetcher(ctx, [API.PageManagerTags, args.id].join('/'), args)
     }
 
