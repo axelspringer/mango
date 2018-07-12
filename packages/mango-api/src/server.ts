@@ -56,7 +56,7 @@ const agent = {
 // create axios instance
 const fetch = setup({
   baseURL: config.wp,
-  timeout: 60 * 1000, // only wait 1 second before timeout
+  timeout: 60 * 60 * 1000, // only wait 1 second before timeout
   httpAgent: new http.Agent(agent),
   httpsAgent: new https.Agent(agent),
   cache: true,
