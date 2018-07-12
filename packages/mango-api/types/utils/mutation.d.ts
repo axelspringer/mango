@@ -1,1 +1,2 @@
-export declare const createMutation: (mutation: any) => any;
+import { GraphQLObjectType } from 'graphql';
+export declare const createMutation: (mutation: any) => GraphQLObjectType;

@@ -69,7 +69,7 @@ export default {
         type: GraphQLBoolean
       }
     },
-    resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args.id, args)
+    resolve: (_root, args, ctx) => ctx.loader.getPosts(ctx, args.id, args)
   },
 
   pages: {

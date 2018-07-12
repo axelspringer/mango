@@ -57,7 +57,7 @@ declare const _default: {
                 type: any;
             };
         };
-        resolve: (_: any, args: any, ctx: any) => any;
+        resolve: (_root: any, args: any, ctx: any) => any;
     };
     pages: {
         type: any;

@@ -1,4 +1,3 @@
-import { GraphQLContext } from 'graphql'
 import { log, error } from '../utils/log'
 
 export default class Loader {
@@ -7,7 +6,7 @@ export default class Loader {
     this[name] = func.bind(this)
   }
 
-  public async _fetcher(ctx: GraphQLContext, url, params = {}) {
+  public async _fetcher(ctx, url, params = {}) {
     let data
     try {
       data = await ctx.axios.get(url, { params }).then(res => res.data)
