@@ -52,7 +52,7 @@ export class Middleware extends EventEmitter {
       app: this.app,
       path: '/graphql',
       cors: { origin: '*' },
-      cacheControl: { defaultMaxAge: Env.Development ? 0 : 60 } // cache in dev 0s, otherwise 60s
+      cacheControl: { defaultMaxAge: Env.Development ? 0 : 60 }, // cache in dev 0s, otherwise 60s
       gui: Env.Development
     })
   }
