@@ -30,7 +30,6 @@ export class Middleware extends EventEmitter {
     // Create Apollo Server
     this.apollo = new ApolloServer({
       schema,
-      cacheControl: !Env.Development,
       tracing: Env.Development,
       cacheControl: { defaultMaxAge: Env.Development ? 0 : 60 }, // cache in dev 0s, otherwise 60s
       context: this.ctx
