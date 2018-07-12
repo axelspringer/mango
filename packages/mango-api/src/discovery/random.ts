@@ -1,6 +1,11 @@
 // use dns cache
 import DiscoveryStrategy from './strategy'
 import * as URL from 'url-parse'
+import { promisify } from 'util'
+import { resolveSrv } from 'dns'
+import { log, error } from '../utils/log'
+
+const resolve = promisify(resolveSrv)
 
 export default class RandomDiscoveryStrategy extends DiscoveryStrategy {
 
@@ -10,24 +15,28 @@ export default class RandomDiscoveryStrategy extends DiscoveryStrategy {
 
   public async resolve(from) {
     const url = new URL(from)
-    const to = await new Promise((resolve, _) => {
-      this.dnsCache.resolveSrv(url.hostname, (err, records) => {
-        if (err || !records || records.length === 0) {
-          return resolve(url)
+    const to = await resolve(url.hostname)
+      .then(records => {
+        if (records.length === 0) {
+          return url
         }
 
         const record = records[RandomDiscoveryStrategy.getRandomInt(0, records.length)]
 
         if (!record) {
-          return resolve(url)
+          return url
         }
 
         url.set('hostname', record.name || url.hostname)
         url.set('port', record.port || url.port)
 
-        resolve(url)
+        return url
       })
-    })
+      .catch(err => {
+        log(error(err))
+
+        return url
+      })
 
     return to.toString()
   }

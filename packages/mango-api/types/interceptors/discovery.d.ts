@@ -4,7 +4,7 @@ export declare class DiscoveryStrategy {
 }
 export declare class RandomDiscoveryStrategy extends DiscoveryStrategy {
     constructor();
-    resolve(config: any, wp: any, dnsCache: any): Promise<{}>;
+    resolve(config: any, wp: any): Promise<any>;
     static getRandomInt(min: any, max: any): any;
 }
 export declare class Discovery {
