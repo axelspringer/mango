@@ -2,7 +2,7 @@
 import { EventEmitter } from 'events'
 import * as GracefulShutdown from 'http-graceful-shutdown'
 import * as Koa from 'koa'
-import * as koaRouter from 'koa-router'
+import RandomDiscoveryStrategy from './discovery/random'
 import Env from './env'
 import logger from './logger'
 
@@ -52,7 +52,17 @@ export class Middleware extends EventEmitter {
       app: this.app,
       path: '/graphql',
       cors: { origin: '*' },
-      gui: Env.Development
+      gui: Env.Development,
+      onHealthCheck: () => {
+        return new Promise(async (resolve, reject) => {
+          const discovery = new RandomDiscoveryStrategy()
+          const url = await discovery.resolve(this.config.wp)
+          console.log(url)
+          this.ctx.axios.get(url)
+            .catch(_err => reject(false))
+            .then(() => resolve(true))
+        })
+      }
     })
   }
 
