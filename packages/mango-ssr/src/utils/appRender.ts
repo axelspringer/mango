@@ -39,7 +39,8 @@ export default async (ctx, next) => {
   }
 
   if (!cacheable) {
-    await renderBundleTimeout(renderer, ctx, context) // wait for render
+    ctx.status = context.statusCode || ctx.status
+    ctx.body = await renderBundleTimeout(renderer, ctx, context) // wait for render
   }
 
   setHeaders(ctx, { 'Content-Type': 'text/html' })
