@@ -14,6 +14,7 @@ declare module "vue/types/vue" {
     $blockIndex?: PageManagerBlockIndex;
     $blockResult?: PageManagerResult;
     $blockPageType?: PageManagerBlockPageType;
+    $block?: any; // should be fixed later
   }
 }
 
