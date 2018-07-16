@@ -14,21 +14,12 @@ export default class Block {
   public name: string
   public page_type: string
   public result: any[] = []
-  public render = {}
 
   constructor({ index, block }: BlockOptions) {
     this.index = index || this.index
     this.name = block && block.page_block ? block.page_block : this.name
     this.page_type = block && block.page_type ? block.page_type : this.page_type
     this.result = block && Array.isArray(block.result) ? block.result : this.result
-
-    // this accounts for the obscure construction of the PageManager
-    this.render = this.result.length === 0 || !this.result[0].value
-      ? this.render
-      : this.result[0].value.map(r => !Array.isArray(r) ? r : r.reduce((a, c) => {
-        a[c.name] = c.value
-        return a
-      }, {}))
   }
 
   /**
