@@ -23,9 +23,9 @@ export default class Block {
     this.result = block && Array.isArray(block.result) ? block.result : this.result
 
     // this accounts for the obscure construction of the PageManager
-    this.render = this.result.length === 0
+    this.render = this.result.length === 0 || !this.result[0].value
       ? this.render
-      : this.result[0].reduce((a, c) => {
+      : this.result[0].value.reduce((a, c) => {
         a[c.name] = c.value
         return a
       }, {})
@@ -39,7 +39,7 @@ export default class Block {
    */
   public find(name: string) {
     // this also accounts for the strange data structure of the PageManager
-    const result = this.result.length === 0 || this.result[0].find(b => b.name === name)
+    const result = this.result.length === 0 && this.result[0].value || this.result[0].value.find(b => b.name === name)
     return result ? result.value : {}
   }
 }
