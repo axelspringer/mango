@@ -21,10 +21,14 @@ export default class Block {
     this.name = block && block.page_block ? block.page_block : this.name
     this.page_type = block && block.page_type ? block.page_type : this.page_type
     this.result = block && Array.isArray(block.result) ? block.result : this.result
-    this.render = this.result.reduce((a, c) => {
-      a[c.name] = c.value
-      return a
-    }, {})
+
+    // this accounts for the obscure construction of the PageManager
+    this.render = this.result.length === 0
+      ? this.render
+      : this.result[0].reduce((a, c) => {
+        a[c.name] = c.value
+        return a
+      }, {})
   }
 
   /**
@@ -34,7 +38,8 @@ export default class Block {
    * @return {(object|undefined)}
    */
   public find(name: string) {
-    const result = this.result.find(b => b.name === name)
+    // this also accounts for the strange data structure of the PageManager
+    const result = this.result.length === 0 || this.result[0].find(b => b.name === name)
     return result ? result.value : {}
   }
 }
