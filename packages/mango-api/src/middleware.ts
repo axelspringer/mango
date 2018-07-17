@@ -52,17 +52,7 @@ export class Middleware extends EventEmitter {
     this.apollo.applyMiddleware({
       app: this.app,
       path: '/graphql',
-      cors: { origin: '*' },
-      onHealthCheck: () => {
-        return new Promise(async (resolve, reject) => {
-          const discovery = new RandomDiscoveryStrategy()
-          const url = await discovery.resolve(this.config.wp)
-          console.log(url)
-          this.ctx.axios.get(url)
-            .catch(_err => reject(false))
-            .then(() => resolve(true))
-        })
-      }
+      cors: { origin: '*' }
     })
   }
 
