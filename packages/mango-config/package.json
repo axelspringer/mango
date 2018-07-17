@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-config",
-  "version": "1.0.0-beta.88",
+  "version": "1.0.0-beta.89",
   "description": "Mango config module",
   "main": "dist/main.js",
   "scripts": {
