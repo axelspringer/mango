@@ -24,6 +24,8 @@ export default function (renderer, ctx, context) {
       if ((code === 301 || code === 302) && url) {
         ctx.status = code
         ctx.redirect(url)
+        // set headers on success
+        cacheControl(ctx, config.maxAge)
         ctx.body = `Redirecting to ${url}`
         ctx.res.end()
       }

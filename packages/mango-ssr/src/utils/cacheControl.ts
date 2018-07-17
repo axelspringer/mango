@@ -13,7 +13,7 @@ export default (ctx, maxAge) => {
 
   if (typeof maxAge === 'number') {
     maxAge = Math.round(maxAge / 1000)
-    ctx.set('Cache-Control', 'public, max-age=' + maxAge)
+    ctx.set('Cache-Control', `public, max-age=${maxAge}, stale-if-error=${maxAge * 5}`)
   } else if (typeof maxAge === 'string') {
     ctx.set('Cache-Control', maxAge)
   } else {
