@@ -1,5 +1,6 @@
-/// <reference types="koa-bodyparser" />
 /// <reference types="node" />
+/// <reference types="koa" />
+/// <reference types="koa-bodyparser" />
 import { EventEmitter } from 'events';
 import * as Koa from 'koa';
 import { ApolloServer } from 'apollo-server-koa';

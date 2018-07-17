@@ -32,6 +32,7 @@ export class Middleware extends EventEmitter {
       schema,
       tracing: Env.Development,
       cacheControl: { defaultMaxAge: Env.Development ? 0 : 60 }, // cache in dev 0s, otherwise 60s
+      playground: Env.Development,
       context: this.ctx
     })
 
@@ -52,7 +53,6 @@ export class Middleware extends EventEmitter {
       app: this.app,
       path: '/graphql',
       cors: { origin: '*' },
-      gui: Env.Development,
       onHealthCheck: () => {
         return new Promise(async (resolve, reject) => {
           const discovery = new RandomDiscoveryStrategy()
