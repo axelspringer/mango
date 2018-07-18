@@ -38,9 +38,6 @@ export default function (config: any = {}) {
     const hashable = new Hashable(req)
     const hash = hashing(hashable)
 
-    // log hashable
-    config.logger.info(JSON.stringify(hashable))
- 
     // return promise to cache
     const res = await db.get(hash, { asBuffer: false })
       .then(cache => new Cachable(cache))
