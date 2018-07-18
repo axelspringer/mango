@@ -10,6 +10,8 @@ import Env from './env'
 import Loader from './loader'
 import setup from './adapter/setup'
 
+const axiosRetry = require('axios-retry')
+
 // use default for import
 const { createLogger, format, transports } = require('winston')
 
@@ -63,6 +65,9 @@ const fetch = setup({
   discovery: RandomDiscoveryStrategy,
   headers
 })
+
+// add retry intercept
+axiosRetry(fetch, { retryDelay: axiosRetry.exponentialDelay, retries: 3 })
 
 // construct context
 const ctx = {

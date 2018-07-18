@@ -14,8 +14,10 @@ export default class RandomDiscoveryStrategy extends DiscoveryStrategy {
   }
 
   public async resolve(from) {
+    const resolveCache = promisify(this.dnsCache.resolveSrv)
+
     const url = new URL(from)
-    const to = await resolve(url.hostname)
+    const to = await resolveCache(url.hostname)
       .then(records => {
         if (records.length === 0) {
           return url
