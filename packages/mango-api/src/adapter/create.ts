@@ -7,6 +7,7 @@ import encode from 'encoding-down'
 import Defaults from './defaults'
 import Hashable from './hashable'
 import Cachable from './cachable'
+import * as ttl from 'level-ttl'
 
 export default function (config: any = {}) {
   // we should do asseration here
@@ -15,7 +16,10 @@ export default function (config: any = {}) {
   const discovery = new config.discovery(config)
 
   // create db
-  const db = levelup(encode(memdown(), { valueEncoding: 'json' })) // create database
+  let db = levelup(encode(memdown(), { valueEncoding: 'json' })) // create database
+
+  // set time to live
+  db = ttl(db, { defaultTTL: 60 * 1000 }) // one minute
 
   // axios adapter. receives the axios request config as only parameter
   async function adapter(req) {
@@ -34,14 +38,13 @@ export default function (config: any = {}) {
     const hashable = new Hashable(req)
     const hash = hashing(hashable)
 
+    // log hashable
+    config.logger.info(JSON.stringify(hashable))
+ 
     // return promise to cache
     const res = await db.get(hash, { asBuffer: false })
       .then(cache => new Cachable(cache))
       .then(cache => {
-        if ((Date.now() - cache.timestamp) >= Defaults.Time) {
-          throw new Error('should update')
-        }
-
         cache.hit = true
         cache.request = req
         return cache

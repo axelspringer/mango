@@ -38,11 +38,9 @@ const logger = createLogger({
 })
 
 // add console transport in dev
-if (Env.Development) {
-  logger.add(new transports.Console({
-    format: format.simple()
-  }))
-}
+logger.add(new transports.Console({
+  format: format.simple()
+}))
 
 // headers to send with, X-MANGO-TOKEN, X-MANGO-SECRET
 const headers = {
@@ -58,10 +56,11 @@ const agent = {
 // create axios instance
 const fetch = setup({
   baseURL: config.wp,
-  timeout: 60 * 60 * 1000, // only wait 1 second before timeout
+  logger,
+  timeout: 60 * 60 * 1000, // wait 1 minute
   httpAgent: new http.Agent(agent),
   httpsAgent: new https.Agent(agent),
-  cache: true,
+  cache: true, // use cache
   discovery: RandomDiscoveryStrategy,
   headers
 })
