@@ -30,6 +30,7 @@ export default function serve(opts) {
 
     let stats
 
+    const fallthrough = /^\/static\/(.+)/i.test(ctx.path)
     const dir = ctx.path.replace(/^\/static/, '') // parse static
     const file = join(options.root, dir)
 
@@ -40,8 +41,8 @@ export default function serve(opts) {
       return next() // could not fetch any data
     }
 
-    if (!stats.isFile()) {
-      return next() // if there is no file
+    if (!stats.isFile() && fallthrough) {
+      ctx.throw(404, 'Not Found')
     }
 
     // skip if this is not a GET/HEAD request
