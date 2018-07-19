@@ -38,11 +38,15 @@ export default function serve(opts) {
       stats = fs.lstatSync(file);
     }
     catch (e) {
+      if (fallthrough) {
+        ctx.throw(404, 'Not Found')
+      }
+
       return next() // could not fetch any data
     }
 
-    if (!stats.isFile() && fallthrough) {
-      ctx.throw(404, 'Not Found')
+    if (!stats.isFile()) {
+      return next()
     }
 
     // skip if this is not a GET/HEAD request
