@@ -6,7 +6,7 @@ export default class Cachable {
   public config
   public headers
   public request
-  public timestamp = Date.now()
+  public timestamp
 
   constructor(
     res
@@ -15,6 +15,6 @@ export default class Cachable {
     this.status = res.status
     this.statusText = res.statusText
     this.headers = res.headers
-    this.timestamp = res.timestamp || this.timestamp
+    this.timestamp = res.timestamp || Date.now().toString()
   }
 }

@@ -78,8 +78,6 @@
     "koa-bodyparser": "^4.2.1",
     "koa-pino-logger": "^2.1.1",
     "koa-router": "^7.3.0",
-    "level-atomic": "0.0.1",
-    "level-ttl": "^3.1.1",
     "leveldown": "^4.0.1",
     "levelup": "^3.0.1",
     "memdown": "^3.0.0",

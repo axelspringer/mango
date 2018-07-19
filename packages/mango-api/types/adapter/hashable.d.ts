@@ -4,5 +4,5 @@ export default class Hashable {
     url: any;
     data: any;
     headers: any;
-    constructor(req: any);
+    constructor(obj: any);
 }

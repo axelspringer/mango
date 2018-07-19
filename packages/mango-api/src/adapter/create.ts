@@ -1,5 +1,4 @@
 import axios from 'axios'
-// import serialize from './serialize'
 import hashing from './hashing'
 import levelup from 'levelup'
 import memdown from 'memdown'
@@ -7,7 +6,7 @@ import encode from 'encoding-down'
 import Defaults from './defaults'
 import Hashable from './hashable'
 import Cachable from './cachable'
-import * as ttl from 'level-ttl'
+import { log, error } from '../utils/log'
 
 export default function (config: any = {}) {
   // we should do asseration here
@@ -16,10 +15,7 @@ export default function (config: any = {}) {
   const discovery = new config.discovery(config)
 
   // create db
-  let db = levelup(encode(memdown(), { valueEncoding: 'json' })) // create database
-
-  // set time to live
-  db = ttl(db, { defaultTTL: 60 * 1000 }) // one minute
+  const db = levelup(encode(memdown(), { valueEncoding: 'json' })) // create database
 
   // axios adapter. receives the axios request config as only parameter
   async function adapter(req) {
@@ -34,19 +30,27 @@ export default function (config: any = {}) {
       return axios.defaults.adapter(req)
     }
 
-    // try to get cashable
+    // create hashable
     const hashable = new Hashable(req)
+
+    // a hash that represents the query
     const hash = hashing(hashable)
 
     // return promise to cache
     const res = await db.get(hash, { asBuffer: false })
       .then(cache => new Cachable(cache))
       .then(cache => {
+        if ((Date.now() - cache.timestamp) >= Defaults.Time) {
+          throw new Error(`Cachable expired`)
+        }
+
         cache.hit = true
         cache.request = req
         return cache
       })
-      .catch(async () => { // err could also be update
+      .catch(async (err) => { // err could also be update
+        log(error(err))
+
         const res: any = await axios.defaults.adapter(req)
 
         if (res.status !== 200) {
@@ -56,7 +60,7 @@ export default function (config: any = {}) {
         try {
           await db.put(hash, new Cachable(res))
         } catch (e) {
-          console.log(e)
+          log(error(e))
         }
 
         res.hit = false

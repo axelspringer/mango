@@ -5,6 +5,6 @@ export default class Cachable {
     config: any;
     headers: any;
     request: any;
-    timestamp: number;
+    timestamp: any;
     constructor(res: any);
 }
