@@ -18,11 +18,11 @@ export default class RandomDiscoveryStrategy extends DiscoveryStrategy {
         [cache, ns] = records
 
         records = Array.isArray(ns) ? ns : Array.isArray(cache) ? cache : []
-        const record = records[RandomDiscoveryStrategy.getRandomInt(0, records.length)]
-
-        if (!record) {
+        if (records.length === 0) {
           return url
         }
+
+        const record = records[RandomDiscoveryStrategy.getRandomInt(0, records.length)]
 
         url.set('hostname', record.name || url.hostname)
         url.set('port', record.port || url.port)
