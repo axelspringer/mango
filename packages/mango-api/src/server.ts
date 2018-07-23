@@ -1,4 +1,5 @@
 // imports
+import './utils/almost'
 import RandomDiscoveryStrategy from './discovery/random'
 import { loadPlugins, createSchema, createQuery, createMutation } from './utils'
 import { Middleware } from './middleware'
