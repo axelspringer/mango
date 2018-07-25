@@ -18,6 +18,12 @@ export default function (config: any = {}) {
 
   // axios adapter. receives the axios request config as only parameter
   async function adapter(req) {
+    // create hashable
+    const hashable = new Hashable(req)
+
+    // a hash that represents the query
+    const hash = hashing(hashable)
+
     // make discovery
     req.url = await discovery.resolve(req.url)
 
@@ -28,12 +34,6 @@ export default function (config: any = {}) {
       || (req.params.cache && req.params.cache == false)) { // do not filter on cache ignore
       return axios.defaults.adapter(req)
     }
-
-    // create hashable
-    const hashable = new Hashable(req)
-
-    // a hash that represents the query
-    const hash = hashing(hashable)
 
     // try to get object from cache
     const cachable = cache.get(hash)
