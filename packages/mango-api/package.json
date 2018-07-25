@@ -1,6 +1,6 @@
 {
   "name": "@axelspringer/mango-api",
-  "version": "1.0.0-beta.103",
+  "version": "1.0.0-beta.104",
   "description": "An API Gateway for WordPress",
   "main": "dist/main.js",
   "typings": "types/main.d.ts",
@@ -46,8 +46,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@axelspringer/mango-plugin-navigation": "^1.0.0-beta.103",
-    "@axelspringer/mango-plugin-pagemanager": "^1.0.0-beta.103",
+    "@axelspringer/mango-plugin-navigation": "^1.0.0-beta.104",
+    "@axelspringer/mango-plugin-pagemanager": "^1.0.0-beta.104",
     "@types/koa": "^2.0.46",
     "@types/node": "^10.5.2",
     "@types/winston": "^2.3.9",
