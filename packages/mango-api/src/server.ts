@@ -65,7 +65,7 @@ const dnsCacheConfig = {
 // create axios instance
 const fetch = setup({
   baseURL: config.wp,
-  timeout: 60 * 60 * 1000, // wait 1 minute
+  timeout: 60 * 1000, // wait 1 minute
   httpAgent: new http.Agent(agent),
   httpsAgent: new https.Agent(agent),
   cache: Env.Production, // use cache
