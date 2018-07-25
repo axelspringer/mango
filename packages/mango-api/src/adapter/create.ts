@@ -7,8 +7,6 @@ import { log, error } from '../utils/log'
 import * as LRU from 'lru-cache'
 
 export default function (config: any = {}) {
-  // we should do asseration here
-
   // create discovery
   const discovery = new config.discovery(config)
 
@@ -44,12 +42,13 @@ export default function (config: any = {}) {
     if (!cachable) {
       const res: any = await axios.defaults.adapter(req)
 
-      try { // try to cache
-        if (res.status === 200) {
+      if (res.status === 200) {
+        try { // try to cache
+          log(`Caching ${hash}`)
           cache.set(hash, JSON.stringify(new Cachable(res)))
+        } catch (e) {
+          log(error(e))
         }
-      } catch (e) {
-        log(error(e))
       }
 
       // indicate non hit
@@ -57,6 +56,8 @@ export default function (config: any = {}) {
 
       return res
     }
+
+    log(`Use cached ${hash}`)
 
     // try to
     return new Cachable(JSON.parse(cachable))

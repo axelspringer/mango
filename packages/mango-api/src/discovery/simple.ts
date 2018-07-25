@@ -4,7 +4,12 @@ import * as URL from 'url-parse'
 import { log, error } from '../utils/log'
 import { DiscoveryStrategyConfig } from './strategy'
 
-export default class RandomDiscoveryStrategy extends DiscoveryStrategy {
+export default class SimpleRoundRobin extends DiscoveryStrategy {
+
+  /**
+   * Record last selected record
+   */
+  public lastRecord = 0
 
   constructor(config: DiscoveryStrategyConfig) {
     super(config) // call to
@@ -17,15 +22,18 @@ export default class RandomDiscoveryStrategy extends DiscoveryStrategy {
         let cache, ns
         [cache, ns] = records
 
-        records = Array.isArray(ns) ? ns : Array.isArray(cache) ? cache : []
+        // filter records
+        records = Array.isArray(cache) ? cache : Array.isArray(ns) ? ns : []
         if (records.length === 0) {
           return url
         }
 
-        const record = records[RandomDiscoveryStrategy.getRandomInt(0, records.length)]
+        const record = this.record(records)
 
         url.set('hostname', record.name || url.hostname)
         url.set('port', record.port || url.port)
+
+        console.log(record)
 
         return url
       })
@@ -33,9 +41,14 @@ export default class RandomDiscoveryStrategy extends DiscoveryStrategy {
     return to.toString()
   }
 
-  public static getRandomInt(min, max) {
-    min = Math.ceil(min)
-    max = Math.floor(max)
-    return Math.floor(Math.random() * (max - min)) + min
+  public record(records) {
+    if (this.lastRecord >= records.length - 1 || this.lastRecord < 0) {
+      this.lastRecord = 0
+      return records[0]
+    }
+
+    this.lastRecord += 1 // increase index for selection
+
+    return records[this.lastRecord]
   }
 }

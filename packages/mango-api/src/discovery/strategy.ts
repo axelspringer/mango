@@ -2,7 +2,6 @@ import { promisify } from 'util'
 import { resolveSrv } from 'dns'
 import '../utils/almost'
 import * as DNSCache from 'dnscache'
-import Defaults from './defaults'
 
 const resolve = promisify(resolveSrv)
 
@@ -22,7 +21,7 @@ export default class DiscoveryStrategy {
 
   constructor(public config: DiscoveryStrategyConfig = {}) {
     // init the dns cache
-    this.dnsCache = DNSCache(config.dnsCacheConfig || Defaults.DNSCache)
+    this.dnsCache = DNSCache(config.dnsCacheConfig)
   }
 
   public resolveSrv(url): Promise<any[]> {

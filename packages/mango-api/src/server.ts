@@ -1,6 +1,6 @@
 // imports
 import './utils/almost'
-import RandomDiscoveryStrategy from './discovery/random'
+import SimpleRoundRobin from './discovery/simple'
 import { loadPlugins, createSchema, createQuery, createMutation } from './utils'
 import { Middleware } from './middleware'
 import { parseArgs } from './args'
@@ -11,6 +11,7 @@ import Env from './env'
 import Loader from './loader'
 import setup from './adapter/setup'
 
+// use retry
 const axiosRetry = require('axios-retry')
 
 // use default for import
@@ -54,6 +55,13 @@ const agent = {
   keepAlive: true
 }
 
+// dns cache config
+const dnsCacheConfig = {
+  enable: true,
+  ttl: 60 * 2,
+  cachesize: 100
+}
+
 // create axios instance
 const fetch = setup({
   baseURL: config.wp,
@@ -61,7 +69,8 @@ const fetch = setup({
   httpAgent: new http.Agent(agent),
   httpsAgent: new https.Agent(agent),
   cache: Env.Production, // use cache
-  discovery: RandomDiscoveryStrategy,
+  discovery: SimpleRoundRobin,
+  dnsCacheConfig,
   headers
 })
 

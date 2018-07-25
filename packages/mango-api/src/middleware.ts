@@ -2,17 +2,12 @@
 import { EventEmitter } from 'events'
 import * as GracefulShutdown from 'http-graceful-shutdown'
 import * as Koa from 'koa'
-import RandomDiscoveryStrategy from './discovery/random'
+import SimpleRoundRobin from './discovery/simple'
 import Env from './env'
 import logger from './logger'
 
 // apollo
 import { ApolloServer } from 'apollo-server-koa'
-
-// custom
-import ping from './ping'
-import health from './health'
-import { throws } from 'assert'
 
 export class Middleware extends EventEmitter {
 
