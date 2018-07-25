@@ -57,7 +57,7 @@ const agent = {
 
 // dns cache config
 const dnsCacheConfig = {
-  enable: true,
+  enable: Env.Production,
   ttl: 60 * 2,
   cachesize: 100
 }

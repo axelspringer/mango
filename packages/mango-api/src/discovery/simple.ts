@@ -1,7 +1,7 @@
 // use dns cache
 import DiscoveryStrategy from './strategy'
 import * as URL from 'url-parse'
-import { log, error } from '../utils/log'
+import { promisify } from 'util'
 import { DiscoveryStrategyConfig } from './strategy'
 
 export default class SimpleRoundRobin extends DiscoveryStrategy {
@@ -17,13 +17,8 @@ export default class SimpleRoundRobin extends DiscoveryStrategy {
 
   public async resolve(from) {
     const url = new URL(from)
-    const to = await this.resolveSrv(url)
+    const to = await promisify(this.dnsCache.resolveSrv)(url.hostname)
       .then(records => {
-        let cache, ns
-        [cache, ns] = records
-
-        // filter records
-        records = Array.isArray(cache) ? cache : Array.isArray(ns) ? ns : []
         if (records.length === 0) {
           return url
         }
@@ -32,8 +27,6 @@ export default class SimpleRoundRobin extends DiscoveryStrategy {
 
         url.set('hostname', record.name || url.hostname)
         url.set('port', record.port || url.port)
-
-        console.log(record)
 
         return url
       })

@@ -12,5 +12,4 @@ export default class DiscoveryStrategy {
     config: DiscoveryStrategyConfig;
     dnsCache: any;
     constructor(config?: DiscoveryStrategyConfig);
-    resolveSrv(url: any): Promise<any[]>;
 }
