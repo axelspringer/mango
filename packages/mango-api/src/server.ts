@@ -60,7 +60,7 @@ const fetch = setup({
   timeout: 60 * 60 * 1000, // wait 1 minute
   httpAgent: new http.Agent(agent),
   httpsAgent: new https.Agent(agent),
-  cache: true, // use cache
+  cache: Env.Production, // use cache
   discovery: RandomDiscoveryStrategy,
   headers
 })

@@ -1,12 +1,10 @@
 import axios from 'axios'
 import hashing from './hashing'
-import levelup from 'levelup'
-import memdown from 'memdown'
-import encode from 'encoding-down'
 import Defaults from './defaults'
 import Hashable from './hashable'
 import Cachable from './cachable'
 import { log, error } from '../utils/log'
+import * as LRU from 'lru-cache'
 
 export default function (config: any = {}) {
   // we should do asseration here
@@ -14,8 +12,11 @@ export default function (config: any = {}) {
   // create discovery
   const discovery = new config.discovery(config)
 
-  // create db
-  const db = levelup(encode(memdown(), { valueEncoding: 'json' })) // create database
+  //  create LRU
+  const cache = new LRU({
+    max: 500,
+    maxAge: config.cache ? 60 * 1000 : 0
+  })
 
   // axios adapter. receives the axios request config as only parameter
   async function adapter(req) {
@@ -36,38 +37,29 @@ export default function (config: any = {}) {
     // a hash that represents the query
     const hash = hashing(hashable)
 
-    // return promise to cache
-    const res = await db.get(hash, { asBuffer: false })
-      .then(cache => new Cachable(cache))
-      .then(cache => {
-        if ((Date.now() - cache.timestamp) >= Defaults.Time) {
-          throw new Error(`Cachable expired`)
+    // try to get object from cache
+    const cachable = cache.get(hash)
+
+    // if there should be nothing in the cache
+    if (!cachable) {
+      const res: any = await axios.defaults.adapter(req)
+
+      try { // try to cache
+        if (res.status === 200) {
+          cache.set(hash, JSON.stringify(new Cachable(res)))
         }
+      } catch (e) {
+        log(error(e))
+      }
 
-        cache.hit = true
-        cache.request = req
-        return cache
-      })
-      .catch(async (err) => { // err could also be update
-        log(error(err))
+      // indicate non hit
+      res.hit = false
 
-        const res: any = await axios.defaults.adapter(req)
+      return res
+    }
 
-        if (res.status !== 200) {
-          return res
-        }
-
-        try {
-          await db.put(hash, new Cachable(res))
-        } catch (e) {
-          log(error(e))
-        }
-
-        res.hit = false
-        return res
-      })
-
-    return res
+    // try to
+    return new Cachable(JSON.parse(cachable))
   }
 
   return {
