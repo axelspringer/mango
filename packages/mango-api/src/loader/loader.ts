@@ -1,11 +1,6 @@
 import { log, error } from '../utils/log'
 
 export default class Loader {
-
-  public addResolver(name, func) {
-    this[name] = func.bind(this)
-  }
-
   public async _fetcher(ctx, url, params = {}) {
     let data
     try {
