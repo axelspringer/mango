@@ -1,1 +1,2 @@
-export declare const CategoryType: any;
+declare const CategoryType: any;
+export default CategoryType;

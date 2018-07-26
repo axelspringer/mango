@@ -9,9 +9,10 @@ export declare class WP {
     static Users: string;
 }
 export declare class Mango {
-    static Permalink: string;
+    static PostByPermalink: string;
     static Post: string;
     static Customizer: string;
     static Media: string;
     static Slugs: string;
+    static Permalink: string;
 }

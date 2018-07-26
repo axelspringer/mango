@@ -1,7 +1,7 @@
 
 const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLInt } = require('graphql')
 import { GraphQLDateTime } from 'graphql-iso-date'
-import { CategoryType } from './catType'
+import CategoryType from './catType'
 import { UserType } from './userType'
 import TagType from './tagType'
 import MediaType from './mediaType'

@@ -3,7 +3,7 @@ import PostType from './postType'
 import PageType from './pageType'
 import ItemType from './itemType'
 import { SettingsType } from './settingsType'
-import { CategoryType } from './catType'
+import CategoryType from './catType'
 import MediaType from './mediaType'
 import TagType from './tagType'
 import TaxonomiesTypes from './taxonomiesTypes'
@@ -378,5 +378,18 @@ export default {
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.getCustomizer(ctx, args)
-  }
+  },
+
+  permalink: {
+    type: ItemType,
+    args: {
+      permalink: {
+        type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
+      }
+    }, // decide upon id, or permalink
+    resolve: (_root, args, ctx) => ctx.loader.getPermalink(ctx, args)
+  },
 }

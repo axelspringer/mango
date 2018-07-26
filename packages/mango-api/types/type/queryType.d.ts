@@ -354,5 +354,17 @@ declare const _default: {
         };
         resolve: (_root: any, args: any, ctx: any) => any;
     };
+    permalink: {
+        type: any;
+        args: {
+            permalink: {
+                type: any;
+            };
+            _embed: {
+                type: any;
+            };
+        };
+        resolve: (_root: any, args: any, ctx: any) => any;
+    };
 };
 export default _default;

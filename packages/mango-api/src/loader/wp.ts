@@ -1,6 +1,7 @@
 import {
   GetPost,
   GetPostPermalink,
+  GetPermalink,
   GetCustomizer,
   ListSlugs,
   ListPosts,
@@ -100,6 +101,11 @@ export default class WPLoader extends Loader {
 
   // fetch a post by permalink
   public async getPostPermalink(ctx, args: GetPostPermalink = {}) {
+    return this._fetcher(ctx, Mango.PostByPermalink, args)
+  }
+
+  // fetch an item to a permalink
+  public async getPermalink(ctx, args: GetPermalink = {}) {
     return this._fetcher(ctx, Mango.Permalink, args)
   }
 

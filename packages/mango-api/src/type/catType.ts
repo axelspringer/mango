@@ -2,7 +2,7 @@ const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLInt } = require('g
 import EmbeddedType from './embeddedType'
 import PolylangTranslationType from './polylangTranslationType'
 
-export const CategoryType = new GraphQLObjectType({
+const CategoryType = new GraphQLObjectType({
   name: 'WPCategory',
   description: 'Wordpress category object',
   fields: () => ({
@@ -64,3 +64,5 @@ export const CategoryType = new GraphQLObjectType({
     }
   })
 })
+
+export default CategoryType
