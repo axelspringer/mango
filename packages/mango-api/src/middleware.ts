@@ -2,7 +2,6 @@
 import { EventEmitter } from 'events'
 import * as GracefulShutdown from 'http-graceful-shutdown'
 import * as Koa from 'koa'
-import SimpleRoundRobin from './discovery/simple'
 import Env from './env'
 import logger from './logger'
 
@@ -25,8 +24,10 @@ export class Middleware extends EventEmitter {
     // Create Apollo Server
     this.apollo = new ApolloServer({
       schema,
-      tracing: Env.Development,
-      cacheControl: { defaultMaxAge: Env.Development ? 0 : 60 }, // cache in dev 0s, otherwise 60s
+      tracing: this.config.tracing,
+      cacheControl: {
+        defaultMaxAge: this.config.maxAge
+      }, // cache in dev 0s, otherwise 60s
       playground: Env.Development,
       context: this.ctx
     })

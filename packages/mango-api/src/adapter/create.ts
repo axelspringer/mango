@@ -13,7 +13,7 @@ export default function (config: any = {}) {
   //  create LRU
   const cache = new LRU({
     max: 500,
-    maxAge: config.cache ? 60 * 1000 : 0
+    maxAge: config.maxAge
   })
 
   // axios adapter. receives the axios request config as only parameter

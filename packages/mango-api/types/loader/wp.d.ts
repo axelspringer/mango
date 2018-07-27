@@ -5,10 +5,10 @@ export default class WPLoader extends Loader {
     getPosts(ctx: any, id: number, args?: ListPosts): Promise<any>;
     getCategory(ctx: any, id: number, args?: ListCategories, type?: Type): Promise<any>;
     getCategories(ctx: any, ids: [number], args?: ListCategories): Promise<any[]>;
-    getPolylangPosts(ctx: any, translations: Object, args?: ListPosts): Promise<any[]>;
-    getPolylangCategories(ctx: any, translations: Object, args?: ListPosts): Promise<any[]>;
-    getPolylangPages(ctx: any, translations: Object, args?: ListPosts): Promise<any[]>;
-    getPolylangTags(ctx: any, translations: Object, args?: ListPosts): Promise<any[]>;
+    getPolylangPosts(ctx: any, post: any, args?: ListPosts): Promise<any[]>;
+    getPolylangCategories(ctx: any, cat: any, args?: ListPosts): Promise<any[]>;
+    getPolylangPages(ctx: any, page: any, args?: ListPosts): Promise<any[]>;
+    getPolylangTags(ctx: any, tag: any, args?: ListPosts): Promise<any[]>;
     getImage(ctx: any, id: number, args?: {}): Promise<any>;
     getUser(ctx: any, id: number, args?: {}): Promise<any>;
     getPages(ctx: any, id: number, args?: ListPages): Promise<any>;

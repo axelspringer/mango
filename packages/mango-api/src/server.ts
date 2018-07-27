@@ -17,6 +17,18 @@ const { createLogger, format, transports } = require('winston')
 // config
 const config = parseArgs()
 
+// set maxAge
+config.maxAge = Env.Production ? Env.MaxAge : 0
+config.cache = Env.Production
+config.tracing = Env.Development
+
+// config set maxAge
+config.dns = {
+  enable: Env.Production,
+  ttl: Env.TTL,
+  cachesize: 100
+}
+
 // initialize loader
 const loader = new Loader() // contains the loaders
 const query = {} // should contain all queries
@@ -52,22 +64,16 @@ const agent = {
   keepAlive: true
 }
 
-// dns cache config
-const dnsCacheConfig = {
-  enable: true,
-  ttl: 60 * 2,
-  cachesize: 100
-}
-
 // create axios instance
 const fetch = setup({
   baseURL: config.wp,
   timeout: 60 * 1000, // wait 1 minute
   httpAgent: new http.Agent(agent),
   httpsAgent: new https.Agent(agent),
-  cache: Env.Production, // use cache
+  cache: config.cache, // use cache
   discovery: SimpleRoundRobin,
-  dnsCacheConfig,
+  dnsCacheConfig: config.dns,
+  maxAge: config.maxAge,
   headers
 })
 

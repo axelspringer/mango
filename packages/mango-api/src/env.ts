@@ -13,13 +13,17 @@ export const {
   SSM_HOST,
   SSM_TOKEN,
   SSM_SECRET,
+  SSM_MAX_AGE,
+  SSM_TTL,
   MANGO_WP,
   MANGO_ENV,
   MANGO_PORT,
   MANGO_PLUGINS,
   MANGO_HOST,
   MANGO_TOKEN,
-  MANGO_SECRET
+  MANGO_SECRET,
+  MANGO_MAX_AGE,
+  MANGO_TTL
 } = process.env
 
 export default class Environment {
@@ -30,6 +34,8 @@ export default class Environment {
   public static Host = SSM_HOST || MANGO_HOST || 'localhost'
   public static Token = SSM_TOKEN || MANGO_TOKEN || 'top_secret'
   public static Secret = SSM_SECRET || MANGO_SECRET || 'top_secret'
+  public static MaxAge = SSM_MAX_AGE ? parseInt(SSM_MAX_AGE) : MANGO_MAX_AGE ? parseInt(MANGO_MAX_AGE) : 60 * 1000
+  public static TTL = SSM_TTL ? parseInt(SSM_TTL) : MANGO_TTL ? parseInt(MANGO_TTL) : 60 * 2
 
   public static Runtime() {
     return Environment.Env !== 'development' ? 'production' : 'development'

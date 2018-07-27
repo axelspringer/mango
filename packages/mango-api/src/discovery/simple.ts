@@ -33,8 +33,6 @@ export default class SimpleRoundRobin extends DiscoveryStrategy {
         url.set('hostname', record.name || url.hostname)
         url.set('port', record.port || url.port)
 
-        console.log(record)
-
         return url
       })
 
