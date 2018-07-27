@@ -48,7 +48,7 @@ export default new GraphQLObjectType({
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (tag, args, ctx) => ctx.loader.getPolylangTags(ctx, tag.translations, args)
+      resolve: (tag, args, ctx) => ctx.loader.getPolylangTags(ctx, tag, args)
     },
     pagemanager: {
       type: EmbeddedType,

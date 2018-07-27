@@ -34,23 +34,23 @@ export default class WPLoader extends Loader {
   }
 
   // fetch posts
-  public async getPolylangPosts(ctx, translations: Object, args: ListPosts = {}) {
-    return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
+  public async getPolylangPosts(ctx, post: any, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(post.translations).map(trans => post.translations[trans] !== post.id ? this.getPost(ctx, post.translations[trans], args) : post)])
   }
 
   // fetch posts
-  public async getPolylangCategories(ctx, translations: Object, args: ListPosts = {}) {
-    return Promise.all([...Object.keys(translations).map(trans => this.getCategory(ctx, translations[trans], args, 'Object'))])
+  public async getPolylangCategories(ctx, cat: any, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(cat.translations).map(trans => cat.translations[trans] !== cat.id ? this.getCategory(ctx, cat.translations[trans], args, 'Object') : cat)])
   }
 
   // fetch posts
-  public async getPolylangPages(ctx, translations: Object, args: ListPosts = {}) {
-    return Promise.all([...Object.keys(translations).map(trans => this.getPost(ctx, translations[trans], args))])
+  public async getPolylangPages(ctx, page: any, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(page.translations).map(trans => page.translations[trans] !== page.id ? this.getPost(ctx, page.translations[trans], args) : page)])
   }
 
   // fetch posts
-  public async getPolylangTags(ctx, translations: Object, args: ListPosts = {}) {
-    return Promise.all([...Object.keys(translations).map(trans => this.getTag(ctx, translations[trans], args, 'Object'))])
+  public async getPolylangTags(ctx, tag: any, args: ListPosts = {}) {
+    return Promise.all([...Object.keys(tag.translations).map(trans => tag.translations[trans] !== tag.id ? this.getTag(ctx, tag.translations[trans], args, 'Object') : tag)])
   }
 
   // fetch image

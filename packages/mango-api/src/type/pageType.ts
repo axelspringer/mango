@@ -78,7 +78,7 @@ const pageType = new GraphQLObjectType({
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (page, args, ctx) => ctx.loader.getPolylangPages(ctx, page.translations, { ...args, preview: page.status !== Status.Publish })
+      resolve: (page, args, ctx) => ctx.loader.getPolylangPages(ctx, page, { ...args, preview: page.status !== Status.Publish })
     },
     meta: {
       type: new GraphQLList(GraphQLString),

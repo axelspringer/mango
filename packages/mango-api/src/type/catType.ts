@@ -40,7 +40,7 @@ const CategoryType = new GraphQLObjectType({
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (cat, args, ctx) => ctx.loader.getPolylangCategories(ctx, cat.translations, args)
+      resolve: (cat, args, ctx) => ctx.loader.getPolylangCategories(ctx, cat, args)
     },
     parent: {
       type: CategoryType,

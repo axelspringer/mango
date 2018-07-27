@@ -44,7 +44,7 @@ export default new GraphQLObjectType({
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (post, args, ctx) => ctx.loader.getPolylangPosts(ctx, post.translations, { ...args, preview: post.status !== Status.Publish })
+      resolve: (post, args, ctx) => ctx.loader.getPolylangPosts(ctx, post, { ...args, preview: post.status !== Status.Publish })
     },
     status: {
       type: GraphQLString,
