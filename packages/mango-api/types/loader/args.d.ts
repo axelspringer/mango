@@ -69,6 +69,7 @@ export declare type ListTaxonomies = {
 };
 export declare type GetPostPermalink = {
     permalink?: string;
+    lang?: string;
     _embed?: boolean;
 };
 export declare type GetPermalink = {

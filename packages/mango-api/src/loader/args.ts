@@ -79,6 +79,7 @@ export type ListTaxonomies = {
 
 export type GetPostPermalink = {
   permalink?: string
+  lang?: string
   _embed?: boolean
 }
 

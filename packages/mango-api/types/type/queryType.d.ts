@@ -360,6 +360,9 @@ declare const _default: {
             permalink: {
                 type: any;
             };
+            lang: {
+                type: any;
+            };
             _embed: {
                 type: any;
             };

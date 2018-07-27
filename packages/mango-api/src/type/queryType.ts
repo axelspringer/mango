@@ -386,6 +386,9 @@ export default {
       permalink: {
         type: GraphQLString
       },
+      lang: {
+        type: GraphQLString
+      },
       _embed: {
         type: GraphQLBoolean
       }

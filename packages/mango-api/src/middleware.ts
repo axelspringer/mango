@@ -22,8 +22,6 @@ export class Middleware extends EventEmitter {
     // Koa
     this.app = new Koa()
 
-    console.log(Env.Development)
-
     // Create Apollo Server
     this.apollo = new ApolloServer({
       schema,
