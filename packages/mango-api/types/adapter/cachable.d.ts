@@ -3,7 +3,6 @@ export default class Cachable {
     status: any;
     statusText: any;
     config: any;
-    headers: any;
     request: any;
     timestamp: any;
     constructor(res: any);
