@@ -66,7 +66,5 @@ export default class Loader {
       const job = this.queue.shift()
       job.fetch()
     }
-
-    resolvedPromise = undefined
   }
 }
