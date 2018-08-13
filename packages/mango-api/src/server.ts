@@ -11,9 +11,6 @@ import Env from './env'
 import Loader from './loader'
 import setup from './adapter/setup'
 
-// use default for import
-const { createLogger, format, transports } = require('winston')
-
 // config
 const config = parseArgs()
 
@@ -21,6 +18,8 @@ const config = parseArgs()
 config.maxAge = Env.Production ? Env.MaxAge : 0
 config.cache = Env.Production
 config.tracing = Env.Development
+config.auth = true
+config.jwtSecretKey = Env.JWTSecretKey
 
 // config set maxAge
 config.dns = {
@@ -36,22 +35,6 @@ const mutation = {} // should contain all mutation
 
 // load plugins
 loadPlugins(config.plugin, loader, query, mutation)
-
-// logger
-const logger = createLogger({
-  level: 'info',
-  format: format.simple(),
-  transports: [
-    // save for later
-    // new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    // new winston.transports.File({ filename: 'combined.log' })
-  ]
-})
-
-// add console transport in dev
-logger.add(new transports.Console({
-  format: format.simple()
-}))
 
 // headers to send with, X-MANGO-TOKEN, X-MANGO-SECRET
 const headers = {
@@ -89,5 +72,5 @@ const querySchema = createQuery(Object.assign(DefaultQuery, query))
 const mutationSchema = createMutation(Object.assign(DefaultMutation, mutation))
 
 // start middleware
-const middleware = new Middleware(ctx, config, createSchema(querySchema, mutationSchema), logger)
+const middleware = new Middleware(ctx, config, createSchema(querySchema, mutationSchema))
 middleware.start()

@@ -118,7 +118,7 @@ const pageType = new GraphQLObjectType({
     },
     parent: {
       type: pageType,
-      resolve: (page, args, ctx) => ctx.loader.getPost(ctx, page.parent, args)
+      resolve: (page, args, ctx) => page.parent !== 0 ? ctx.loader.getPages(ctx, page.parent, args) : null
     },
     acf: {
       type: EmbeddedType,

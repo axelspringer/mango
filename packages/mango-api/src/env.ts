@@ -15,6 +15,7 @@ export const {
   SSM_SECRET,
   SSM_MAX_AGE,
   SSM_TTL,
+  SSM_JWT_SECRET_KEY,
   MANGO_WP,
   MANGO_ENV,
   MANGO_PORT,
@@ -23,7 +24,8 @@ export const {
   MANGO_TOKEN,
   MANGO_SECRET,
   MANGO_MAX_AGE,
-  MANGO_TTL
+  MANGO_TTL,
+  MANGO_JWT_SECRET_KEY
 } = process.env
 
 export default class Environment {
@@ -36,6 +38,7 @@ export default class Environment {
   public static Secret = SSM_SECRET || MANGO_SECRET || 'top_secret'
   public static MaxAge = SSM_MAX_AGE ? parseInt(SSM_MAX_AGE) : MANGO_MAX_AGE ? parseInt(MANGO_MAX_AGE) : 60 * 1000
   public static TTL = SSM_TTL ? parseInt(SSM_TTL) : MANGO_TTL ? parseInt(MANGO_TTL) : 60 * 2
+  public static JWTSecretKey = SSM_JWT_SECRET_KEY || MANGO_JWT_SECRET_KEY // then its undefined
 
   public static Runtime() {
     return Environment.Env !== 'development' ? 'production' : 'development'

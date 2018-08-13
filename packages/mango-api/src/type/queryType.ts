@@ -9,6 +9,8 @@ import TagType from './tagType'
 import TaxonomiesTypes from './taxonomiesTypes'
 import EmbeddedType from './embeddedType'
 import SlugType from './slugType'
+import Auth from '../auth/auth'
+import { AccessDenied } from '../auth/error'
 
 export default {
   posts: {
@@ -338,7 +340,18 @@ export default {
         type: GraphQLBoolean
       }
     }, // decide upon id, or permalink
-    resolve: (_root, args, ctx) => args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
+    resolve: (_root, args, ctx) => {
+      const auth = new Auth(ctx.config.jwtSecretKey, ctx.req)
+      const query = args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
+
+      if (args.preview && ctx.config.auth) {
+        return auth.verify()
+          .then(() => query)
+          .catch(err => err)
+      }
+
+      return query
+    }
   },
 
   page: {
@@ -357,7 +370,18 @@ export default {
         type: GraphQLBoolean
       }
     },
-    resolve: (_root, args, ctx) => args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
+    resolve: (_root, args, ctx) => {
+      const auth = new Auth(ctx.config.jwtSecretKey, ctx.req)
+      const query = args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
+
+      if (args.preview && ctx.config.auth) {
+        return auth.verify()
+          .then(() => query)
+          .catch(err => err)
+      }
+
+      return query
+    }
   },
 
   media: {

@@ -15,7 +15,8 @@ export class Middleware extends EventEmitter {
   public listener
   public apollo: ApolloServer
 
-  constructor(public ctx, public config, public schema, public log) {
+  constructor(public ctx, public config, public schema) {
+    // call to super
     super()
 
     // Koa
@@ -33,7 +34,7 @@ export class Middleware extends EventEmitter {
       context: ({ ctx }) => ({ ...this.ctx, req: ctx.request })
     })
 
-    // Middlewares
+    // Configure other middlewares
     this.app.use(logger())
 
     // Custom error

@@ -13,6 +13,7 @@ export class Job {
   })
 
   constructor(public ctx, public url, public params = {}) {
+    console.log({ url, params })
     this.key = sha256(JSON.stringify({ url, params }))
   }
 
