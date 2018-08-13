@@ -29,7 +29,8 @@ export class Middleware extends EventEmitter {
         defaultMaxAge: this.config.maxAge
       }, // cache in dev 0s, otherwise 60s
       playground: Env.Development,
-      context: this.ctx
+      // create context in request
+      context: ({ ctx }) => ({ ...this.ctx, req: ctx.request })
     })
 
     // Middlewares

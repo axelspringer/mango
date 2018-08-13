@@ -8,37 +8,37 @@ export default {
     }
 
     if ('category' === args.currentPageType && args.id) {
-      return await this._fetcher(ctx, [API.PageManagerCategories, args.id].join('/'), args)
+      return await this.job(ctx, [API.PageManagerCategories, args.id].join('/'), args)
     }
 
     if ('post_tag' === args.currentPageType && args.id) {
-      return await this._fetcher(ctx, [API.PageManagerTags, args.id].join('/'), args)
+      return await this.job(ctx, [API.PageManagerTags, args.id].join('/'), args)
     }
 
     if ('post' === args.currentPageType && args.id) {
-      return await this._fetcher(ctx, [API.PageManagerPosts, args.id].join('/'), args)
+      return await this.job(ctx, [API.PageManagerPosts, args.id].join('/'), args)
     }
 
     if ('page' === args.currentPageType && args.id) {
-      return await this._fetcher(ctx, [API.PageManagerPages, args.id].join('/'), args)
+      return await this.job(ctx, [API.PageManagerPages, args.id].join('/'), args)
     }
 
     if ('home' === args.currentPageType && args.language) {
-      return await this._fetcher(ctx, [API.PageManagerGlobal, 'home', args.language].join('/'), args)
+      return await this.job(ctx, [API.PageManagerGlobal, 'home', args.language].join('/'), args)
     }
 
     if ('global' === args.currentPageType && args.section && args.language) {
-      return await this._fetcher(ctx, [API.PageManagerGlobal, args.section, args.language].join('/'), args)
+      return await this.job(ctx, [API.PageManagerGlobal, args.section, args.language].join('/'), args)
     }
 
     if ('language' === args.currentPageType) {
-      return await this._fetcher(ctx, API.PageManagerLanguages, args)
+      return await this.job(ctx, API.PageManagerLanguages, args)
     }
 
     return null
   },
 
   async getPageManagerLanguages(ctx: GraphQLContext, args = {}) {
-    return await this._fetcher(ctx, API.PageManagerLanguages, args)
+    return await this.job(ctx, API.PageManagerLanguages, args)
   }
 }

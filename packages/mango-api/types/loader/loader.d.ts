@@ -1,4 +1,19 @@
+export declare const enqueuePostPromiseJob: (fn: any) => void;
+export declare class Job {
+    ctx: any;
+    url: any;
+    params: {};
+    resolve: any;
+    reject: any;
+    key: any;
+    promise: Promise<{}>;
+    constructor(ctx: any, url: any, params?: {});
+    fetch(): any;
+}
 export default class Loader {
+    queue: Job[];
+    resolvedQ: any;
     addResolver(name: any, func: any): void;
-    _fetcher(ctx: any, url: any, params?: {}): Promise<any>;
+    job(ctx: any, url: any, params?: {}): Promise<{}>;
+    dispatch(): void;
 }
