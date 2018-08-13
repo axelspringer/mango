@@ -1,16 +1,6 @@
 import { log, error } from '../utils/log'
 import { sha256 } from 'js-sha256'
-
-let resolvedPromise
-
-export const enqueuePostPromiseJob = typeof process === 'object' && typeof process.nextTick === 'function' ?
-  function (fn) {
-    if (!resolvedPromise) {
-      resolvedPromise = Promise.resolve()
-    }
-    resolvedPromise.then(() => process.nextTick(fn))
-  } :
-  setImmediate || setTimeout
+import enqueuePostPromiseJob from '../utils/enqueue'
 
 export class Job {
   public resolve
@@ -35,7 +25,7 @@ export class Job {
 
 export default class Loader {
   public queue: Job[] = []
-  public resolvedQ
+  public promise: Promise<any>
 
   public addResolver(name, func) {
     this[name] = func.bind(this)
@@ -54,7 +44,7 @@ export default class Loader {
     }
 
     if (this.queue.length === 1) {
-      enqueuePostPromiseJob(() => this.dispatch())
+      enqueuePostPromiseJob(this.promise, () => this.dispatch())
     }
 
     return job.promise

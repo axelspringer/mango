@@ -1,4 +1,3 @@
-export declare const enqueuePostPromiseJob: (fn: any) => void;
 export declare class Job {
     ctx: any;
     url: any;
@@ -12,7 +11,7 @@ export declare class Job {
 }
 export default class Loader {
     queue: Job[];
-    resolvedQ: any;
+    promise: Promise<any>;
     addResolver(name: any, func: any): void;
     job(ctx: any, url: any, params?: {}): Promise<{}>;
     dispatch(): void;
