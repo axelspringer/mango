@@ -13,14 +13,13 @@ export class Job {
   })
 
   constructor(public ctx, public url, public params = {}) {
-    console.log({ url, params })
     this.key = sha256(JSON.stringify({ url, params }))
   }
 
   public fetch() {
     return this.ctx.axios.get(this.url, { params: this.params })
       .then(res => this.resolve(res.data))
-      .catch(() => this.reject(null))
+      .catch(() => this.resolve(null))
   }
 }
 
