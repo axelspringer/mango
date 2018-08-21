@@ -10,10 +10,6 @@ export default new GraphQLUnionType({
       return PageType
     }
 
-    if (data.type === 'post') {
-      return PostType
-    }
-
-    return null // do nothing if not matched
+    return PostType
   }
 })

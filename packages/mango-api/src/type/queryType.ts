@@ -448,7 +448,7 @@ export default {
       }
     },
     resolve: (_root, args, ctx) => {
-      return ctx.loader.getSearch(ctx, args.query, args.first, args)
+      return ctx.loader.getSearch(ctx, args.query, args.first)
     }
   }
 }
