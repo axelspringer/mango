@@ -3,6 +3,8 @@ export declare type ListPost = {
     id?: number;
     permalink?: string;
 };
+export interface GetSearch {
+}
 export declare type Context = 'view' | 'embed' | 'edit';
 export declare type Order = 'desc' | 'asc';
 export declare type OrderByPosts = 'author' | 'date' | 'id' | 'include' | 'modified' | 'parent' | 'relevance' | 'slug' | 'title';

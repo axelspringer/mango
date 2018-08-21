@@ -16,4 +16,5 @@ export class Mango {
   public static Media = '/mango/v1/media'
   public static Slugs = '/mango/v1/slugs'
   public static Permalink = '/mango/v1/permalink'
+  public static Search = '/mango/v1/search'
 }

@@ -369,5 +369,18 @@ declare const _default: {
         };
         resolve: (_root: any, args: any, ctx: any) => any;
     };
+    search: {
+        type: any;
+        args: {
+            query: {
+                type: any;
+                required: boolean;
+            };
+            first: {
+                type: any;
+            };
+        };
+        resolve: (_root: any, args: any, ctx: any) => any;
+    };
 };
 export default _default;

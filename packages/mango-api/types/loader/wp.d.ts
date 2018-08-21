@@ -1,4 +1,4 @@
-import { GetPost, GetPostPermalink, GetPermalink, GetCustomizer, ListSlugs, ListPosts, ListCategories, ListTags, ListTaxonomies, ListPages } from './args';
+import { GetPost, GetPostPermalink, GetPermalink, GetSearch, GetCustomizer, ListSlugs, ListPosts, ListCategories, ListTags, ListTaxonomies, ListPages } from './args';
 import Loader from './loader';
 import { Type } from './response';
 export default class WPLoader extends Loader {
@@ -23,4 +23,5 @@ export default class WPLoader extends Loader {
     getCustomizer(ctx: any, args?: GetCustomizer): Promise<{}>;
     getMediaItem(ctx: any, id: number, args?: {}): Promise<{}>;
     getSlugs(ctx: any, args?: ListSlugs): Promise<{}>;
+    getSearch(ctx: any, search: any, page?: number, args?: GetSearch): Promise<any[]>;
 }

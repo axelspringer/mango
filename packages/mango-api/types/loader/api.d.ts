@@ -15,4 +15,5 @@ export declare class Mango {
     static Media: string;
     static Slugs: string;
     static Permalink: string;
+    static Search: string;
 }

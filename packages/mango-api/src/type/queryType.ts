@@ -1,7 +1,13 @@
-const { GraphQLString, GraphQLList, GraphQLInt, GraphQLBoolean } = require('graphql')
+const {
+  GraphQLString,
+  GraphQLList,
+  GraphQLInt,
+  GraphQLBoolean
+} = require('graphql')
 import PostType from './postType'
 import PageType from './pageType'
 import ItemType from './itemType'
+import SearchResultType from './searchResultType'
 import { SettingsType } from './settingsType'
 import CategoryType from './catType'
 import MediaType from './mediaType'
@@ -154,7 +160,6 @@ export default {
     resolve: (_, args, ctx) => ctx.loader.getSlugs(ctx, args)
   },
 
-
   settings: {
     type: SettingsType,
     resolve: (_root, _args, ctx) => ctx.loader.getSettings(ctx)
@@ -247,7 +252,8 @@ export default {
         type: GraphQLBoolean
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getTag(ctx, args.id, args, 'Object')
+    resolve: (_root, args, ctx) =>
+      ctx.loader.getTag(ctx, args.id, args, 'Object')
   },
 
   categories: {
@@ -321,7 +327,8 @@ export default {
         type: GraphQLInt
       }
     },
-    resolve: (_root, args, ctx) => ctx.loader.getCategory(ctx, args.id, args, 'Object')
+    resolve: (_root, args, ctx) =>
+      ctx.loader.getCategory(ctx, args.id, args, 'Object')
   },
 
   post: {
@@ -333,7 +340,8 @@ export default {
       permalink: {
         type: GraphQLString
       },
-      preview: { // this needs to be authenticated later
+      preview: {
+        // this needs to be authenticated later
         type: GraphQLBoolean
       },
       _embed: {
@@ -342,10 +350,13 @@ export default {
     }, // decide upon id, or permalink
     resolve: (_root, args, ctx) => {
       const auth = new Auth(ctx.config.jwtSecretKey, ctx.req)
-      const query = args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
+      const query = args.id
+        ? ctx.loader.getPost(ctx, args.id, args)
+        : ctx.loader.getPostPermalink(ctx, args)
 
       if (args.preview && ctx.config.auth) {
-        return auth.verify()
+        return auth
+          .verify()
           .then(() => query)
           .catch(err => err)
       }
@@ -363,7 +374,8 @@ export default {
       permalink: {
         type: GraphQLString
       },
-      preview: { // this needs to be authenticated later
+      preview: {
+        // this needs to be authenticated later
         type: GraphQLBoolean
       },
       _embed: {
@@ -372,10 +384,13 @@ export default {
     },
     resolve: (_root, args, ctx) => {
       const auth = new Auth(ctx.config.jwtSecretKey, ctx.req)
-      const query = args.id ? ctx.loader.getPost(ctx, args.id, args) : ctx.loader.getPostPermalink(ctx, args)
+      const query = args.id
+        ? ctx.loader.getPost(ctx, args.id, args)
+        : ctx.loader.getPostPermalink(ctx, args)
 
       if (args.preview && ctx.config.auth) {
-        return auth.verify()
+        return auth
+          .verify()
           .then(() => query)
           .catch(err => err)
       }
@@ -419,4 +434,21 @@ export default {
     }, // decide upon id, or permalink
     resolve: (_root, args, ctx) => ctx.loader.getPermalink(ctx, args)
   },
+
+  search: {
+    type: new GraphQLList(SearchResultType),
+    args: {
+      query: {
+        type: GraphQLString,
+        required: true
+      },
+      first: {
+        // save for later to limit results
+        type: GraphQLInt
+      }
+    },
+    resolve: (_root, args, ctx) => {
+      return ctx.loader.getSearch(ctx, args.query, args.first, args)
+    }
+  }
 }

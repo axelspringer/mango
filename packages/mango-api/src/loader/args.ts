@@ -4,15 +4,33 @@ export type ListPost = {
   permalink?: string
 }
 
+export interface GetSearch {}
+
 export type Context = 'view' | 'embed' | 'edit'
 
 export type Order = 'desc' | 'asc'
 
-export type OrderByPosts = 'author' | 'date' | 'id' | 'include' | 'modified' | 'parent' | 'relevance' | 'slug' | 'title'
+export type OrderByPosts =
+  | 'author'
+  | 'date'
+  | 'id'
+  | 'include'
+  | 'modified'
+  | 'parent'
+  | 'relevance'
+  | 'slug'
+  | 'title'
 
 export type Status = 'publish'
 
-export type OrderByCategories = 'id' | 'include' | 'name' | 'slug' | 'term_group' | 'description' | 'count'
+export type OrderByCategories =
+  | 'id'
+  | 'include'
+  | 'name'
+  | 'slug'
+  | 'term_group'
+  | 'description'
+  | 'count'
 
 export type ListPosts = {
   context?: Context
@@ -48,8 +66,8 @@ export type ListPages = {
   orderby?: OrderByPosts
   slug?: string[]
   status?: Status
-  menu_order?: number,
-  author_exclude?: number,
+  menu_order?: number
+  author_exclude?: number
   tags?: string[]
   tags_exclude?: string[]
   order?: Order
@@ -68,7 +86,7 @@ export type ListTags = {
   hide_empty?: boolean
   parent?: number
   post?: number
-  slug?: string[],
+  slug?: string[]
   _embed?: boolean
 }
 
@@ -89,8 +107,8 @@ export type GetPermalink = {
 }
 
 export type GetPostPreview = {
-  id?: number,
-  preview?: boolean,
+  id?: number
+  preview?: boolean
   _embed?: boolean
 }
 
