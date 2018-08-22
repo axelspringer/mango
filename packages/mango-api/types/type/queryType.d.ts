@@ -376,7 +376,7 @@ declare const _default: {
                 type: any;
                 required: boolean;
             };
-            first: {
+            page: {
                 type: any;
             };
         };

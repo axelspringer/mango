@@ -199,8 +199,7 @@ export default class WPLoader extends Loader {
   // fetch search
   public async getSearch(ctx, search, page = 1, args: GetSearch = {}) {
     search = search.replace(/ /g, '+') // format string
-    return this.job(ctx, [Mango.Search, search, page].join('/'), args).then(
-      (data: SearchResult) => data.result
-    )
+    console.log([Mango.Search, search, page].join('/'))
+    return this.job(ctx, [Mango.Search, search, page].join('/'), args)
   }
 }

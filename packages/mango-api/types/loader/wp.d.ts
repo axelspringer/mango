@@ -23,5 +23,5 @@ export default class WPLoader extends Loader {
     getCustomizer(ctx: any, args?: GetCustomizer): Promise<{}>;
     getMediaItem(ctx: any, id: number, args?: {}): Promise<{}>;
     getSlugs(ctx: any, args?: ListSlugs): Promise<{}>;
-    getSearch(ctx: any, search: any, page?: number, args?: GetSearch): Promise<any[]>;
+    getSearch(ctx: any, search: any, page?: number, args?: GetSearch): Promise<{}>;
 }

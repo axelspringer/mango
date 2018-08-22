@@ -1,15 +1,20 @@
-const { GraphQLUnionType } = require('graphql')
-import PageType from './pageType'
-import PostType from './postType'
+const { GraphQLObjectType, GraphQLList, GraphQLInt } = require('graphql')
+import SearchResultItemType from './searchResultItemType'
 
-export default new GraphQLUnionType({
-  name: 'SearchResultType',
-  types: [PageType, PostType],
-  resolveType: data => {
-    if (data.type === 'page') {
-      return PageType
+export default new GraphQLObjectType({
+  name: 'SearchResult',
+  fields: () => ({
+    result: {
+      type: new GraphQLList(SearchResultItemType),
+      resolve: search => search.result
+    },
+    perPage: {
+      type: GraphQLInt,
+      resolve: search => search.per_page
+    },
+    page: {
+      type: GraphQLInt,
+      resolve: search => search.page
     }
-
-    return PostType
-  }
+  })
 })

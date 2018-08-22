@@ -7,7 +7,7 @@ const {
 import PostType from './postType'
 import PageType from './pageType'
 import ItemType from './itemType'
-import SearchResultType from './searchResultType'
+import SearchType from './searchResultType'
 import { SettingsType } from './settingsType'
 import CategoryType from './catType'
 import MediaType from './mediaType'
@@ -436,7 +436,7 @@ export default {
   },
 
   search: {
-    type: new GraphQLList(SearchResultType),
+    type: SearchType,
     args: {
       query: {
         type: GraphQLString,
