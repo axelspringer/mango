@@ -442,13 +442,13 @@ export default {
         type: GraphQLString,
         required: true
       },
-      first: {
+      page: {
         // save for later to limit results
         type: GraphQLInt
       }
     },
     resolve: (_root, args, ctx) => {
-      return ctx.loader.getSearch(ctx, args.query, args.first)
+      return ctx.loader.getSearch(ctx, args.query, args.page)
     }
   }
 }
