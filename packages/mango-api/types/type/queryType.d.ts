@@ -376,6 +376,9 @@ declare const _default: {
                 type: any;
                 required: boolean;
             };
+            lang: {
+                type: any;
+            };
             page: {
                 type: any;
             };

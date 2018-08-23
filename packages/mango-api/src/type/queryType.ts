@@ -16,7 +16,7 @@ import TaxonomiesTypes from './taxonomiesTypes'
 import EmbeddedType from './embeddedType'
 import SlugType from './slugType'
 import Auth from '../auth/auth'
-import { AccessDenied } from '../auth/error'
+import omit from '../utils/omit'
 
 export default {
   posts: {
@@ -442,13 +442,21 @@ export default {
         type: GraphQLString,
         required: true
       },
+      lang: {
+        type: GraphQLString
+      },
       page: {
         // save for later to limit results
         type: GraphQLInt
       }
     },
     resolve: (_root, args, ctx) => {
-      return ctx.loader.getSearch(ctx, args.query, args.page)
+      return ctx.loader.getSearch(
+        ctx,
+        args.query,
+        args.page,
+        omit(args, ['query', 'page'])
+      )
     }
   }
 }

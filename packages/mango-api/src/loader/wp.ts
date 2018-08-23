@@ -12,8 +12,9 @@ import {
   ListPages
 } from './args'
 import Loader from './loader'
-import { Type, SearchResult } from './response'
+import { Type } from './response'
 import { WP, Mango } from './api'
+import { toQuery } from '../utils/search'
 
 // posts loader
 export default class WPLoader extends Loader {
@@ -198,8 +199,6 @@ export default class WPLoader extends Loader {
 
   // fetch search
   public async getSearch(ctx, search, page = 1, args: GetSearch = {}) {
-    search = search.replace(/ /g, '+') // format string
-    console.log([Mango.Search, search, page].join('/'))
-    return this.job(ctx, [Mango.Search, search, page].join('/'), args)
+    return this.job(ctx, [Mango.Search, toQuery(search), page].join('/'), args)
   }
 }
