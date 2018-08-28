@@ -199,6 +199,10 @@ export default class WPLoader extends Loader {
 
   // fetch search
   public async getSearch(ctx, search, page = 1, args: GetSearch = {}) {
-    return this.job(ctx, [Mango.Search, toQuery(search), page].join('/'), args)
+    return this.job(
+      ctx,
+      [Mango.Search, encodeURI(toQuery(search)), page].join('/'),
+      args
+    )
   }
 }
