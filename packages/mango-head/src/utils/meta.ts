@@ -2,7 +2,7 @@
  * Standard tags
  */
 export const defaultAttrs = ['http-equiv', 'charset']
-export const defaultValues = ['viewport']
+export const defaultValues = ['viewport', 'google-site-verification']
 
 /**
  * Create meta tags
