@@ -8,12 +8,12 @@ export default class Loader {
   public async _fetcher(ctx, url, params = {}, isGet: boolean = true) {
     let data
     try {
-      if (true === isGet) {
-        data = await ctx.axios.get(url, { params }).then(res => res.data)
+      if (!isGet) {
+        data = await ctx.axios.post(url, { params }).then(res => res.data)
       }
       
-      if (false === isGet) {
-        data = await ctx.axios.post(url, { params }).then(res => res.data)
+      if (isGet) {
+        data = await ctx.axios.get(url, { params }).then(res => res.data)
       }
     } catch (err) {
       log(error(err))
