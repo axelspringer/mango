@@ -22,7 +22,7 @@ export default class Loader {
     let data
 
     try {
-      data = await ctx.axions.post(url, { params }).then(res => res.data)
+      data = await ctx.axios.post(url, { params }).then(res => res.data)
     } catch (err) {
       log(error(err))
 
