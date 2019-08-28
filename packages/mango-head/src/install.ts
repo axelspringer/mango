@@ -1,5 +1,4 @@
-import title from './mixins/title'
-import tags from './mixins/tags'
+import Context from './mixins/context/context'
 
 export let _Vue
 
@@ -12,6 +11,5 @@ export function install(Vue) {
 
   _Vue = Vue
 
-  Vue.mixin(title)
-  Vue.mixin(tags)
+  Vue.mixin(Context)
 }

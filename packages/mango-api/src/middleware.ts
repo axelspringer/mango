@@ -1,39 +1,39 @@
 // imports
 import { EventEmitter } from 'events'
-import * as cors from '@koa/cors'
 import * as GracefulShutdown from 'http-graceful-shutdown'
 import * as Koa from 'koa'
-import * as koaBody from 'koa-bodyparser'
-import * as koaRouter from 'koa-router'
 import Env from './env'
 import logger from './logger'
 
 // apollo
-import { graphqlKoa, graphiqlKoa } from 'apollo-server-koa'
-
-// custom
-import ping from './ping'
-import health from './health'
+import { ApolloServer } from 'apollo-server-koa'
 
 export class Middleware extends EventEmitter {
 
   public app: Koa
-  public router: koaRouter
   public adapter: any
   public listener
+  public apollo: ApolloServer
 
   constructor(public ctx, public config, public schema, public log) {
     super()
 
     // Koa
     this.app = new Koa()
-    this.router = new koaRouter()
+
+    // Create Apollo Server
+    this.apollo = new ApolloServer({
+      schema,
+      tracing: this.config.tracing,
+      cacheControl: {
+        defaultMaxAge: this.config.maxAge
+      }, // cache in dev 0s, otherwise 60s
+      playground: Env.Development,
+      context: this.ctx
+    })
 
     // Middlewares
     this.app.use(logger())
-    this.app.use(cors({ origin: '*' }))
-    this.app.use(this.router.routes())
-    this.app.use(this.router.allowedMethods())
 
     // Custom error
     this.app.use(async (_, next) => {
@@ -44,29 +44,12 @@ export class Middleware extends EventEmitter {
       }
     })
 
-    // Health
-    this.router.get('/', health)
-
-    // Ping
-    this.router.get('/ping', ping)
-
-    // GraphQL
-    this.router.post('/graphql', koaBody(), graphqlKoa({
-      schema, context: this.ctx,
-      tracing: Env.Development,
-      cacheControl: !Env.Development
-    }))
-
-    this.router.get('/graphql', graphqlKoa({
-      schema, context: this.ctx,
-      tracing: Env.Development,
-      cacheControl: !Env.Development
-    }))
-
-    // enable GraphiQL only in dev
-    if (Env.Development) {
-      this.router.get('/graphiql', graphiqlKoa({ endpointURL: '/graphql' }))
-    }
+    // Apply Apollo Middleware
+    this.apollo.applyMiddleware({
+      app: this.app,
+      path: '/graphql',
+      cors: { origin: '*' }
+    })
   }
 
   // run the middleware

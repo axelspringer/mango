@@ -69,6 +69,11 @@ export declare type ListTaxonomies = {
 };
 export declare type GetPostPermalink = {
     permalink?: string;
+    lang?: string;
+    _embed?: boolean;
+};
+export declare type GetPermalink = {
+    permalink?: string;
     _embed?: boolean;
 };
 export declare type GetPostPreview = {
@@ -95,5 +100,10 @@ export declare type ListCategories = {
     parent?: number;
     post?: number;
     slug?: string[];
+    _embed?: boolean;
+};
+export declare type ListSlugs = {
+    slug?: string[];
+    preview?: boolean;
     _embed?: boolean;
 };

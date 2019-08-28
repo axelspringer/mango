@@ -25,10 +25,3 @@ before_install:
 script:
 - npm run build
 - npm run test
-deploy:
- provider: script
- skip_cleanup: true
- script: scripts/deploy.sh
- on:
-   branch: master
-   tags: false

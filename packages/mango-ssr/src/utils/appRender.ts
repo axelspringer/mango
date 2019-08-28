@@ -1,6 +1,7 @@
 import SSRContext from '../context'
 import setHeaders from './setHeaders'
 import * as LRU from 'lru-cache'
+import renderBundleTimeout from './renderBundleTimeout'
 
 const microCache = LRU({
   max: 100,
@@ -9,27 +10,9 @@ const microCache = LRU({
 
 const isCacheable = req => req.method === 'GET'
 
-function render(renderer, ctx, context) {
-  return new Promise((resolve, reject) => {
-    const timeout = setTimeout(function () { // set a timeout for render
-      reject('Render Timeout')
-    }, 60 * 1000) // this is artifical
-
-    renderer.renderToString(context, (err, html) => {
-      clearTimeout(timeout) // clean-up
-      if (err) {
-        reject(err)
-      }
-      resolve(html)
-    }) // wait to render string
-  })
-    .then(html => html) //
-    .catch(err => ctx.throw(500, err))
-}
-
 export default async (ctx, next) => {
   const { renderer } = ctx.state
-  const context = new SSRContext(ctx.req)
+  const context = new SSRContext(ctx)
 
   if (!renderer) {
     ctx.body = 'waiting for compilation... refresh in a moment.'
@@ -47,13 +30,17 @@ export default async (ctx, next) => {
     }
 
     if (!hit) {
-      ctx.body = await render(renderer, ctx, context) // wait for render
-      microCache.set(ctx.req.url, ctx.body)
+      ctx.body = await renderBundleTimeout(renderer, ctx, context) // wait for render
+      ctx.status = context.statusCode || ctx.status
+      if (ctx.status === 200) { // checking implicit for explicit status
+        microCache.set(ctx.req.url, ctx.body)
+      }
     }
   }
 
   if (!cacheable) {
-    await render(renderer, ctx, context) // wait for render
+    ctx.status = context.statusCode || ctx.status
+    ctx.body = await renderBundleTimeout(renderer, ctx, context) // wait for render
   }
 
   setHeaders(ctx, { 'Content-Type': 'text/html' })

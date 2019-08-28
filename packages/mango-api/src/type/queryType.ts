@@ -1,12 +1,14 @@
 const { GraphQLString, GraphQLList, GraphQLInt, GraphQLBoolean } = require('graphql')
 import PostType from './postType'
 import PageType from './pageType'
+import ItemType from './itemType'
 import { SettingsType } from './settingsType'
-import { CategoryType } from './catType'
+import CategoryType from './catType'
 import MediaType from './mediaType'
 import TagType from './tagType'
 import TaxonomiesTypes from './taxonomiesTypes'
 import EmbeddedType from './embeddedType'
+import SlugType from './slugType'
 
 export default {
   posts: {
@@ -57,11 +59,17 @@ export default {
       categories_exclude: {
         type: new GraphQLList(GraphQLString)
       },
+      tags: {
+        type: new GraphQLList(GraphQLString)
+      },
+      tags_exclude: {
+        type: new GraphQLList(GraphQLString)
+      },
       _embed: {
         type: GraphQLBoolean
       }
     },
-    resolve: (_, args, ctx) => ctx.loader.getPosts(ctx, args.id, args)
+    resolve: (_root, args, ctx) => ctx.loader.getPosts(ctx, args.id, args)
   },
 
   pages: {
@@ -127,6 +135,23 @@ export default {
     },
     resolve: (_, args, ctx) => ctx.loader.getPages(ctx, args.id, args)
   },
+
+  slugs: {
+    type: new GraphQLList(SlugType),
+    args: {
+      slug: {
+        type: new GraphQLList(GraphQLString)
+      },
+      preview: {
+        type: GraphQLBoolean
+      },
+      _embed: {
+        type: GraphQLBoolean
+      }
+    },
+    resolve: (_, args, ctx) => ctx.loader.getSlugs(ctx, args)
+  },
+
   settings: {
     type: SettingsType,
     resolve: (_root, _args, ctx) => ctx.loader.getSettings(ctx)
@@ -297,7 +322,7 @@ export default {
   },
 
   post: {
-    type: PostType,
+    type: ItemType,
     args: {
       id: {
         type: GraphQLInt // the id takes presence
@@ -352,5 +377,21 @@ export default {
       }
     },
     resolve: (_root, args, ctx) => ctx.loader.getCustomizer(ctx, args)
-  }
+  },
+
+  permalink: {
+    type: ItemType,
+    args: {
+      permalink: {
+        type: GraphQLString
+      },
+      lang: {
+        type: GraphQLString
+      },
+      _embed: {
+        type: GraphQLBoolean
+      }
+    }, // decide upon id, or permalink
+    resolve: (_root, args, ctx) => ctx.loader.getPermalink(ctx, args)
+  },
 }

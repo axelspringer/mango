@@ -19,10 +19,10 @@ import { join } from 'upath'
  * @api public
  */
 export default function serve(opts) {
-  assert(typeof opts.rootDir === 'string', 'rootDir must be specified (as a string)')
+  assert(typeof opts.root === 'string', 'rootDir must be specified (as a string)')
 
   const options = opts || {}
-  options.root = path.resolve(options.rootDir || process.cwd())
+  options.root = path.resolve(options.root || process.cwd())
   // const log = options.log || false
 
   return async (ctx, next) => {
@@ -30,6 +30,7 @@ export default function serve(opts) {
 
     let stats
 
+    const fallthrough = /^\/static\/(.+)/i.test(ctx.path)
     const dir = ctx.path.replace(/^\/static/, '') // parse static
     const file = join(options.root, dir)
 
@@ -37,11 +38,15 @@ export default function serve(opts) {
       stats = fs.lstatSync(file);
     }
     catch (e) {
+      if (fallthrough) {
+        ctx.throw(404, 'Not Found')
+      }
+
       return next() // could not fetch any data
     }
 
     if (!stats.isFile()) {
-      return next() // if there is no file
+      return next()
     }
 
     // skip if this is not a GET/HEAD request
@@ -51,7 +56,8 @@ export default function serve(opts) {
 
     let sent
 
-    /* In case of error from koa-send try to serve the default static file
+    /**
+     * In case of error from koa-send try to serve the default static file
      * eg. 404 error page or image that illustrates error
      */
     try {

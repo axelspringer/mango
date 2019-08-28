@@ -1,1 +1,2 @@
-export declare const Language: any;
+import { GraphQLObjectType } from 'graphql';
+export declare const Language: GraphQLObjectType;

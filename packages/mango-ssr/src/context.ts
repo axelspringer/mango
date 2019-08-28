@@ -3,8 +3,11 @@ export default class SSRContext {
   public rawHeaders
   public headers
   public methods
+  public statusCode
 
-  constructor(req: Express.Request) {
+  constructor(public ctx) {
+    // backwards compatibility
+    const { req } = ctx
     const { url, headers, rawHeaders, methods }: any = req
 
     this.url = url || this.url

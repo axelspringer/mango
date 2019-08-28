@@ -26,6 +26,12 @@ export function install(Vue) {
     }
   });
 
+  Object.defineProperty(Vue.prototype, '$block', {
+    get: function get() {
+      return this._pageblock
+    }
+  });
+
   Object.defineProperty(Vue.prototype, '$pageblock', {
     get: function get() {
       return this._pageblock && this._pageblock.result ? this._pageblock.result : undefined
@@ -47,6 +53,12 @@ export function install(Vue) {
   Object.defineProperty(Vue.prototype, '$blockIndex', {
     get: function get() {
       return this._pageblock && this._pageblock.index !== undefined ? this._pageblock.index : undefined
+    }
+  });
+
+  Object.defineProperty(Vue.prototype, '$blockPageType', {
+    get: function get() {
+      return this._pageblock && this._pageblock.page_type ? this._pageblock.page_type : undefined
     }
   });
 

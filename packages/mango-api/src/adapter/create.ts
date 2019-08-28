@@ -1,24 +1,29 @@
 import axios from 'axios'
-// import serialize from './serialize'
 import hashing from './hashing'
-import levelup from 'levelup'
-import memdown from 'memdown'
-import encode from 'encoding-down'
 import Defaults from './defaults'
 import Hashable from './hashable'
 import Cachable from './cachable'
+import { log, error } from '../utils/log'
+import * as LRU from 'lru-cache'
 
 export default function (config: any = {}) {
-  // we should do asseration here
-
   // create discovery
   const discovery = new config.discovery(config)
 
-  // create db
-  const db = levelup(encode(memdown(), { valueEncoding: 'json' })) // create database
+  //  create LRU
+  const cache = new LRU({
+    max: 500,
+    maxAge: config.maxAge
+  })
 
   // axios adapter. receives the axios request config as only parameter
   async function adapter(req) {
+    // create hashable
+    const hashable = new Hashable(req)
+
+    // a hash that represents the query
+    const hash = hashing(hashable)
+
     // make discovery
     req.url = await discovery.resolve(req.url)
 
@@ -30,40 +35,32 @@ export default function (config: any = {}) {
       return axios.defaults.adapter(req)
     }
 
-    // try to get cashable
-    const hashable = new Hashable(req)
-    const hash = hashing(hashable)
+    // try to get object from cache
+    const cachable = cache.get(hash)
 
-    // return promise to cache
-    const res = await db.get(hash, { asBuffer: false })
-      .then(cache => new Cachable(cache))
-      .then(cache => {
-        if ((Date.now() - cache.timestamp) >= Defaults.Time) {
-          throw new Error('should update')
-        }
+    // if there should be nothing in the cache
+    if (!cachable) {
+      const res: any = await axios.defaults.adapter(req)
 
-        cache.hit = true
-        cache.request = req
-        return cache
-      })
-      .catch(async () => { // err could also be update
-        const res: any = await axios.defaults.adapter(req)
-
-        if (res.status !== 200) {
-          return res
-        }
-
-        try {
-          await db.put(hash, new Cachable(res))
+      if (res.status === 200) {
+        try { // try to cache
+          log(`Caching ${hash}`)
+          cache.set(hash, JSON.stringify(new Cachable(res)))
         } catch (e) {
-          console.log(e)
+          log(error(e))
         }
+      }
 
-        res.hit = false
-        return res
-      })
+      // indicate non hit
+      res.hit = false
 
-    return res
+      return res
+    }
+
+    log(`Use cached ${hash}`)
+
+    // try to
+    return new Cachable(JSON.parse(cachable))
   }
 
   return {

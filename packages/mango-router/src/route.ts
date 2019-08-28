@@ -1,8 +1,8 @@
 import { RouteConfig } from 'vue-router/types'
-import { Component } from 'vue'
+import { Component, AsyncComponent } from 'vue'
 
 export default class Route {
-  public cmp: Component
+  public cmp: Component | AsyncComponent
   public config: RouteConfig
 
   constructor(cmp, config: RouteConfig) {

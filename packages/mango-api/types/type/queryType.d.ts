@@ -47,11 +47,17 @@ declare const _default: {
             categories_exclude: {
                 type: any;
             };
+            tags: {
+                type: any;
+            };
+            tags_exclude: {
+                type: any;
+            };
             _embed: {
                 type: any;
             };
         };
-        resolve: (_: any, args: any, ctx: any) => any;
+        resolve: (_root: any, args: any, ctx: any) => any;
     };
     pages: {
         type: any;
@@ -108,6 +114,21 @@ declare const _default: {
                 type: any;
             };
             categories_exclude: {
+                type: any;
+            };
+            _embed: {
+                type: any;
+            };
+        };
+        resolve: (_: any, args: any, ctx: any) => any;
+    };
+    slugs: {
+        type: any;
+        args: {
+            slug: {
+                type: any;
+            };
+            preview: {
                 type: any;
             };
             _embed: {
@@ -328,6 +349,21 @@ declare const _default: {
         type: any;
         args: {
             language: {
+                type: any;
+            };
+        };
+        resolve: (_root: any, args: any, ctx: any) => any;
+    };
+    permalink: {
+        type: any;
+        args: {
+            permalink: {
+                type: any;
+            };
+            lang: {
+                type: any;
+            };
+            _embed: {
                 type: any;
             };
         };

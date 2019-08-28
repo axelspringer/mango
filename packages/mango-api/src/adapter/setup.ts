@@ -4,7 +4,7 @@ import create from './create'
 
 export default function (config = {}): any {
   // omit the discovery config
-  const axiosConfig = omit(config, ['discovery', 'cache'])
+  const axiosConfig = omit(config, ['discovery'])
 
   // create a new adapter
   const { adapter } = create(config)

@@ -35,7 +35,8 @@ export const PageManagerBlock = new GraphQLObjectType({
   name: 'PageManagerBlock',
   fields: {
     page_block: { type: new GraphQLNonNull(GraphQLString) },
-    result: { type: GraphQLList(WidgetTypePageManager) }
+    result: { type: GraphQLList(WidgetType) },
+    page_type: { type: GraphQLString },
   }
 })
 

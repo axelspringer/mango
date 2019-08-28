@@ -10,6 +10,14 @@ function getTags(vm) {
   }
 }
 
+function renderTags(vm) {
+  removeMetaTags() // remove tags
+  const tags = getTags(vm)
+  if (tags) {
+    createMetaTags(tags.meta || [])
+  }
+}
+
 const serverTagsMixin = {
   created() {
     const tags = getTags(this)
@@ -20,21 +28,11 @@ const serverTagsMixin = {
 }
 
 const clientTagsMixin = {
-  beforeRouteEnter(_to, _from, next) {
-    next(vm => {
-      removeMetaTags() // remove tags
-      const tags = getTags(vm)
-      if (tags) {
-        createMetaTags(tags.meta || [])
-      }
-    })
+  mounted() {
+    renderTags(this)
   },
   updated() {
-    removeMetaTags() // remove tags
-    const tags = getTags(this)
-    if (tags) {
-      createMetaTags(tags.meta || [])
-    }
+    renderTags(this)
   }
 }
 

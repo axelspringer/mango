@@ -79,6 +79,12 @@ export type ListTaxonomies = {
 
 export type GetPostPermalink = {
   permalink?: string
+  lang?: string
+  _embed?: boolean
+}
+
+export type GetPermalink = {
+  permalink?: string
   _embed?: boolean
 }
 
@@ -109,5 +115,11 @@ export type ListCategories = {
   parent?: number
   post?: number
   slug?: string[]
+  _embed?: boolean
+}
+
+export type ListSlugs = {
+  slug?: string[]
+  preview?: boolean
   _embed?: boolean
 }

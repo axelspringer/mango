@@ -1,5 +1,5 @@
 
-const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLString, GraphQLInt } = require('graphql')
+const { GraphQLObjectType, GraphQLList, GraphQLBoolean, GraphQLTypeReference, GraphQLString, GraphQLInt } = require('graphql')
 import { GraphQLDateTime } from 'graphql-iso-date'
 import { UserType } from './userType'
 import MediaType from './mediaType'
@@ -8,26 +8,33 @@ import EmbeddedType from './embeddedType'
 import PolylangTranslationType from './polylangTranslationType'
 import Status from '../models/status'
 
-export default new GraphQLObjectType({
+const pageType = new GraphQLObjectType({
   name: 'Page',
   description: 'Contains a Page from Wordpress',
   fields: () => ({
     date: {
-      //type: GraphQLDateTime,
-      type: GraphQLString,
-      resolve: page => page.date
+      type: GraphQLDateTime,
+      resolve: page => page.date ? new Date(page.date) : null
     },
     dateGmt: {
       type: GraphQLDateTime,
-      resolve: page => page.date_gmt.rendered
+      resolve: page => page.date_gmt && page.date_gmt.rendered ? new Date(page.date_gmt.rendered) : null
     },
     featuredMedia: {
       type: MediaType,
-      resolve: (page, args, ctx) => ctx.loader.getMedia(ctx, page.featured_media, args)
+      resolve: (page, args, ctx) => !page.featured_media ? null : page.status !== Status.Publish ? ctx.loader.getMediaItem(ctx, page.featured_media, args) : ctx.loader.getMedia(ctx, page.featured_media, args)
     },
     id: {
       type: GraphQLString,
       resolve: page => page.id
+    },
+    modified: {
+      type: GraphQLDateTime,
+      resolve: page => page.modified ? new Date(page.modified) : null
+    },
+    modifiedGmt: {
+      type: GraphQLDateTime,
+      resolve: page => page.modified_gmt ? new Date(page.modified_gmt) : null
     },
     status: {
       type: GraphQLString,
@@ -71,7 +78,7 @@ export default new GraphQLObjectType({
     },
     translations: {
       type: PolylangTranslationType,
-      resolve: (page, args, ctx) => ctx.loader.getPolylangPages(ctx, page.translations, { ...args, preview: page.status !== Status.Publish })
+      resolve: (page, args, ctx) => ctx.loader.getPolylangPages(ctx, page, { ...args, preview: page.status !== Status.Publish })
     },
     meta: {
       type: new GraphQLList(GraphQLString),
@@ -107,7 +114,11 @@ export default new GraphQLObjectType({
     },
     img: {
       type: ImgType,
-      resolve: (root, args, ctx) => ctx.loader.getImage(ctx, root.featured_media, args)
+      resolve: (page, args, ctx) => ctx.loader.getImage(ctx, page.featured_media, args)
+    },
+    parent: {
+      type: pageType,
+      resolve: (page, args, ctx) => ctx.loader.getPost(ctx, page.parent, args)
     },
     acf: {
       type: EmbeddedType,
@@ -119,3 +130,5 @@ export default new GraphQLObjectType({
     }
   }),
 })
+
+export default pageType

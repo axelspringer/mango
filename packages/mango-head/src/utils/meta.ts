@@ -2,7 +2,7 @@
  * Standard tags
  */
 export const defaultAttrs = ['http-equiv', 'charset']
-export const defaultValues = ['viewport']
+export const defaultValues = ['viewport', 'google-site-verification']
 
 /**
  * Create meta tags
@@ -12,7 +12,9 @@ export function createMetaTags(metas) {
     const el = document.createElement('meta')
     Object.getOwnPropertyNames(meta)
       .forEach(attr => {
-        el[attr] = meta[attr]
+        const prop = document.createAttribute(attr)
+        prop.value = meta[attr]
+        el.setAttributeNode(prop)
       })
     document.getElementsByTagName('head')[0].appendChild(el)
   })

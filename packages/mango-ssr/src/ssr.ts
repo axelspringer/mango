@@ -69,7 +69,6 @@ export class ServerSideRenderer {
   public init() {
     this.initPlugins()
     this.createRenderer()
-    this.setup()
   }
 
   /**
@@ -89,11 +88,18 @@ export class ServerSideRenderer {
       this.app.use(middleware)
     })
 
-    Env.Development || this.app.use(Compress({
-      threshold: 2048,
-      flush: require('zlib').Z_SYNC_FLUSH
-    }))
-    Env.Development || this.app.use(Serve({ rootDir: this.config.serve }))
+    // compression of content
+    if (this.config.compress) {
+      this.app.use(Compress({
+        threshold: 2048,
+        flush: require('zlib').Z_SYNC_FLUSH
+      }))
+    }
+
+    // serve content
+    if (this.config.serveStatic) {
+      this.app.use(Serve(this.config.serveOptions))
+    }
   }
 
   /**
@@ -114,6 +120,7 @@ export class ServerSideRenderer {
           async (ctx, next) => {
             ctx.state.renderer = renderer
             ctx.state.plugin = plugin
+            ctx.state.config = this.config
 
             await next()
           },
@@ -161,6 +168,7 @@ export class ServerSideRenderer {
           '*',
           async (ctx, next) => {
             ctx.state.renderer = this.renderer
+            ctx.state.config = this.config
 
             await next()
           },
